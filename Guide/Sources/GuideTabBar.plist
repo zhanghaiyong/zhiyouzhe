@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>ClassName</key>
+		<string>ReleaseOrderViewController</string>
+		<key>Title</key>
+		<string>预约</string>
+		<key>Image</key>
+		<string>icon_guide_iphone.png</string>
+		<key>SelectImage</key>
+		<string>icon_guide_seleted_iphone.png</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>OrderListViewController</string>
+		<key>Title</key>
+		<string>订单</string>
+		<key>Image</key>
+		<string>icon_order_iphone.png</string>
+		<key>SelectImage</key>
+		<string>icon_order_selected_iphone.png</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>NewsViewController</string>
+		<key>Title</key>
+		<string>消息</string>
+		<key>Image</key>
+		<string>icon_news_iphone.png</string>
+		<key>SelectImage</key>
+		<string>icon_news_selected_iphone.png</string>
+		<key>UnLoad</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>PersonalViewController</string>
+		<key>Title</key>
+		<string>个人</string>
+		<key>Image</key>
+		<string>icon_me_iphone.png</string>
+		<key>SelectImage</key>
+		<string>icon_me_selected_iphone.png</string>
+	</dict>
+</array>
+</plist>

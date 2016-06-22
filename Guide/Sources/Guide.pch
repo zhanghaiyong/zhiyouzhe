@@ -1,0 +1,36 @@
+//
+//  Guide.pch
+//  Guide
+//
+//  Created by ksm on 16/4/7.
+//  Copyright © 2016年 ksm. All rights reserved.
+//
+
+#ifndef Guide_pch
+#define Guide_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Guide_pch */
+
+#import "BaseViewController.h"
+#import "UIButton+HYExtension.h"
+#import "NSDate+HYExtension.h"
+#import "NSDate+Tools.h"
+#import "UIColor+HYExtension.h"
+#import "UIView+HYExt.h"
+#import "NSString+HYExtension.h"
+#import "Defaults.h"
+#import "NSURLs.h"
+#import "Uitils.h"
+#import "BaseTableViewController.h"
+#import "MJExtension.h"
+#import "HYSystem.h"
+#import <RongIMKit/RongIMKit.h>
+#import "KSMNetworkRequest.h"
+#import "AccountModel.h"
+#import "BaseParams.h"
+#import "HUDConfig.h"
+#import <MJRefresh.h>
+

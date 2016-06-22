@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="87" id="KGk-i7-Jjw" customClass="orderCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预约时间：2016年04月23日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgo-9N-evd">
+                        <rect key="frame" x="80" y="35" width="179" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="DKA-g8-hgd"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的偶像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlW-uv-JTL">
+                        <rect key="frame" x="80" y="10" width="56" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="Jx1-Qt-6eX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qcf-lI-7Xe">
+                        <rect key="frame" x="146" y="16" width="9" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="9" id="6Yt-bR-Pek"/>
+                            <constraint firstAttribute="height" constant="14" id="iz3-hE-fHe"/>
+                        </constraints>
+                        <state key="normal" image="icon_male_iphone"/>
+                        <state key="selected" title="icon_woman_iphone"/>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_head_default_iphone" translatesAutoresizingMaskIntoConstraints="NO" id="wRd-AY-lOb">
+                        <rect key="frame" x="10" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="7px-yC-1Vw"/>
+                            <constraint firstAttribute="width" constant="60" id="XEU-ZI-Pbh"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="30"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进行中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VSR-SS-rQf">
+                        <rect key="frame" x="274" y="10" width="36" height="25"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nlW-uv-JTL" firstAttribute="top" secondItem="wRd-AY-lOb" secondAttribute="top" id="37K-Af-ZaA"/>
+                    <constraint firstItem="Qcf-lI-7Xe" firstAttribute="leading" secondItem="nlW-uv-JTL" secondAttribute="trailing" constant="10" id="9CB-bh-KVb"/>
+                    <constraint firstItem="wRd-AY-lOb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="9Cy-zl-2Z2"/>
+                    <constraint firstItem="VSR-SS-rQf" firstAttribute="top" secondItem="wRd-AY-lOb" secondAttribute="top" id="ADt-Ov-amo"/>
+                    <constraint firstItem="wRd-AY-lOb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="JqD-6S-RVQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="VSR-SS-rQf" secondAttribute="trailing" constant="2" id="KDB-jP-QOS"/>
+                    <constraint firstItem="Qcf-lI-7Xe" firstAttribute="centerY" secondItem="nlW-uv-JTL" secondAttribute="centerY" id="deh-fd-pSf"/>
+                    <constraint firstItem="Rgo-9N-evd" firstAttribute="top" secondItem="nlW-uv-JTL" secondAttribute="bottom" id="hmD-tq-AZx"/>
+                    <constraint firstItem="VSR-SS-rQf" firstAttribute="height" secondItem="nlW-uv-JTL" secondAttribute="height" id="tEg-a5-PiJ"/>
+                    <constraint firstItem="Rgo-9N-evd" firstAttribute="leading" secondItem="wRd-AY-lOb" secondAttribute="trailing" constant="10" id="xrI-eL-oIw"/>
+                    <constraint firstItem="nlW-uv-JTL" firstAttribute="leading" secondItem="wRd-AY-lOb" secondAttribute="trailing" constant="10" id="y8J-D0-3K7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="appointTime" destination="Rgo-9N-evd" id="nd4-8Z-Yhg"/>
+                <outlet property="avatar" destination="wRd-AY-lOb" id="HhW-1y-OQ2"/>
+                <outlet property="nickName" destination="nlW-uv-JTL" id="5hm-8q-jXC"/>
+                <outlet property="orderStatus" destination="VSR-SS-rQf" id="MaW-nE-jpM"/>
+                <outlet property="sexButton" destination="Qcf-lI-7Xe" id="Ldh-jE-HSX"/>
+            </connections>
+            <point key="canvasLocation" x="336" y="392.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_head_default_iphone" width="60" height="60"/>
+        <image name="icon_male_iphone" width="9" height="14"/>
+    </resources>
+</document>

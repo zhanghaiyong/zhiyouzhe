@@ -19,6 +19,19 @@
 
 - (IBAction)sureAction:(id)sender {
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(comfirmBtnClick)]) {
+        [self.delegate comfirmBtnClick];
+    }
+    
+    if (_accountTF.text.length ==0) {
+        [[HUDConfig shareHUD] Tips:@"支付宝号码不能为空" delay:DELAY];
+        return;
+    }
+    if (_accountTF.text.length ==0) {
+        [[HUDConfig shareHUD] Tips:@"提现金额不能为空" delay:DELAY];
+        return;
+    }
+    
     [self removeFromSuperview];
 }
 @end

@@ -115,15 +115,16 @@
         UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:pathIndex];
         
         for (int i = 0; i<6; i++) {
-            UIButton *sender = (UIButton *)[cell viewWithTag:100+i];
-            NSDictionary *dic = costs.costArray[i];
-            NSLog(@"dic = %@",dic);
+            
+            UIButton *sender    = (UIButton *)[cell viewWithTag:100+i];
+            NSDictionary *dic   = costs.costArray[i];
+            NSLog(@"dic         = %@",dic);
             [sender setTitle:[[dic objectForKey:@"price"] stringByReplacingOccurrencesOfString:@".00" withString:@"元"] forState:UIControlStateNormal];
             if ([[dic objectForKey:@"price"] isEqualToString:account.serviceCharge]) {
-                
-                currentBtn.selected = NO;
-                currentBtn = sender;
-                sender.selected = YES;
+
+            currentBtn.selected = NO;
+            currentBtn          = sender;
+            sender.selected     = YES;
             }
         }
     }
@@ -307,16 +308,74 @@
                 break;
             case 1:
             {
-                //认证驾照
-                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                DriverLicenseViewController *driverLicense = [story instantiateViewControllerWithIdentifier:@"DriverLicenseViewController"];
-                [driverLicense returnCarStatus:^(NSString *model) {
+                [[HUDConfig shareHUD] alwaysShow];
+                //    所有字断不能为空
+                if (_nickLabel.text.length == 0 ||
+                    _sexLabel.text.length  == 0 ||
+                    //            _eduLabel.text.length  == 0 ||
+                    _sexLabel.text.length  == 0 ||
+                    _signLabel.text.length == 0)  {
                     
-                    _driverLicenseLabel.text = model;
+                    [SVProgressHUD showErrorWithStatus:@"请完善资料"];
+                    return;
+                }
+                
+                if (_cityLabel.text.length == 0) {
                     
-                }];
-                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:driverLicense];
-                [self presentViewController:navi animated:YES completion:nil];
+                    [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
+                    return;
+                    
+                }
+                
+                //头像名
+                self.params.headiconUrl = imageName;
+                //昵称
+                self.params.nickname = _nickLabel.text;
+                //性别
+                self.params.sex = _sexLabel.text;
+                //学历
+                self.params.college = _collegeTF.text;
+                //年龄
+                self.params.age = _ageLabel.text;
+                //服务费用
+                //    DECIMAL_DIG
+                self.params.serviceCharge = [[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] intValue];
+                //签名
+                self.params.signature = _signLabel.text;
+                //服务城市id
+                self.params.cityId = cityModel.id;
+                //服务城市名称
+                self.params.serviceCity = cityModel.cityName;
+                
+                NSLog(@"%@",self.params.mj_keyValues);
+                [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
+                    
+                    [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+                    NSLog(@"%@",responseObj);
+                    
+                    if (![responseObj isKindOfClass:[NSNull class]]) {
+                        
+                        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                            
+                            //认证驾照
+                            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                            DriverLicenseViewController *driverLicense = [story instantiateViewControllerWithIdentifier:@"DriverLicenseViewController"];
+                            [driverLicense returnCarStatus:^(NSString *model) {
+                                
+                                _driverLicenseLabel.text = model;
+                                
+                            }];
+                            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:driverLicense];
+                            [self presentViewController:navi animated:YES completion:nil];
+                        }
+                    }
+                    
+                    
+                } failure:^(NSError *error) {
+                    
+                    [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
+                    
+                } type:2];
             }
                 break;
             default:
@@ -390,23 +449,23 @@
    
     
     [[HUDConfig shareHUD] alwaysShow];
-    //所有字断不能为空
-    //    if (_nickLabel.text.length == 0 ||
-    //        _sexLabel.text.length  == 0 ||
-    //        _eduLabel.text.length  == 0 ||
-    //        _sexLabel.text.length  == 0 ||
-    //        _signLabel.text.length == 0)  {
-    //
-    //        [ProgressHUD showError:@"请完善资料"];
-    //        return;
-    //    }
+//    所有字断不能为空
+        if (_nickLabel.text.length == 0 ||
+            _sexLabel.text.length  == 0 ||
+//            _eduLabel.text.length  == 0 ||
+            _sexLabel.text.length  == 0 ||
+            _signLabel.text.length == 0)  {
     
-    //    if (_cityLabel.text.length == 0) {
-    //
-    //        [ProgressHUD showError:@"请选择服务城市"];
-    //        return;
-    //
-    //    }
+            [SVProgressHUD showErrorWithStatus:@"请完善资料"];
+            return;
+        }
+    
+        if (_cityLabel.text.length == 0) {
+    
+            [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
+            return;
+    
+        }
     
     //头像名
     self.params.headiconUrl = imageName;
@@ -419,7 +478,8 @@
     //年龄
     self.params.age = _ageLabel.text;
     //服务费用
-    self.params.serviceCharge = [costs.costArray[currentBtn.tag-100] objectForKey:@"price"];
+//    DECIMAL_DIG
+    self.params.serviceCharge = [[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] intValue];
     //签名
     self.params.signature = _signLabel.text;
     //服务城市id
@@ -463,7 +523,7 @@
                 }else {
                     
                 if (account.photoPaths.length == 0) {
-                    
+    
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     KnowSecondRegisterVC *KnowSecond = [story instantiateViewControllerWithIdentifier:@"KnowSecondRegisterVC"];
                     [self.navigationController pushViewController:KnowSecond animated:YES];

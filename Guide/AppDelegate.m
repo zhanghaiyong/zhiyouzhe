@@ -33,21 +33,19 @@
                                                            NSFontAttributeName, nil]];
 }
 
-
 //判断二次登陆情况
 - (void)judgeSecondLogin {
 
-    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    AccountModel *account = [AccountModel account];
-    if (account) {
+    self.window                    = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    AccountModel *account          = [AccountModel account];
     
-        NSLog(@"appDelegate = %@",account.mj_keyValues);
-        
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        RoleViewController *roleVC = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
-        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:roleVC];
-        self.window.rootViewController = navi;
-        [self.window makeKeyAndVisible];
+    if (account) {
+    NSLog(@"appDelegate            = %@",account.mj_keyValues);
+    UIStoryboard *story            = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    RoleViewController *roleVC     = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
+    UINavigationController *navi   = [[UINavigationController alloc]initWithRootViewController:roleVC];
+    self.window.rootViewController = navi;
+    [self.window makeKeyAndVisible];
         
 //        //第一步，创建URL
 //        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?token=%@",KLoginByToken,account.token]];
@@ -90,14 +88,23 @@
     }else {
     
         BASE_INFO_FUN(@"为空");
-        UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *login = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        UIStoryboard *loginStoryboard  = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *login     = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         self.window.rootViewController = login;
-        
+
          [self.window makeKeyAndVisible];
     }
     
 }
+
+
+- (void)goToViewControllerWith:(NSDictionary*)pushInfo {
+
+    UITabBarController *TabBar = [PageInfo pageControllers];
+    [self.window.rootViewController presentViewController:TabBar animated:YES completion:nil];
+    
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -107,26 +114,27 @@
     [[JiPush shareJpush]addObserver];
     //统计App启动的事件
     [[RCIMClient sharedRCIMClient]recordLaunchOptionsEvent:launchOptions];
-    
-    
+
+
     //设置键盘自动关闭
     [[SDKKey shareSDKKey] IQKeyboard];
-    
+
     //短信验证
     [[SDKKey shareSDKKey]SMSSDKKey];
-    
+
     //容云
     [[SDKKey shareSDKKey]RCIMKey:application];
-    
-    
-    NSDictionary *remoteNotificationUserInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    NSLog(@"%@",remoteNotificationUserInfo);
-//    [SVProgressHUD show];
-    
-    
+
+
+    NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSLog(@"程序启动的推送 ＝ %@",remoteNotification);
+    if (remoteNotification) {
+
+        [[HUDConfig shareHUD] Tips:remoteNotification.description delay:1009000000];
+    }
     //设置主色调
     [self configure];
-    
+
     [self judgeSecondLogin];
 
     return YES;
@@ -160,10 +168,10 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
     NSLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
-    
+
     //极光推送
     [[JiPush shareJpush]registerDeviceToken:deviceToken];
-    
+
     NSString *token = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
                                                     withString:@""]stringByReplacingOccurrencesOfString:@">"
                                                     withString:@""]stringByReplacingOccurrencesOfString:@" "
@@ -189,6 +197,8 @@
 //IOS 7支持需要
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:application.applicationIconBadgeNumber + 1];
+    
     [[JiPush shareJpush]handleNotification:userInfo];
     NSLog(@"推送 收到通知:%@", userInfo);
     completionHandler(UIBackgroundFetchResultNewData);
@@ -196,7 +206,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
 }
-
 
 
 //收到推送的调用
@@ -244,6 +253,5 @@
                                      errorDescription:NULL];
     return str;
 }
-
 
 @end

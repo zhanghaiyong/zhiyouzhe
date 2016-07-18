@@ -13,7 +13,6 @@
 
     AccountModel *account;
     AppointOrderModel *orderModel;
-
 }
 
 

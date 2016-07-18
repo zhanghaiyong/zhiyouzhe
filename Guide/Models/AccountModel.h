@@ -50,6 +50,9 @@
 //性别
 @property (nonatomic,strong)NSString *sex;
 @property (nonatomic,strong)NSString *photoPaths;
+//钱包id
+@property (nonatomic,strong)NSString *walletId;
+
 
 + (void)saveAccount:(AccountModel * __nonnull)account;
 

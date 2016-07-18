@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol withDrawViewDelegate <NSObject>
+
+-(void) comfirmBtnClick;
+
+@end
+
 @interface WithDrawView : UIView
 
 @property (weak, nonatomic) IBOutlet UITextField *accountTF;
 @property (weak, nonatomic) IBOutlet UITextField *moneyTF;
+
+@property (nonatomic, assign) id <withDrawViewDelegate> delegate;
 @end

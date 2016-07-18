@@ -55,6 +55,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
 
     //设置工具栏的样式
+    
     [self.chatSessionInputBarControl setInputBarType:RCChatSessionInputBarControlDefaultType style:RC_CHAT_INPUT_BAR_STYLE_CONTAINER];
 
     //设置聊天背景色

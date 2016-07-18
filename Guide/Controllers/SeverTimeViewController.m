@@ -7,24 +7,16 @@
 //
 
 #import "SeverTimeViewController.h"
-#import "ScenicLayout.h"
-#import "SeverTimeCell.h"
-//#import "ScenicHead.h"
-//#import "NavigationView.h"
 #import "CalendarModel.h"
-
+#import "SZCalendarPicker.h"
 @interface SeverTimeViewController ()
-
-@property (nonatomic,strong)NSMutableArray *dataArray;
-@property (nonatomic,strong)NSMutableArray *dates;
+@property (nonatomic,strong)NSMutableArray *saveDates;
+@property (nonatomic,strong)NSMutableArray *DeleteDates;
 
 @end
 
-@interface SeverTimeViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
-{
-
-    UICollectionView *collection;
-    UIButton         *saveBtn;
+@interface SeverTimeViewController () {
+    
     AccountModel     *account;
 }
 
@@ -32,24 +24,25 @@
 
 @implementation SeverTimeViewController
 
--(NSMutableArray *)dataArray {
 
-    if (_dataArray == nil) {
+-(NSMutableArray *)saveDates {
+    
+    if (_saveDates == nil) {
         
-        NSMutableArray *dataArray = [NSMutableArray array];
-        _dataArray = dataArray;
+        NSMutableArray *saveDates = [NSMutableArray array];
+        _saveDates = saveDates;
     }
-    return _dataArray;
+    return _saveDates;
 }
 
--(NSMutableArray *)dates {
+-(NSMutableArray *)DeleteDates {
     
-    if (_dates == nil) {
+    if (_DeleteDates == nil) {
         
-        NSMutableArray *dates = [NSMutableArray array];
-        _dates = dates;
+        NSMutableArray *DeleteDates = [NSMutableArray array];
+        _DeleteDates = DeleteDates;
     }
-    return _dates;
+    return _DeleteDates;
 }
 
 - (void)viewDidLoad {
@@ -60,12 +53,11 @@
     [self setNavigationLeft:@"icon_back_iphone"];
     account = [AccountModel account];
     
-    saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [saveBtn sizeToFit];
     saveBtn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    saveBtn.userInteractionEnabled = NO;
-    [saveBtn setTitleColor:lever2Color forState:UIControlStateNormal];
+    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:saveBtn];
     self.navigationItem.rightBarButtonItem = item;
@@ -77,16 +69,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    collection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) collectionViewLayout:[[ScenicLayout alloc]init]];
-    collection.backgroundColor = [UIColor clearColor];
-    collection.dataSource = self;
-    collection.delegate = self;
-    [collection registerClass:[SeverTimeCell class] forCellWithReuseIdentifier:@"MY_CELL"];//注册item或cell
-    collection.alwaysBounceVertical = YES;
-    [self.view addSubview:collection];
-    
     [self loadSeverTime];
-    
 }
 
 
@@ -101,124 +84,113 @@
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 NSArray *array = [responseObj objectForKey:@"data"];
                 NSArray *modelArray = [CalendarModel mj_objectArrayWithKeyValuesArray:array];
-                [self.dataArray addObjectsFromArray:modelArray];
-                [collection reloadData];
+                
+                SZCalendarPicker *calendarPicker = [SZCalendarPicker showOnView:self.view];
+                calendarPicker.today = [NSDate date];
+                calendarPicker.date = calendarPicker.today;
+                calendarPicker.CalendarModels = modelArray;
+                calendarPicker.frame = CGRectMake(0, 64, self.view.frame.size.width, SCREEN_HEIGHT);
+                calendarPicker.receive = ^(NSString *dateStr,BOOL isTap){
+                    
+                    if (isTap == YES) {
+                        
+                        [self.saveDates addObject:dateStr];
+                        
+                    }else {
+                    
+                        [self.saveDates removeObject:dateStr];
+                    }
+                };
+                
+                calendarPicker.noReceive = ^(NSString *dateStr,BOOL isTap){
+                    
+                    if (isTap == YES) {
+                        
+                        [self.DeleteDates addObject:dateStr];
+                        
+                    }else {
+                        
+                        [self.DeleteDates removeObject:dateStr];
+                    }
+                };
+                
            }
         }
     } failure:^(NSError *error) {
+        
         [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        
     } type:0];
 }
 
 - (void)saveAction {
 
-    [[HUDConfig shareHUD]alwaysShow];
-    NSLog(@"dates  = %@",self.dates);
-    NSString *dateString = [self.dates componentsJoinedByString:@","];
-    NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token,@"dates":dateString};
-    [KSMNetworkRequest postRequest:KNotOderTake params:params success:^(id responseObj) {
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"%@",responseObj);
-        if (![responseObj isKindOfClass:[NSNull class]]) {
-            if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-                [self.navigationController popViewControllerAnimated:YES];
+
+    [self saveDate];
+    [self deleteDate];
+}
+
+//设置成不接单日
+- (void)saveDate {
+
+    if (self.saveDates.count > 0) {
+        
+        
+        [[HUDConfig shareHUD]alwaysShow];
+        NSLog(@"saveDate  = %@",self.saveDates);
+        NSString *dateString = [self.saveDates componentsJoinedByString:@","];
+        NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token,@"dates":dateString};
+        [KSMNetworkRequest postRequest:KNotOderTake params:params success:^(id responseObj) {
+            [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+            NSLog(@"saveDate ＝ %@",responseObj);
+            if (![responseObj isKindOfClass:[NSNull class]]) {
+                if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             }
-        }
-    } failure:^(NSError *error) {
+        } failure:^(NSError *error) {
+            
+            [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+            
+        } type:0];
+    }
+}
+
+//设置成可接单日
+- (void)deleteDate {
+
+    if (self.DeleteDates.count > 0) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
-        
-    } type:0];
+        [[HUDConfig shareHUD]alwaysShow];
+        NSLog(@"deleteDate  = %@",self.DeleteDates);
+        NSString *dateString = [self.DeleteDates componentsJoinedByString:@","];
+        NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token,@"dates":dateString};
+        [KSMNetworkRequest postRequest:KorderTake params:params success:^(id responseObj) {
+            
+            [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+            NSLog(@"deleteDate ＝ %@",responseObj);
+            
+            if (![responseObj isKindOfClass:[NSNull class]]) {
+                
+                if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+        } failure:^(NSError *error) {
+            
+            [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+            
+        } type:0];
+    }
 }
 
 - (void)back {
 
-    //通过保存按钮的交互来盘点是否修改了信息，提示信息，是直接退出，还是继续编辑
-    if (saveBtn.userInteractionEnabled == YES) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提醒" message:@"还未保存，是否退出" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"继续上传" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }]];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }else {
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
-#pragma mark  CollectionViewDelegate
-//返回section数量
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-//必须实现，返回每个section中item的数量
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.dataArray.count;
-    
-}
-
-//必须实现，返回每个item的内容
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    SeverTimeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
-    cell.sender.tag = 100+indexPath.row;
-    CalendarModel *model = self.dataArray[indexPath.row];
-    NSString *time = [model.time substringFromIndex:5];
-    NSString *weel = model.week;
-   [cell.sender setTitle:[NSString stringWithFormat:@"%@(%@)",time,weel] forState:UIControlStateNormal];
-    cell.time = model.time;                                                                                                                                                        
-    if (![model.state isEqualToString:@"可接单日"]) {
-        [cell.sender setTitleColor:lever3Color forState:UIControlStateNormal];
-        cell.roleImage.hidden = YES;
-    }
-    
-    [cell tapThisCell:^(id c) {
-        SeverTimeCell *tapCell = (SeverTimeCell *)c;
-        
-        if (saveBtn.userInteractionEnabled == NO) {
-            
-            saveBtn.userInteractionEnabled = YES;
-            [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-        }
-        
-        if (!tapCell.sender.selected) {
-            
-            [self.dates addObject:tapCell.time];
-            
-        }else {
-            
-            if ([self.dates containsObject:tapCell.time]) {
-                [self.dates removeObject:tapCell.time];
-            }
-        }
-        
-    }];
-    
-    return cell;
-}
-
-
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    SeverTimeCell *cell = (SeverTimeCell *)[self collectionView:collection cellForItemAtIndexPath:indexPath];
-//    if (cell.sender.selected) {
-//        [self.dates addObject:cell.time];
-//    }else {
-//        [self.dates removeObject:cell.time];
-//    }
-//    
-//    NSLog(@"dates = %@",self.dates);
-//}
 
 
 @end

@@ -9,6 +9,7 @@
 #import "SettingViewController.h"
 #import "UIImageView+WebCache.h"
 #import "LoginViewController.h"
+#import "JiPush.h"
 @interface SettingViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *cacheCase;
 
@@ -86,6 +87,7 @@
         LoginViewController *login = [story instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [UIApplication sharedApplication].keyWindow.rootViewController = login;
         [AccountModel deleteAccount];
+        [[JiPush shareJpush] setAlias:@""];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"点错了" style:UIAlertActionStyleDestructive handler:nil]];
     

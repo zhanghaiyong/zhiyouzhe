@@ -9,19 +9,25 @@
     
     switch ([(NSString *)self integerValue]) {
         case 0:
-            return @"待出行";
+            return @"待付款";
             break;
         case 1:
-            return @"退款中";
+            return @"待出行";
             break;
         case 2:
-            return @"已退款";
+            return @"退款中";
             break;
         case 3:
-            return @"行程中";
+            return @"已退款";
             break;
         case 4:
+            return @"行程中";
+            break;
+        case 5:
             return @"已结束";
+            break;
+        case 6:
+            return @"已评价";
             break;
             
         default:

@@ -148,15 +148,17 @@
         [[HUDConfig shareHUD] Tips:@"电话号码不能为空" delay:DELAY];
         [Uitils shake:_phoneTF];
         
-    }else if (_codeTF.text.length == 0) {
-    
-         [[HUDConfig shareHUD] Tips:@"请输入验证码" delay:DELAY];
-        [Uitils shake:_codeTF];
-        
-    }else {
+    }
+//    else if (_codeTF.text.length == 0) {
+//    
+//         [[HUDConfig shareHUD] Tips:@"请输入验证码" delay:DELAY];
+//        [Uitils shake:_codeTF];
+//        
+//    }
+    else {
     
         [[HUDConfig shareHUD]alwaysShow];
-        
+//        
 //    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
 //        
 //        if (!error) {

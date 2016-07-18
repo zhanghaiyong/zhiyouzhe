@@ -41,7 +41,16 @@
             
             RongCloudTokenParams *params = [[RongCloudTokenParams alloc]init];
             params.userId                = account.id;
-            params.userName              = account.nickname;
+//            NSString *string = account.nickname.length ==0 || account.nickname.length>10?@"111":[account.nickname substringWithRange:NSMakeRange(0, 10)];
+            NSString *string = account.nickname;
+            if (string.length ==0) {
+                string =@"1111";
+            }
+            else if (string.length >10) {
+                string = [string substringWithRange:NSMakeRange(0, 10)];
+            }
+            
+            params.userName              = string;
             params.portraitUri           = [NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl];
             
             [[HUDConfig shareHUD] alwaysShow];
@@ -50,12 +59,12 @@
             [RCIM sharedRCIM].currentUserInfo = userInfo;
             NSLog(@"currentUserInfo = %@",userInfo);
             [KSMNetworkRequest getRequest:KGgetRongCloudToken params:params.mj_keyValues success:^(id responseObj) {
-                
+            
                 [[HUDConfig shareHUD] dismiss];
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
                 NSLog(@"  dic = %@",dic);
                 [[SDKKey shareSDKKey] RCIMConnectWithToken:[dic objectForKey:@"data"]];
-                
+            
                 
                 //第一部分资料没有完善
                 if (account.nickname.length == 0) {

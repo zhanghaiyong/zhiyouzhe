@@ -125,8 +125,8 @@
             }
             
             [self.selectedPhotos addObjectsFromArray:array];
-            if (array.count < 9) {
-                UIButton *addBtn = [_scrollView viewWithTag:100+array.count];
+            if (self.selectedPhotos.count < 9) {
+                UIButton *addBtn = [_scrollView viewWithTag:100+self.selectedPhotos.count];
                 addBtn.hidden = NO;
                 addBtn.backgroundColor = [UIColor clearColor];
                 addBtn.selected = YES;
@@ -207,6 +207,7 @@
         }
         
         [[HUDConfig shareHUD] alwaysShow];
+        
         [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
             NSString *imageString = [imagekeys componentsJoinedByString:@","];
             self.params.photoUrl = imageString;

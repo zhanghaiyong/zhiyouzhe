@@ -12,6 +12,7 @@
 #import "KnowThreeRegisterVC.h"
 #import "KnowSecondRegisterVC.h"
 #import "SeverTimeViewController.h"
+#import "MywalletViewController.h"
 @interface PersonalViewController (){
 
     AccountModel *account;
@@ -44,7 +45,7 @@
         _userAvatar.layer.borderWidth = 1;
         
     }];
-    _userNickName.text = account.nickname;
+    _userNickName.text = account.nickname.length>10?[account.nickname substringWithRange:NSMakeRange(0, 10)]:account.nickname;
     _userSex.selected = [account.sex isEqualToString:@"男"]? NO :YES;
     self.starRanting.show_star = 4;
 }
@@ -101,7 +102,18 @@
                 
                 break;
             case 2: //钱包
-                
+            {
+                if (![account.identificationState isEqualToString:@"2"]) {
+                    [[HUDConfig shareHUD]Tips:@"未认证通过,暂无钱包信息" delay:DELAY];
+                    return;
+                }
+                else {
+                    UIStoryboard *storyboard1 = [UIStoryboard storyboardWithName:@"Know" bundle:nil];
+                    MywalletViewController *knowSecond = [storyboard1 instantiateViewControllerWithIdentifier:@"MywalletViewController"];
+                    
+                    [self.navigationController pushViewController:knowSecond animated:YES];
+                }
+            }
                 break;
             case 3: { //服务
                 

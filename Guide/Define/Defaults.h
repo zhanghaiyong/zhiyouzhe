@@ -40,8 +40,8 @@
 
 #define DELAY 2
 
-#define Account (@"account")
-#define Cost (@"Cost")
+#define Account     (@"account")
+#define Cost        (@"Cost")
 #define GETCOSTTIME (@"getCostTime")
 
 #define REFRESH_SYSTEM  (@"refreshSystem")
@@ -53,6 +53,10 @@
 //shareSDK APIKey
 const static NSString *SMSKey = @"1229a77693d00";
 const static NSString *SMSecret = @"766c6e4c400fe5e1649f64ed232ac5a9";
+
+#define NO_RECEIVE (@"不接单日")
+#define RECEIVED   (@"已接单日")
+#define RECEIVE    (@"可接单日")
 
 
 #if (DEBUG || TESTCASE)

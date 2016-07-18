@@ -95,35 +95,36 @@
         
         appointOrChat = flag;
         if (flag == 1) {
-            if (self.AppointOrderArr.count == 0) {
-                [self.tableView.mj_header beginRefreshing];
-            }else {
-            
+//            if (self.AppointOrderArr.count == 0) {
+//                [self.tableView.mj_header beginRefreshing];
+//            }else {
+            [self appointOrder];
                 [self.tableView reloadData];
-            }
+//            }
         }else {
             
-            if (self.ChatOrderArr.count == 0) {
-                [self.tableView.mj_header beginRefreshing];
-            }else {
-                
+//            if (self.ChatOrderArr.count == 0) {
+//                [self.tableView.mj_header beginRefreshing];
+//            }else {
+            [self chatOrder];
                 [self.tableView reloadData];
-            }
+//            }
         }
     }];
     account = [AccountModel account];
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        if (appointOrChat == 1) {
-
-            [self appointOrder];
-            
-        }else {
-            
-            [self chatOrder];
-        }
-    }];
-    [self.tableView.mj_header beginRefreshing];
-    
+//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        if (appointOrChat == 1) {
+//
+//            [self appointOrder];
+//            
+//        }else {
+//            
+//            [self chatOrder];
+//        }
+//    }];
+    [self appointOrder];
+//    [self.tableView.mj_header beginRefreshing];
+//    
 }
 
 //获取预约订单列表

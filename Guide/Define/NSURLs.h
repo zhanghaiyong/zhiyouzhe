@@ -12,7 +12,7 @@
 
 //http://112.74.20.53:8080/zyz-app/
 //http://192.168.10.200:8080/zyz-app/
-#define  BaseURLString (@"http://192.168.10.200:8080/zyz-app/")
+#define  BaseURLString (@"http://112.74.20.53:8080/zyz-app/")
 
 #endif /* NSURLs_h */
 //imageUrl
@@ -70,9 +70,12 @@
 #define KGetCalendar [BaseURLString stringByAppendingString:@"zhiliaoCalendar/getZhiliaoCalendarByZhiliao"]
 
 
-//知了存储不接单日
+//设置成不接单日
 #define KNotOderTake [BaseURLString stringByAppendingString:@"zhiliaoCalendar/save"]
 
+
+//恢复为可接单日
+#define KorderTake [BaseURLString stringByAppendingString:@"zhiliaoCalendar/delete"]
 
 #warning 订单
 //预约订单
@@ -100,3 +103,11 @@
 #define KAllAppointmentMsg          [BaseURLString stringByAppendingString:@"appOppointmentMessage/findBookingMessageByZhiliaoId"]
 //处理预约
 #define KDealAppointment            [BaseURLString stringByAppendingString:@"appOppointmentMessage/agreeBooking"]
+
+//知了钱包
+#define KGEtWallet            [BaseURLString stringByAppendingString:@"zhiliaoWallet/wallet"]
+
+//收支明细
+#define KGetIncomeDetail           [BaseURLString stringByAppendingString:@"zhiliaoWallet/findWalletWithdrawByWalletId"]
+//申请提现
+#define KApplyForCash           [BaseURLString stringByAppendingString:@"zhiliaoWallet/walletWithdraw"]

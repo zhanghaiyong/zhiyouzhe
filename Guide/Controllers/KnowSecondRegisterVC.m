@@ -1,4 +1,3 @@
-//
 //  KnowFirstRegisterVC.m
 //  Guide
 //

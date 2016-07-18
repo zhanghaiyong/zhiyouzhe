@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface InfoParams : BaseParams
-
+{
+    
+}
 //年龄
 @property (nonatomic,strong)NSString *age;
 //
@@ -41,7 +43,7 @@
 //
 @property (nonatomic,strong)NSString *serviceCarState;
 //服务金额
-@property (nonatomic,strong)NSString *serviceCharge;
+@property (nonatomic)int serviceCharge;
 //服务城市
 @property (nonatomic,strong)NSString *serviceCity;
 //个性签名

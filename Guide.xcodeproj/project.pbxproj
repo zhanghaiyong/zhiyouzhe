@@ -13,6 +13,9 @@
 		78123CFA1CDB2E8700FFACB6 /* PostImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 78123CF91CDB2E8700FFACB6 /* PostImageTool.m */; };
 		7818FC4A1CF409C10001F066 /* GetVisitorParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7818FC491CF409C10001F066 /* GetVisitorParams.m */; };
 		7821E9E11CF6F96600D3B8AB /* AddTravelNoteParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7821E9E01CF6F96600D3B8AB /* AddTravelNoteParams.m */; };
+		78234E1E1D1BC28200B64BAD /* SZCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78234E1A1D1BC28200B64BAD /* SZCalendarCell.m */; };
+		78234E1F1D1BC28200B64BAD /* SZCalendarPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 78234E1C1D1BC28200B64BAD /* SZCalendarPicker.m */; };
+		78234E201D1BC28200B64BAD /* SZCalendarPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78234E1D1D1BC28200B64BAD /* SZCalendarPicker.xib */; };
 		7828007D1CD1B89600F760EF /* JiPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 7828007C1CD1B89600F760EF /* JiPush.m */; };
 		782800801CD1BD9100F760EF /* SDKKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 7828007F1CD1BD9100F760EF /* SDKKey.m */; };
 		78287A9F1CC8743000B2C656 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78287A9E1CC8743000B2C656 /* NewsDetailViewController.m */; };
@@ -42,14 +45,9 @@
 		785629431D013AA1009D9160 /* NoChatList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785629421D013AA1009D9160 /* NoChatList.xib */; };
 		785629461D017692009D9160 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785629451D017692009D9160 /* AboutUsViewController.m */; };
 		7856294B1D017AF4009D9160 /* UserProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856294A1D017AF4009D9160 /* UserProtocolViewController.m */; };
-		785629541D0182DF009D9160 /* ScenicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856294D1D0182DF009D9160 /* ScenicCell.m */; };
-		785629551D0182DF009D9160 /* ScenicHead.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856294F1D0182DF009D9160 /* ScenicHead.m */; };
-		785629561D0182DF009D9160 /* ScenicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 785629511D0182DF009D9160 /* ScenicLayout.m */; };
-		785629571D0182DF009D9160 /* SeverTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 785629531D0182DF009D9160 /* SeverTimeCell.m */; };
 		7856295B1D0186CD009D9160 /* OrderMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856295A1D0186CD009D9160 /* OrderMsgModel.m */; };
 		785631E31CBDE080004852A4 /* DriverLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785631E21CBDE080004852A4 /* DriverLicenseViewController.m */; };
 		785631EA1CBE23F9004852A4 /* CityItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785631E91CBE23F9004852A4 /* CityItemViewController.m */; };
-		785631EE1CBE314E004852A4 /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785631ED1CBE314E004852A4 /* CalendarView.m */; };
 		785631F11CBE3687004852A4 /* StarRantingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785631F01CBE3687004852A4 /* StarRantingViewController.m */; };
 		785631F41CBE3D26004852A4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785631F31CBE3D26004852A4 /* SettingViewController.m */; };
 		785CB4F91CC77FE000037ABF /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785CB4F81CC77FE000037ABF /* OrderDetailViewController.m */; };
@@ -127,6 +125,11 @@
 		7818FC491CF409C10001F066 /* GetVisitorParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetVisitorParams.m; sourceTree = "<group>"; };
 		7821E9DF1CF6F96600D3B8AB /* AddTravelNoteParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTravelNoteParams.h; sourceTree = "<group>"; };
 		7821E9E01CF6F96600D3B8AB /* AddTravelNoteParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTravelNoteParams.m; sourceTree = "<group>"; };
+		78234E191D1BC28200B64BAD /* SZCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZCalendarCell.h; sourceTree = "<group>"; };
+		78234E1A1D1BC28200B64BAD /* SZCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZCalendarCell.m; sourceTree = "<group>"; };
+		78234E1B1D1BC28200B64BAD /* SZCalendarPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZCalendarPicker.h; sourceTree = "<group>"; };
+		78234E1C1D1BC28200B64BAD /* SZCalendarPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZCalendarPicker.m; sourceTree = "<group>"; };
+		78234E1D1D1BC28200B64BAD /* SZCalendarPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SZCalendarPicker.xib; sourceTree = "<group>"; };
 		7828007B1CD1B89600F760EF /* JiPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JiPush.h; sourceTree = "<group>"; };
 		7828007C1CD1B89600F760EF /* JiPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JiPush.m; sourceTree = "<group>"; };
 		7828007E1CD1BD9100F760EF /* SDKKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDKKey.h; sourceTree = "<group>"; };
@@ -180,22 +183,12 @@
 		785629451D017692009D9160 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		785629491D017AF4009D9160 /* UserProtocolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProtocolViewController.h; sourceTree = "<group>"; };
 		7856294A1D017AF4009D9160 /* UserProtocolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProtocolViewController.m; sourceTree = "<group>"; };
-		7856294C1D0182DF009D9160 /* ScenicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenicCell.h; sourceTree = "<group>"; };
-		7856294D1D0182DF009D9160 /* ScenicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenicCell.m; sourceTree = "<group>"; };
-		7856294E1D0182DF009D9160 /* ScenicHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenicHead.h; sourceTree = "<group>"; };
-		7856294F1D0182DF009D9160 /* ScenicHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenicHead.m; sourceTree = "<group>"; };
-		785629501D0182DF009D9160 /* ScenicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenicLayout.h; sourceTree = "<group>"; };
-		785629511D0182DF009D9160 /* ScenicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenicLayout.m; sourceTree = "<group>"; };
-		785629521D0182DF009D9160 /* SeverTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeverTimeCell.h; sourceTree = "<group>"; };
-		785629531D0182DF009D9160 /* SeverTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeverTimeCell.m; sourceTree = "<group>"; };
 		785629591D0186CD009D9160 /* OrderMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderMsgModel.h; sourceTree = "<group>"; };
 		7856295A1D0186CD009D9160 /* OrderMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderMsgModel.m; sourceTree = "<group>"; };
 		785631E11CBDE080004852A4 /* DriverLicenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverLicenseViewController.h; sourceTree = "<group>"; };
 		785631E21CBDE080004852A4 /* DriverLicenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverLicenseViewController.m; sourceTree = "<group>"; };
 		785631E81CBE23F9004852A4 /* CityItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityItemViewController.h; sourceTree = "<group>"; };
 		785631E91CBE23F9004852A4 /* CityItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityItemViewController.m; sourceTree = "<group>"; };
-		785631EC1CBE3147004852A4 /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarView.h; sourceTree = "<group>"; };
-		785631ED1CBE314E004852A4 /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarView.m; sourceTree = "<group>"; };
 		785631EF1CBE3687004852A4 /* StarRantingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarRantingViewController.h; sourceTree = "<group>"; };
 		785631F01CBE3687004852A4 /* StarRantingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarRantingViewController.m; sourceTree = "<group>"; };
 		785631F21CBE3D26004852A4 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -403,14 +396,11 @@
 		785629581D018304009D9160 /* 服务时间 */ = {
 			isa = PBXGroup;
 			children = (
-				7856294C1D0182DF009D9160 /* ScenicCell.h */,
-				7856294D1D0182DF009D9160 /* ScenicCell.m */,
-				7856294E1D0182DF009D9160 /* ScenicHead.h */,
-				7856294F1D0182DF009D9160 /* ScenicHead.m */,
-				785629501D0182DF009D9160 /* ScenicLayout.h */,
-				785629511D0182DF009D9160 /* ScenicLayout.m */,
-				785629521D0182DF009D9160 /* SeverTimeCell.h */,
-				785629531D0182DF009D9160 /* SeverTimeCell.m */,
+				78234E1B1D1BC28200B64BAD /* SZCalendarPicker.h */,
+				78234E1C1D1BC28200B64BAD /* SZCalendarPicker.m */,
+				78234E1D1D1BC28200B64BAD /* SZCalendarPicker.xib */,
+				78234E191D1BC28200B64BAD /* SZCalendarCell.h */,
+				78234E1A1D1BC28200B64BAD /* SZCalendarCell.m */,
 			);
 			name = "服务时间";
 			sourceTree = "<group>";
@@ -422,15 +412,6 @@
 				786D50B61CCF4F19001242D8 /* LDXScore.m */,
 			);
 			name = "星评";
-			sourceTree = "<group>";
-		};
-		785631EB1CBE3133004852A4 /* 日历 */ = {
-			isa = PBXGroup;
-			children = (
-				785631EC1CBE3147004852A4 /* CalendarView.h */,
-				785631ED1CBE314E004852A4 /* CalendarView.m */,
-			);
-			name = "日历";
 			sourceTree = "<group>";
 		};
 		788836C91CBC9B4C0030909E /* 学历选择 */ = {
@@ -658,7 +639,6 @@
 			children = (
 				785629581D018304009D9160 /* 服务时间 */,
 				784089BA1CCA34760018E94B /* photos */,
-				785631EB1CBE3133004852A4 /* 日历 */,
 				785631E41CBDF212004852A4 /* 星评 */,
 				788836CF1CBCC9A00030909E /* 生日选择 */,
 				788836C91CBC9B4C0030909E /* 学历选择 */,
@@ -761,7 +741,7 @@
 				TargetAttributes = {
 					789E78891CB60D080039AC69 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 3LH5W66BT8;
+						DevelopmentTeam = 9JB56G6779;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -794,6 +774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78287AB61CC8AE2000B2C656 /* IncomeDetailCell.xib in Resources */,
+				78234E201D1BC28200B64BAD /* SZCalendarPicker.xib in Resources */,
 				788A56491CB790C000A58302 /* GuideTabBar.plist in Resources */,
 				78287AB11CC880A700B2C656 /* NewsCell.xib in Resources */,
 				788A56361CB77BAC00A58302 /* Know.storyboard in Resources */,
@@ -895,7 +876,6 @@
 				788A56341CB77A6200A58302 /* BaseTableViewController.m in Sources */,
 				788A563F1CB78C9200A58302 /* OrderListViewController.m in Sources */,
 				7866D5731D0581F900D22F41 /* CostModel.m in Sources */,
-				785629551D0182DF009D9160 /* ScenicHead.m in Sources */,
 				784089C41CCA34BF0018E94B /* ZZPhotoPickerViewController.m in Sources */,
 				7856294B1D017AF4009D9160 /* UserProtocolViewController.m in Sources */,
 				785629411D013A98009D9160 /* NoChatList.m in Sources */,
@@ -918,14 +898,12 @@
 				78B1C4261CF2E2C100656CE8 /* RongCloudTokenParams.m in Sources */,
 				788C3B691CBB40140057C61B /* CellLayout.m in Sources */,
 				781134351CBF98AC0097D89F /* WithDrawView.m in Sources */,
-				785629571D0182DF009D9160 /* SeverTimeCell.m in Sources */,
 				788A56391CB78A8B00A58302 /* RootTabBarController.m in Sources */,
 				78287A9F1CC8743000B2C656 /* NewsDetailViewController.m in Sources */,
 				78287AB51CC8AE2000B2C656 /* IncomeDetailCell.m in Sources */,
 				78123CFA1CDB2E8700FFACB6 /* PostImageTool.m in Sources */,
 				785CB4F91CC77FE000037ABF /* OrderDetailViewController.m in Sources */,
 				7818FC4A1CF409C10001F066 /* GetVisitorParams.m in Sources */,
-				785631EE1CBE314E004852A4 /* CalendarView.m in Sources */,
 				789E78DA1CB632FC0039AC69 /* Uitils.m in Sources */,
 				782800801CD1BD9100F760EF /* SDKKey.m in Sources */,
 				7864811C1D0FAF240037453F /* AppointOrderModel.m in Sources */,
@@ -935,6 +913,7 @@
 				7871FC2B1CBF6E0500E2608C /* CALayer+TextFieldBoardColor.m in Sources */,
 				788A562E1CB764ED00A58302 /* KnowSecondRegisterVC.m in Sources */,
 				789E78D71CB632950039AC69 /* HYSandbox.m in Sources */,
+				78234E1E1D1BC28200B64BAD /* SZCalendarCell.m in Sources */,
 				7853BBBB1CE42FA8002195B6 /* InfoParams.m in Sources */,
 				78551AA81D0E57FE00E91896 /* ChatOrderCell.m in Sources */,
 				789231321CD87EF100E69A94 /* KSMNetworkRequest.m in Sources */,
@@ -944,12 +923,11 @@
 				789E78BE1CB630D10039AC69 /* NSDate+Tools.m in Sources */,
 				7856295B1D0186CD009D9160 /* OrderMsgModel.m in Sources */,
 				788A56311CB7797600A58302 /* KnowFirstRegisterVC.m in Sources */,
-				785629561D0182DF009D9160 /* ScenicLayout.m in Sources */,
 				789E78C71CB631670039AC69 /* UIButton+HYExtension.m in Sources */,
-				785629541D0182DF009D9160 /* ScenicCell.m in Sources */,
 				789E788F1CB60D080039AC69 /* main.m in Sources */,
 				7853BBBE1CE483D0002195B6 /* PhotoNamesParams.m in Sources */,
 				784089CD1CCA35110018E94B /* ZZPhotoPickerCell.m in Sources */,
+				78234E1F1D1BC28200B64BAD /* SZCalendarPicker.m in Sources */,
 				789E78C41CB631360039AC69 /* NSDate+HYExtension.m in Sources */,
 				78897BB81CC0C6A500ADFCB1 /* TraverNotesViewController.m in Sources */,
 				78829D541CFD438B00337327 /* DeleteTravelNoteParams.m in Sources */,
@@ -977,8 +955,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1000,7 +978,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "f913867f-8b11-44f5-b14d-1600ea565098";
+				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1022,8 +1000,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1038,7 +1016,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "f913867f-8b11-44f5-b14d-1600ea565098";
+				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1050,16 +1028,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f913867f-8b11-44f5-b14d-1600ea565098";
+				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
 			};
 			name = Debug;
 		};
@@ -1069,16 +1047,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f913867f-8b11-44f5-b14d-1600ea565098";
+				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
 			};
 			name = Release;
 		};

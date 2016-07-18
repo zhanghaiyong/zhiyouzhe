@@ -978,7 +978,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
+				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1000,8 +1000,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Casmate network technology co., LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Casmate network technology co., LTD";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1016,7 +1016,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
+				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1037,7 +1037,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
+				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
 			};
 			name = Debug;
 		};
@@ -1047,8 +1047,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Casmate network technology co., LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Casmate network technology co., LTD";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
@@ -1056,7 +1056,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0313f3aa-831b-440e-9e23-f6b806d5a1fb";
+				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
 			};
 			name = Release;
 		};

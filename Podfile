@@ -24,4 +24,6 @@ pod 'MWPhotoBrowser', '~>2.1.1'
 
 pod 'SVProgressHUD'
 
+pod 'VPImageCropper', '~> 0.0.4'
+
 end

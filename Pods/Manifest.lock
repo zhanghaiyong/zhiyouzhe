@@ -40,6 +40,7 @@ PODS:
   - SDWebImage/Core (3.7.6)
   - SMS_SDK (1.2.0)
   - SVProgressHUD (2.0.3)
+  - VPImageCropper (0.0.4)
 
 DEPENDENCIES:
   - AFNetworking (= 2.6.3)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - SDWebImage (~> 3.7.5)
   - SMS_SDK
   - SVProgressHUD
+  - VPImageCropper (~> 0.0.4)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -69,5 +71,6 @@ SPEC CHECKSUMS:
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SMS_SDK: b25cca6db6063520f7e4f66faa0bc9c13cb58365
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  VPImageCropper: f4895315460bd05fbb22dbee6b063bdd43f25797
 
 COCOAPODS: 0.39.0

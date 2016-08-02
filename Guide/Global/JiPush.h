@@ -6,7 +6,7 @@
 //  Copyright © 2016年 ksm. All rights reserved.
 //
 
-static NSString *appKey = @"59fb4a2ef0cea05e7798bab4";
+static NSString *appKey = @"192e6ba190574c47ad3f39dd";
 static NSString *channel = @"Publish channel";
 static BOOL isProduction = true;
 

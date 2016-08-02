@@ -35,6 +35,7 @@
     [aCoder encodeObject:_sex forKey:@"sex"];
     [aCoder encodeObject:_photoPaths forKey:@"photoPaths"];
      [aCoder encodeObject:_serviceCarAuth forKey:@"serviceCarAuth"];
+    [aCoder encodeObject:_serviceCarCharge forKey:@"serviceCarCharge"];
 }
 
 //解的时候调用，告诉系统哪个属性要解档，如何解档
@@ -65,6 +66,7 @@
         _sex = [aDecoder decodeObjectForKey:@"sex"];
         _photoPaths = [aDecoder decodeObjectForKey:@"photoPaths"];
         _serviceCarAuth = [aDecoder decodeObjectForKey:@"serviceCarAuth"];
+        _serviceCarCharge = [aDecoder decodeObjectForKey:@"serviceCarCharge"];
     }
     return self;
 }

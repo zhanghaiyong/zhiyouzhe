@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface UserProtocolViewController : BaseViewController
-
+@property (nonatomic,assign)NSInteger index;
 @end

@@ -39,21 +39,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row) {
-        case 0:{
         
-            UIStoryboard *LoginSB = [UIStoryboard storyboardWithName:@"Know" bundle:nil];
-            UserProtocolViewController *userProtocol = [LoginSB instantiateViewControllerWithIdentifier:@"UserProtocolViewController"];
-            [self.navigationController pushViewController:userProtocol animated:YES];
-        }
-            break;
-        case 1:
-            
-            break;
-            
-        default:
-            break;
-    }
+    UIStoryboard *LoginSB = [UIStoryboard storyboardWithName:@"Know" bundle:nil];
+    UserProtocolViewController *userProtocol = [LoginSB instantiateViewControllerWithIdentifier:@"UserProtocolViewController"];
+    userProtocol.index = indexPath.row;
+    [self.navigationController pushViewController:userProtocol animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {

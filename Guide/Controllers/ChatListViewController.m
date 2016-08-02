@@ -90,14 +90,14 @@
     //设置显示的会话类型
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setTitle:@"知了介绍" forState:UIControlStateNormal];
-    [rightBtn sizeToFit];
-    rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    [rightBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
+//    
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [rightBtn setTitle:@"知了介绍" forState:UIControlStateNormal];
+//    [rightBtn sizeToFit];
+//    rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+//    [rightBtn setTitleColor:lever1Color forState:UIControlStateNormal];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+//    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 #pragma mark RCIM

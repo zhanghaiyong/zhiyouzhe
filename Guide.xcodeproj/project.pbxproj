@@ -108,6 +108,8 @@
 		789E78E81CB63FBA0039AC69 /* RoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E78E71CB63FBA0039AC69 /* RoleViewController.m */; };
 		789E78EE1CB658620039AC69 /* KnowThreeRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E78ED1CB658620039AC69 /* KnowThreeRegisterVC.m */; };
 		78B1C4261CF2E2C100656CE8 /* RongCloudTokenParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C4251CF2E2C100656CE8 /* RongCloudTokenParams.m */; };
+		78C0EC6F1D4B05AB003A00E9 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C0EC6D1D4B05AB003A00E9 /* GuideViewController.m */; };
+		78C0EC701D4B05AB003A00E9 /* GuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78C0EC6E1D4B05AB003A00E9 /* GuideViewController.xib */; };
 		95EAA53111E032752F884385 /* libPods-Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AD686A3B3E57CEF39406F5 /* libPods-Guide.a */; };
 /* End PBXBuildFile section */
 
@@ -306,6 +308,9 @@
 		789E78ED1CB658620039AC69 /* KnowThreeRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowThreeRegisterVC.m; sourceTree = "<group>"; };
 		78B1C4241CF2E2C100656CE8 /* RongCloudTokenParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RongCloudTokenParams.h; sourceTree = "<group>"; };
 		78B1C4251CF2E2C100656CE8 /* RongCloudTokenParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RongCloudTokenParams.m; sourceTree = "<group>"; };
+		78C0EC6C1D4B05AB003A00E9 /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
+		78C0EC6D1D4B05AB003A00E9 /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
+		78C0EC6E1D4B05AB003A00E9 /* GuideViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideViewController.xib; sourceTree = "<group>"; };
 		A61D2A6A383783984B71C04D /* Pods-Guide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Guide.release.xcconfig"; path = "Pods/Target Support Files/Pods-Guide/Pods-Guide.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -494,6 +499,9 @@
 			children = (
 				789E78901CB60D080039AC69 /* AppDelegate.h */,
 				789E78911CB60D080039AC69 /* AppDelegate.m */,
+				78C0EC6C1D4B05AB003A00E9 /* GuideViewController.h */,
+				78C0EC6D1D4B05AB003A00E9 /* GuideViewController.m */,
+				78C0EC6E1D4B05AB003A00E9 /* GuideViewController.xib */,
 				7828007A1CD1B70600F760EF /* Global */,
 				789E78A91CB62B510039AC69 /* Network */,
 				789E78A61CB62B510039AC69 /* Controllers */,
@@ -778,6 +786,7 @@
 				788A56491CB790C000A58302 /* GuideTabBar.plist in Resources */,
 				78287AB11CC880A700B2C656 /* NewsCell.xib in Resources */,
 				788A56361CB77BAC00A58302 /* Know.storyboard in Resources */,
+				78C0EC701D4B05AB003A00E9 /* GuideViewController.xib in Resources */,
 				785629431D013AA1009D9160 /* NoChatList.xib in Resources */,
 				78287AA71CC8781100B2C656 /* NewsDetailCell.xib in Resources */,
 				789E789A1CB60D080039AC69 /* Assets.xcassets in Resources */,
@@ -932,6 +941,7 @@
 				78897BB81CC0C6A500ADFCB1 /* TraverNotesViewController.m in Sources */,
 				78829D541CFD438B00337327 /* DeleteTravelNoteParams.m in Sources */,
 				785631EA1CBE23F9004852A4 /* CityItemViewController.m in Sources */,
+				78C0EC6F1D4B05AB003A00E9 /* GuideViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

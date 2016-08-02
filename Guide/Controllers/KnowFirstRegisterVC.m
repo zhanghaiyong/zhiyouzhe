@@ -100,34 +100,34 @@
     currentBtn = _firstBtn;
     
     //查看是否过期
-    NSDate *date = [Uitils getUserDefaultsForKey:GETCOSTTIME];
-    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
-    // 过期了
-    if (interval > 60*60*24 || !date) {
+//    NSDate *date = [Uitils getUserDefaultsForKey:GETCOSTTIME];
+//    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
+//    // 过期了
+//    if (interval > 60*60*24 || !date) {
         
         [self costList];
         
-    }else { //未过期
-    
-        costs = [CostModel cost];
-        
-        NSIndexPath *pathIndex = [NSIndexPath indexPathForRow:1 inSection:1];
-        UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:pathIndex];
-        
-        for (int i = 0; i<6; i++) {
-            
-            UIButton *sender    = (UIButton *)[cell viewWithTag:100+i];
-            NSDictionary *dic   = costs.costArray[i];
-            NSLog(@"dic         = %@",dic);
-            [sender setTitle:[[dic objectForKey:@"price"] stringByReplacingOccurrencesOfString:@".00" withString:@"元"] forState:UIControlStateNormal];
-            if ([[dic objectForKey:@"price"] isEqualToString:account.serviceCharge]) {
-
-            currentBtn.selected = NO;
-            currentBtn          = sender;
-            sender.selected     = YES;
-            }
-        }
-    }
+//    }else { //未过期
+//    
+//        costs = [CostModel cost];
+//        
+//        NSIndexPath *pathIndex = [NSIndexPath indexPathForRow:1 inSection:1];
+//        UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:pathIndex];
+//        
+//        for (int i = 0; i<6; i++) {
+//            
+//            UIButton *sender    = (UIButton *)[cell viewWithTag:100+i];
+//            NSDictionary *dic   = costs.costArray[i];
+//            NSLog(@"dic         = %@",dic);
+//            [sender setTitle:[[dic objectForKey:@"price"] stringByReplacingOccurrencesOfString:@".00" withString:@"元"] forState:UIControlStateNormal];
+//            if ([[dic objectForKey:@"price"] isEqualToString:account.serviceCharge]) {
+//
+//            currentBtn.selected = NO;
+//            currentBtn          = sender;
+//            sender.selected     = YES;
+//            }
+//        }
+//    }
     
     //编辑状态下
     if (self.isEdit) {
@@ -165,7 +165,7 @@
         _signLabel.text = account.signature;
         _signLabel.textAlignment = NSTextAlignmentRight;
         _cityLabel.text = account.serviceCity;
-        _driverLicenseLabel.text = [Uitils statusCode:account.serviceCarState];
+        _driverLicenseLabel.text = [Uitils statusCode:account.serviceCarAuth];
         
         
     }else { //注册状态下
@@ -206,7 +206,7 @@
                 NSDictionary *dic = costs.costArray[i];
                 NSLog(@"dic = %@",dic);
                 [sender setTitle:[[dic objectForKey:@"price"] stringByReplacingOccurrencesOfString:@".00" withString:@"元"] forState:UIControlStateNormal];
-                if ([[dic objectForKey:@"price"] isEqualToString:account.serviceCharge]) {
+                if ([[dic objectForKey:@"price"] intValue] == [account.serviceCharge intValue]) {
                     
                     currentBtn.selected = NO;
                     currentBtn = sender;
@@ -340,6 +340,7 @@
                 //服务费用
                 //    DECIMAL_DIG
                 self.params.serviceCharge = [[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] intValue];
+
                 //签名
                 self.params.signature = _signLabel.text;
                 //服务城市id
@@ -348,6 +349,14 @@
                 self.params.serviceCity = cityModel.cityName;
                 
                 NSLog(@"%@",self.params.mj_keyValues);
+                if ([account.serviceCarAuth isEqualToString:@"1"]) {
+                    [[HUDConfig shareHUD]Tips:@"带车服务认证中，请耐心等待" delay:DELAY];
+                    return;
+                }
+                if ([account.serviceCarAuth isEqualToString:@"2"]) {
+                    [[HUDConfig shareHUD]Tips:@"您已认证带车服务" delay:DELAY];
+                    return;
+                }
                 [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
                     
                     [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
@@ -506,6 +515,7 @@
                 account.headiconUrl = [dic objectForKey:@"headiconUrl"];
                 account.nickname = [dic objectForKey:@"nickname"];
                 account.serviceCharge = [dic objectForKey:@"serviceCharge"];
+                NSLog(@"1 is%@ 2is%@",account.serviceCharge,[dic objectForKey:@"serviceCharge"]);
                 account.sex = [dic objectForKey:@"sex"];
                 account.signature = [dic objectForKey:@"signature"];
                 

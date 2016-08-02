@@ -40,50 +40,40 @@
     AccountModel *account          = [AccountModel account];
     
     if (account) {
-    NSLog(@"appDelegate            = %@",account.mj_keyValues);
-    UIStoryboard *story            = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    RoleViewController *roleVC     = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
-    UINavigationController *navi   = [[UINavigationController alloc]initWithRootViewController:roleVC];
-    self.window.rootViewController = navi;
-    [self.window makeKeyAndVisible];
         
-//        //第一步，创建URL
-//        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?token=%@",KLoginByToken,account.token]];
-//        //第二步，创建请求
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-////        [request setHTTPMethod:@"GET"];//设置请求方式为POST，默认为GET
-//        //第三步，连接服务器
-//        NSError *error;
-//        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
-//        
-//        if (error == nil) {
-//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingAllowFragments error:nil];
+        //第一步，创建URL
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?token=%@",KLoginByToken,account.token]];
+        //第二步，创建请求
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+//        [request setHTTPMethod:@"GET"];//设置请求方式为POST，默认为GET
+        //第三步，连接服务器
+        NSError *error;
+        NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
+        
+        if (error == nil) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingAllowFragments error:nil];
 //            BASE_INFO_FUN(dic);
-//            
-//            if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
-//                
-//                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//                RoleViewController *roleVC = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
-//                roleVC.havePhone = [dic objectForKey:@"photo"];
-//                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:roleVC];
-//                self.window.rootViewController = navi;
-//                [self.window makeKeyAndVisible];
-//                
-//            }else {
-//                
-//                UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//                LoginViewController *login = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//                self.window.rootViewController = login;
-//                [self.window makeKeyAndVisible];
-//            }
-//            
-//        }else {
-//        
-//            UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//            LoginViewController *login = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//            self.window.rootViewController = login;
-//            [self.window makeKeyAndVisible];
-//        }
+            NSLog(@"dic is %@",dic);
+            
+            if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
+                //字段转model
+                AccountModel *account = [AccountModel mj_objectWithKeyValues:[dic objectForKey:@"data"]];
+                //保存model
+                [AccountModel saveAccount:account];
+                UIStoryboard *story            = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                RoleViewController *roleVC     = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
+                UINavigationController *navi   = [[UINavigationController alloc]initWithRootViewController:roleVC];
+                self.window.rootViewController = navi;
+                [self.window makeKeyAndVisible];
+            }
+            
+        }else {
+        
+            UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *login = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            self.window.rootViewController = login;
+            [self.window makeKeyAndVisible];
+        }
         
     }else {
     

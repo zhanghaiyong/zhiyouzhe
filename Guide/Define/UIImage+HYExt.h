@@ -11,5 +11,5 @@
 @interface UIImage (HYExt)
 
 + (UIImage *)CompressorWidth:(CGFloat)width;
-
+@property(nonatomic, assign) BOOL isAdded;
 @end

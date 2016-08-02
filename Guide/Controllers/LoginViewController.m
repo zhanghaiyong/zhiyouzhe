@@ -10,12 +10,14 @@
 #import "KnowSecondRegisterVC.h"
 #import <SMS_SDK/SMSSDK.h>
 #import "RoleViewController.h"
-
-@interface LoginViewController ()
+#import "GuideViewController.h"
+@interface LoginViewController ()<GuideViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *codeTF;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeButton;
+
+@property (strong, nonatomic)GuideViewController *guide;
 @end
 
 @implementation LoginViewController
@@ -32,8 +34,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![[userDefaults objectForKey:@"isFirstLogin"]isEqualToString:@"isFirstLogin"]) {
+        [self showGuide];
+    }
 
     //获取验证码倒数60秒
     count = 60;
@@ -42,6 +46,16 @@
     
 }
 
+-(void)showGuide {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"isFirstLogin" forKey:@"isFirstLogin"];
+    self.guide = [[GuideViewController alloc]init];
+    self.guide.delegate = self;
+    [self.view addSubview:self.guide.view];
+}
+- (void)guideViewControllerDisMiss:(GuideViewController *)guideViewController {
+    [self.guide.view removeFromSuperview];
+}
 #pragma mark UITextField Delegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     

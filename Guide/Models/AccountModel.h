@@ -41,6 +41,7 @@
 @property (nonatomic,strong)NSString *serviceCarState;
 @property (nonatomic,strong)NSString *serviceCarAuth;
 @property (nonatomic,strong)NSString *serviceCharge;
+@property (nonatomic,strong)NSString *serviceCarCharge;
 //服务城市
 @property (nonatomic,strong)NSString *serviceCity;
 //个性签名

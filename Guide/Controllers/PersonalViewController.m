@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *userNickName;
 @property (weak, nonatomic) IBOutlet UIButton *userSex;
+@property (weak, nonatomic) IBOutlet UILabel *identifierLabel;
 
 @end
 
@@ -47,6 +48,19 @@
     }];
     _userNickName.text = account.nickname.length>10?[account.nickname substringWithRange:NSMakeRange(0, 10)]:account.nickname;
     _userSex.selected = [account.sex isEqualToString:@"男"]? NO :YES;
+    switch ([account.identificationState intValue]) {
+        case 0:
+            _identifierLabel.text = @"未认证";
+            break;
+        case 1:
+            _identifierLabel.text = @"认证中";
+            break;
+        case 2:
+            _identifierLabel.text = @"已认证";
+            break;
+        default:
+            break;
+    }
     self.starRanting.show_star = 4;
 }
 
@@ -89,6 +103,12 @@
         switch (indexPath.row) {
             case 0: {//认证
                 
+                if ([account.identificationState isEqualToString:@"1"]) {
+                    [[HUDConfig shareHUD]Tips:@"认证审核中,请耐心等待" delay:DELAY];return;
+                }
+                if ([account.identificationState isEqualToString:@"2"]) {
+                    [[HUDConfig shareHUD]Tips:@"您的认证已经通过" delay:DELAY];return;
+                }
                 KnowThreeRegisterVC *guideVC = [storyboard instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
                 guideVC.isEdit = YES;
                 [self.navigationController pushViewController:guideVC animated:YES];

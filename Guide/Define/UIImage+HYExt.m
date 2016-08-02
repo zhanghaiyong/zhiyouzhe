@@ -30,5 +30,11 @@
    // 返回新的改变大小后的图片
     return scaledImage;
 }
-
+-(void)setIsAdded:(BOOL)isAdded
+{
+    
+}
+-(BOOL)isAdded {
+    return YES;
+}
 @end

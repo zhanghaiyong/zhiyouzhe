@@ -12,7 +12,7 @@
 #import "PhotoNamesParams.h"
 #import "KnowThreeRegisterVC.h"
 #import "PageInfo.h"
-
+#import "UIImage+HYExt.h"
 #import "VPImageCropperViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -40,11 +40,12 @@
 
 @end
 
-@interface KnowSecondRegisterVC ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, VPImageCropperDelegate>
+@interface KnowSecondRegisterVC ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, VPImageCropperDelegate,MWPhotoBrowserDelegate>
 {
 
     UIButton *saveBtn;
     UIImageView *touchImage;
+    NSInteger index;
 }
 @end
 
@@ -75,7 +76,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     account = [AccountModel account];
+    
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(takePhotos:)];
     [_imageV1 addGestureRecognizer:tap1];
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(takePhotos:)];
@@ -115,23 +118,29 @@
         _nextButton.hidden = YES;
         
         if (account.photoPaths.length != 0) {
-
-            NSArray *photos = [account.photoPaths componentsSeparatedByString:@","];
+            NSString *path = [NSString stringWithFormat:@"%@",account.photoPaths];
+            NSArray *photos = [path componentsSeparatedByString:@","];
+            __block  int j=0;
             for (int i = 0; i<photos.count; i++) {
-             
                 UIImageView *imageV = [self.view viewWithTag:100+i];
                 imageV.highlighted = YES;
-                [Uitils cacheImage:photos[i] withImageV:imageV withPlaceholder:@"icon_add_poto_iphone" completed:^(UIImage *image) {
                     
-                    imageV.layer.borderColor = MainColor.CGColor;
-                    imageV.layer.borderWidth = 1;
-                    
-                    if (![self.selectedPhotos containsObject:photos[i]]) {
-                       [self.selectedPhotos addObject:image];
-                    }
-                    
-                    NSLog(@"dfs = %ld  %ld",self.selectedPhotos.count,photos.count);
-                }];
+                    [Uitils cacheImage:photos[i] withImageV:imageV withPlaceholder:@"icon_add_poto_iphone" completed:^(UIImage *image) {
+                        
+                        imageV.layer.borderColor = MainColor.CGColor;
+                        imageV.layer.borderWidth = 1;
+                        if (j<photos.count) {
+
+                                [self.selectedPhotos addObject:image];
+                                j++;
+                       
+                            
+                        }
+                        
+                        
+                        NSLog(@"dfs = %ld  %ld",self.selectedPhotos.count,photos.count);
+                    }];
+                
             }
         }
         
@@ -139,25 +148,26 @@
         self.title = @"上传照片(2/3)";
         [self.navigationItem setHidesBackButton:TRUE animated:NO];
     }
+    
 }
 
 - (void)takePhotos:(UITapGestureRecognizer *)gesture {
 //    UIImageView *touchImage = (UIImageView *)gesture.view;
     touchImage = (UIImageView *)gesture.view;
-    UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:@"取消"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"拍照", @"从相册中选取", nil];
-    [choiceSheet showInView:self.view];
+    index = touchImage.tag;
     //当前点击的对象
 //    UIImageView *touchImage = (UIImageView *)gesture.view;
-//
-//    if (!touchImage.highlighted ) {
-//        
-//        saveBtn.userInteractionEnabled = YES;
-//        [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-//        
+//     空白图片
+    if (!touchImage.highlighted ) {
+        UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"取消"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"拍照", @"从相册中选取", nil];
+        [choiceSheet showInView:self.view];
+        saveBtn.userInteractionEnabled = YES;
+        [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
+
 //        ZZPhotoController *photoController = [[ZZPhotoController alloc]init];
 //        photoController.selectPhotoOfMax = 8 - self.selectedPhotos.count;
 //        [photoController showIn:self result:^(id responseObject){
@@ -174,30 +184,36 @@
 //            [self.selectedPhotos addObjectsFromArray:array];
 //            
 //        }];
-//        
-//    }else {
-//    
-//        NSMutableArray *showPhotos = [NSMutableArray array];
-//        for (int i = 0; i<self.selectedPhotos.count; i++) {
-//            
-//            MWPhoto *p = [[MWPhoto alloc]initWithImage:self.selectedPhotos[i]];
-//            [showPhotos addObject:p];
-//        }
-//        
-//        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc]initWithPhotos:showPhotos];
-//        browser.delegate = self;
-//        browser.displayActionButton = YES; // 分享按钮
-//        browser.displayNavArrows = NO; // 是否在工具栏显示左和右导航箭头 (defaults to NO)
-//        browser.alwaysShowControls = NO ; // 一直显示导航栏
-//        [browser setCurrentPhotoIndex:touchImage.tag-100];
-//        [self.navigationController pushViewController:browser animated:YES];
-//    }
+//        上面有图片
+    }else {
+
+        NSMutableArray *showPhotos = [NSMutableArray array];
+
+        for (int i = 0; i<self.selectedPhotos.count; i++) {
+            
+            MWPhoto *p = [[MWPhoto alloc]initWithImage:self.selectedPhotos[i]];
+            [showPhotos addObject:p];
+        }
+        
+        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc]initWithPhotos:showPhotos];
+        browser.delegate = self;
+        browser.displayActionButton = YES; // 分享按钮
+        browser.displayNavArrows = NO; // 是否在工具栏显示左和右导航箭头 (defaults to NO)
+        browser.alwaysShowControls = NO ; // 一直显示导航栏
+        [browser setCurrentPhotoIndex:touchImage.tag-100];
+        [self.navigationController pushViewController:browser animated:YES];
+    }
     
 }
 
 - (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
-    touchImage.image = editedImage;
-//    UIImageView *imageView = [self.view viewWithTag:100+i+self.selectedPhotos.count];
+//    touchImage.image = editedImage;
+    [self.selectedPhotos addObject:editedImage];
+    saveBtn.userInteractionEnabled = YES;
+    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
+    UIImageView *imageView = [self.view viewWithTag:index];
+    imageView.highlighted = YES;
+    [self updatePhoto];
     [cropperViewController dismissViewControllerAnimated:YES completion:^{
         // TO DO
     }];
@@ -259,7 +275,18 @@
         }];
     }];
 }
-
+- (void)updatePhoto {
+    for (int i = 0; i<8; i++) {
+        UIImageView *imageView = [self.view viewWithTag:100+i];
+        imageView.image = [UIImage imageNamed:@"icon_add_poto_iphone"];
+        imageView.highlighted = NO;
+    }
+    for (int i=0; i<self.selectedPhotos.count; i++) {
+        UIImageView *imageV = [self.view viewWithTag:100+i];
+        imageV.highlighted = YES;
+        imageV.image = self.selectedPhotos[i];
+    }
+}
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:^(){
     }];
@@ -391,8 +418,13 @@
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser deletePhoto:(NSUInteger)index {
 
     NSLog(@"%ld",index);
+    if (!saveBtn.userInteractionEnabled) {
+        saveBtn.userInteractionEnabled = YES;
+        [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
+    }
     [self.selectedPhotos removeObjectAtIndex:index];
     [self refreshPhoto:index];
+    
     
 }
 
@@ -428,7 +460,13 @@
 }
 
 - (void)postData {
-    NSArray *array = ;
+    NSArray *array = self.view.subviews;
+    for (UIView *view in array) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            NSLog(@"view is%@",view);
+        }
+    }
+    
     if (self.selectedPhotos.count < 6) {
         [[HUDConfig shareHUD] Tips:@"请上传至少6张照片" delay:DELAY];
         return;
@@ -449,15 +487,15 @@
         self.params.piclist = imageString;
         NSLog(@"%@",self.params.mj_keyValues);
         [KSMNetworkRequest postRequest:KPhotosName params:self.params.mj_keyValues success:^(id responseObj) {
-            
+
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"%@",dic);
+            NSLog(@"dic %@",dic);
             [[HUDConfig shareHUD] Tips:[dic objectForKey:@"msg"] delay:DELAY];
             
             if (![dic isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
-                
                     account.photoPaths = imageString;
+                    NSLog(@"imageString is %@",imageString);
                     [AccountModel saveAccount:account];
                     [[HUDConfig shareHUD] SuccessHUD:@"上传成功" delay:DELAY];
                     

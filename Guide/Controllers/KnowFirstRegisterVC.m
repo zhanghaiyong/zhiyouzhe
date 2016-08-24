@@ -8,8 +8,11 @@
 
 #import "KnowFirstRegisterVC.h"
 #import "CityItemViewController.h"
+#import "UserLabelViewController.h"
+#import "UserTableViewController.h"
+#import "BirthdayViewController.h"
 #import "CityModel.h"
-#import "BirthdayView.h"
+#import "AvatarViewController.h"
 #import "ZZPhotoController.h"
 #import "TakePhotoViewController.h"
 #import "DriverLicenseViewController.h"
@@ -19,42 +22,75 @@
 #import "KnowThreeRegisterVC.h"
 #import "PageInfo.h"
 #import "CostModel.h"
-@interface KnowFirstRegisterVC ()<UITextFieldDelegate,BirthdayViewDelegate>
-{
+#import "UpImgViewController.h"
+@interface KnowFirstRegisterVC () {
     //当前选中的服务金额对应按钮
     UIButton *currentBtn;
     AccountModel *account;
     CostModel    *costs;
     //传过来的城市
     CityModel *cityModel;
-    
-    UIButton *saveBtn;
-    NSString *imageName;
+
+//    NSString *imageName;
 }
+
+/**
+ *  头像
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImg;
+/**
+ *  昵称
+ */
+@property (weak, nonatomic) IBOutlet UILabel *nickLabel;
+/**
+ *  年龄
+ */
+@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
+/**
+ *  性别
+ */
+@property (weak, nonatomic) IBOutlet UILabel *sexLabel;
+/**
+ *  所在地
+ */
+@property (weak, nonatomic) IBOutlet UILabel *areaLabel;
+/**
+ *  工作状态
+ */
+@property (weak, nonatomic) IBOutlet UILabel *workStatusLabel;
+/**
+ *  在读院校
+ */
+@property (weak, nonatomic) IBOutlet UILabel *collegeLabel;
+/**
+ *  学历
+ */
+@property (weak, nonatomic) IBOutlet UILabel *degreeLabel;
+/**
+ *  微信
+ */
+@property (weak, nonatomic) IBOutlet UILabel *weixinLabel;
+/**
+ *  QQ
+ */
+@property (weak, nonatomic) IBOutlet UILabel *QQLabel;
+/**
+ *  邮箱
+ */
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+/**
+ *  服务城市
+ */
+@property (weak, nonatomic) IBOutlet UILabel *severCity;
+/**
+ *  带车服务
+ */
+@property (weak, nonatomic) IBOutlet UILabel *carSeverLabel;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 //第一个服务金额按钮
 @property (weak, nonatomic) IBOutlet UIButton *firstBtn;
-//下一步
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
-//头像
-@property (weak, nonatomic) IBOutlet UIImageView *avatar;
-//昵称
-@property (weak, nonatomic) IBOutlet UITextField *nickLabel;
-//性别
-@property (weak, nonatomic) IBOutlet UILabel *sexLabel;
-//大学
-@property (weak, nonatomic) IBOutlet UITextField *collegeTF;
-//年龄
-@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
-//签名
-@property (weak, nonatomic) IBOutlet UITextField *signLabel;
-//城市
-@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
-//带车服务
-@property (weak, nonatomic) IBOutlet UILabel *driverLicenseLabel;
 
-//选择生日
-@property (nonatomic,strong)BirthdayView *birthdayView;
 
 @property (nonatomic,strong)InfoParams *params;
 @end
@@ -72,18 +108,6 @@
     return _params;
 }
 
--(BirthdayView *)birthdayView {
-    
-    if (_birthdayView == nil) {
-        
-        BirthdayView *birthdayView = [[[NSBundle mainBundle] loadNibNamed:@"BirthdayView" owner:self options:nil] lastObject];
-        birthdayView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        birthdayView.delegate = self;
-        _birthdayView = birthdayView;
-    }
-    
-    return _birthdayView;
-}
 
 - (void)viewDidAppear:(BOOL)animated{
     
@@ -133,43 +157,37 @@
     if (self.isEdit) {
         
         self.title = @"个人资料";
-        saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
-        [saveBtn sizeToFit];
-        saveBtn.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-        saveBtn.userInteractionEnabled = NO;
-        [saveBtn setTitleColor:lever2Color forState:UIControlStateNormal];
-        [saveBtn addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:saveBtn];
-        self.navigationItem.rightBarButtonItem = item;
-        
+
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [leftBtn sizeToFit];
         [leftBtn setImage:[UIImage imageNamed:@"icon_back_iphone"] forState:UIControlStateNormal];
         [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
         self.navigationItem.leftBarButtonItem = leftItem;
-        _nextButton.hidden = YES;
+//        _nextButton.hidden = YES;
         
-        //将已经上传过的数据展示到对应的字断
-        imageName = account.headiconUrl;
-        [Uitils cacheImage:account.headiconUrl withImageV:_avatar withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
-            _avatar.layer.borderColor = MainColor.CGColor;
-            _avatar.layer.borderWidth = 1;
+//        //将已经上传过的数据展示到对应的字断
+        
+        [Uitils cacheImage:account.headiconUrl withImageV:self.avatarImg withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
+            self.avatarImg.layer.borderColor = MainColor.CGColor;
+            self.avatarImg.layer.borderWidth = 1;
         }];
-        _nickLabel.text = account.nickname;
-        _sexLabel.text  = account.sex;
-        _ageLabel.text  = account.age;
-        _collegeTF.text = account.college;
-        _collegeTF.textAlignment = NSTextAlignmentRight;
-        _signLabel.text = account.signature;
-        _signLabel.textAlignment = NSTextAlignmentRight;
-        _cityLabel.text = account.serviceCity;
-        _driverLicenseLabel.text = [Uitils statusCode:account.serviceCarAuth];
         
+        self.nickLabel.text = account.nickname;
+        self.ageLabel.text = account.age;
+        self.sexLabel.text = account.sex;
+        self.areaLabel.text = account.serviceCity;
+        self.workStatusLabel.text = account.occupation;
+        self.collegeLabel.text = account.college;
+        self.degreeLabel.text = account.degree;
+        self.weixinLabel.text = account.weixin;
+        self.QQLabel.text = account.qq;
+        self.emailLabel.text = account.email;
+        self.severCity.text = account.serviceCity;
+        self.carSeverLabel.text = [Uitils statusCode:account.serviceCarAuth];
         
     }else { //注册状态下
-        self.title = @"完善资料(1/3)";
+        self.title = @"身份认证";
         [self.navigationItem setHidesBackButton:TRUE animated:NO];
         
     }
@@ -198,10 +216,11 @@
             //存储最新的请求时间
             [Uitils setUserDefaultsObject:[NSDate date] ForKey:GETCOSTTIME];
             
-            NSIndexPath *pathIndex = [NSIndexPath indexPathForRow:1 inSection:1];
+            NSIndexPath *pathIndex = [NSIndexPath indexPathForRow:1 inSection:3];
             UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:pathIndex];
             
             for (int i = 0; i<6; i++) {
+                
                 UIButton *sender = (UIButton *)[cell viewWithTag:100+i];
                 NSDictionary *dic = costs.costArray[i];
                 NSLog(@"dic = %@",dic);
@@ -231,166 +250,205 @@
         button.selected = YES;
     }
     
-    saveBtn.userInteractionEnabled = YES;
-    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
+//    saveBtn.userInteractionEnabled = YES;
+//    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
 }
 
 
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    saveBtn.userInteractionEnabled = YES;
-    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-    
-    if (indexPath.section == 0) {
-        
-        switch (indexPath.row) {
-            case 0: //头像
-            {
-                TakePhotoViewController *takePhotoVC = [[TakePhotoViewController alloc]init];
-                [takePhotoVC returnImage:^(UIImage *image) {
+    UITableViewCell *titleCell = [tableView cellForRowAtIndexPath:indexPath];
+    UILabel *titleLabel = [titleCell.contentView viewWithTag:100];
 
-                    _avatar.image = image;
-                    imageName = [NSString stringWithFormat:@"%@%@",account.id,[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]]];
-                    [[PostImageTool shareTool] QiniuPostImage:image imageKey:imageName Success:^{
-                    } failure:^(NSError *error) {
-                        
-                    }];
-                }];
-                [self presentViewController:takePhotoVC animated:YES completion:nil];
-                
-            }
-                break;
-            case 2: //性别
-            {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                
-                [alert addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    _sexLabel.text = @"男";
-                    
-                }]];
-                [alert addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    _sexLabel.text = @"女";
-                    
-                }]];
-                [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    
-                }]];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-            }
-                break;
-            case 3:  //年龄
-                [[UIApplication sharedApplication].keyWindow addSubview:self.birthdayView];
-                break;
-                
-            default:
-                break;
-        }
-    }else if (indexPath.section == 2) {
+    UILabel *contentLabel = [titleCell.contentView viewWithTag:101];
     
-        switch (indexPath.row) {
-            case 0:  //选择服务城市
-            {
-                CityItemViewController *cityItemVC = [[CityItemViewController alloc]init];
-                [cityItemVC returnBindCity:^(id model) {
-                    cityModel = (CityModel *)model;
-                    
-                    _cityLabel.text = cityModel.cityName;
-                }];
-                
-                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:cityItemVC];
-                [self presentViewController:navi animated:YES completion:nil];
-            }
-                break;
-            case 1:
-            {
-                [[HUDConfig shareHUD] alwaysShow];
-                //    所有字断不能为空
-                if (_nickLabel.text.length == 0 ||
-                    _sexLabel.text.length  == 0 ||
-                    //            _eduLabel.text.length  == 0 ||
-                    _sexLabel.text.length  == 0 ||
-                    _signLabel.text.length == 0)  {
-                    
-                    [SVProgressHUD showErrorWithStatus:@"请完善资料"];
-                    return;
-                }
-                
-                if (_cityLabel.text.length == 0) {
-                    
-                    [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
-                    return;
-                    
-                }
-                
-                //头像名
-                self.params.headiconUrl = imageName;
-                //昵称
-                self.params.nickname = _nickLabel.text;
-                //性别
-                self.params.sex = _sexLabel.text;
-                //学历
-                self.params.college = _collegeTF.text;
-                //年龄
-                self.params.age = _ageLabel.text;
-                //服务费用
-                //    DECIMAL_DIG
-                self.params.serviceCharge = [[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] intValue];
-
-                //签名
-                self.params.signature = _signLabel.text;
-                //服务城市id
-                self.params.cityId = cityModel.id;
-                //服务城市名称
-                self.params.serviceCity = cityModel.cityName;
-                
-                NSLog(@"%@",self.params.mj_keyValues);
-                if ([account.serviceCarAuth isEqualToString:@"1"]) {
-                    [[HUDConfig shareHUD]Tips:@"带车服务认证中，请耐心等待" delay:DELAY];
-                    return;
-                }
-                if ([account.serviceCarAuth isEqualToString:@"2"]) {
-                    [[HUDConfig shareHUD]Tips:@"您已认证带车服务" delay:DELAY];
-                    return;
-                }
-                [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
-                    
-                    [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-                    NSLog(@"%@",responseObj);
-                    
-                    if (![responseObj isKindOfClass:[NSNull class]]) {
+    switch (indexPath.section) {
+        case 0:
+                switch (indexPath.row) {
+                    case 0: {
+                     
+                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                        AvatarViewController *avatarVC = [story instantiateViewControllerWithIdentifier:@"AvatarViewController"];
+                        avatarVC.title = titleLabel.text;
                         
-                        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                        [avatarVC returnAvatar:^(UIImage *avatar) {
                             
-                            //认证驾照
-                            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                            DriverLicenseViewController *driverLicense = [story instantiateViewControllerWithIdentifier:@"DriverLicenseViewController"];
-                            [driverLicense returnCarStatus:^(NSString *model) {
-                                
-                                _driverLicenseLabel.text = model;
-                                
-                            }];
-                            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:driverLicense];
-                            [self presentViewController:navi animated:YES completion:nil];
-                        }
+                            self.avatarImg.image = avatar;
+                        }];
+                        
+                        [Uitils cacheImage:account.headiconUrl withImageV:avatarVC.BigAvatar withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
+                        }];
+                        
+                        [self.navigationController pushViewController:avatarVC animated:YES];
+                    }
+                        break;
+                    case 1:{ //昵称
+                        
+                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                        UserLabelViewController *userLabel = [story instantiateViewControllerWithIdentifier:@"UserLabelViewController"];
+                        userLabel.title = titleLabel.text;
+                        [userLabel returnSetValue:^(NSString *context) {
+                            
+                            self.nickLabel.text = context;
+                            contentLabel.text = context;
+                        }];
+                        
+                        [self.navigationController pushViewController:userLabel animated:YES];
+                    }
+                        break;
+                        
+                    case 2:{ //年龄
+                        
+                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                        BirthdayViewController *setBirthday = [story instantiateViewControllerWithIdentifier:@"BirthdayViewController"];
+                        [setBirthday returnSetValue:^(NSString *context) {
+                            
+                            self.ageLabel.text = context;
+                            contentLabel.text = context;
+
+                        }];
+                        setBirthday.title = titleLabel.text;
+                        [self.navigationController pushViewController:setBirthday animated:YES];
+                    }
+                        break;
+                        
+                    case 3:{ //性别
+                        
+                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                        UserTableViewController *userTable = [story instantiateViewControllerWithIdentifier:@"UserTableViewController"];
+                        [userTable returnSetValue:^(NSString *context) {
+                            
+                            self.sexLabel.text = context;
+                            contentLabel.text = context;
+                            
+                        }];
+                        userTable.title = titleLabel.text;
+                        [self.navigationController pushViewController:userTable animated:YES];
+                    }
+                        break;
+                    case 4:  //所在地
+                    {
+                        CityItemViewController *area = [[CityItemViewController alloc]init];
+                        [area returnBindCity:^(id model) {
+                            cityModel = (CityModel *)model;
+                            
+                            self.areaLabel.text = cityModel.cityName;
+                            contentLabel.text = cityModel.cityName;
+                        }];
+                        [self.navigationController pushViewController:area animated:YES];
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
+
+            break;
+            
+        case 1:
+            
+            if (indexPath.row == 2) {  // 最高学历
+
+                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                UserTableViewController *userTable = [story instantiateViewControllerWithIdentifier:@"UserTableViewController"];
+                [userTable returnSetValue:^(NSString *context) {
+                    
+                    self.degreeLabel.text = context;
+
+                    contentLabel.text = context;
+                    
+                }];
+                userTable.title = titleLabel.text;
+                [self.navigationController pushViewController:userTable animated:YES];
+                
+            }else {   //在读院校  工作状态 －－
+            
+                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                UserLabelViewController *userLabel = [story instantiateViewControllerWithIdentifier:@"UserLabelViewController"];
+                userLabel.title = titleLabel.text;
+                [userLabel returnSetValue:^(NSString *context) {
+                    
+                    if (indexPath.row == 0) {
+                        
+                        self.workStatusLabel.text = context;
+                    }else {
+                        
+                        self.collegeLabel.text = context;
                     }
                     
-                    
-                } failure:^(NSError *error) {
-                    
-                    [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
-                    
-                } type:2];
+                    contentLabel.text = context;
+                }];
+                
+                [self.navigationController pushViewController:userLabel animated:YES];
             }
-                break;
-            default:
-                break;
+            break;
+            
+        case 2:{ //微信 qq 邮箱
+            
+            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            UserLabelViewController *userLabel = [story instantiateViewControllerWithIdentifier:@"UserLabelViewController"];
+            [userLabel returnSetValue:^(NSString *context) {
+                
+                switch (indexPath.row) {
+                    case 0:
+                        self.weixinLabel.text = context;
+                        break;
+                    case 1:
+                        self.QQLabel.text = context;
+                        break;
+                    case 2:
+                        self.emailLabel.text = context;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+                
+                contentLabel.text = context;
+            }];
+            userLabel.title = titleLabel.text;
+            [self.navigationController pushViewController:userLabel animated:YES];
         }
+            
+            break;
+            
+        case 3:
+            
+            if (indexPath.row == 2) {
+                
+                {
+                    CityItemViewController *area = [[CityItemViewController alloc]init];
+                    [area returnBindCity:^(id model) {
+                        cityModel = (CityModel *)model;
+                        
+                        self.severCity.text = cityModel.cityName;
+                        contentLabel.text = cityModel.cityName;
+                    }];
+                    [self.navigationController pushViewController:area animated:YES];
+                }
+            }else if (indexPath.row == 3) {
+            
+                //认证驾照
+                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                DriverLicenseViewController *driverLicense = [story instantiateViewControllerWithIdentifier:@"DriverLicenseViewController"];
+                [driverLicense returnCarStatus:^(NSString *model) {
+
+                    self.carSeverLabel.text = model;
+                    contentLabel.text = model;
+
+                }];
+                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:driverLicense];
+                [self presentViewController:navi animated:YES completion:nil];
+            }
+            
+            break;
+           
+        default:
+            break;
     }
+
 }
 
 
@@ -398,106 +456,81 @@
 - (void)selectedBirthday:(NSString *)birthdayString {
 
     _ageLabel.text = birthdayString;
-    saveBtn.userInteractionEnabled = YES;
-    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-}
 
-#pragma mark UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
-    
-    [_signLabel resignFirstResponder];
-    [_nickLabel resignFirstResponder];
-    [_collegeTF resignFirstResponder];
-    return YES;
-}
-
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-
-    saveBtn.userInteractionEnabled = YES;
-    [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-    return YES;
 }
 
 - (void)back{
 
-    //通过保存按钮的交互来盘点是否修改了信息，提示信息，是直接退出，还是继续编辑
-    if (saveBtn.userInteractionEnabled == YES) {
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提醒" message:@"还未保存，是否退出" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"继续编辑" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }]];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }else {
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-
-- (void)saveAction {
-
-    [self postData];
-}
-
-- (IBAction)nextAction:(id)sender {
+//    //通过保存按钮的交互来盘点是否修改了信息，提示信息，是直接退出，还是继续编辑
+//    if (saveBtn.userInteractionEnabled == YES) {
+//        
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提醒" message:@"还未保存，是否退出" preferredStyle:UIAlertControllerStyleAlert];
+//        [alert addAction:[UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//            [self.navigationController popViewControllerAnimated:YES];
+//            
+//        }]];
+//        [alert addAction:[UIAlertAction actionWithTitle:@"继续编辑" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        }]];
+//        
+//        [self presentViewController:alert animated:YES completion:nil];
+//        
+//    }else {
     
+        [self.navigationController popViewControllerAnimated:YES];
+//    }
+}
+
+
+- (IBAction)nextActionKInfoEdit:(id)sender {
+    
+    if (self.isEdit) {
+        
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        UpImgViewController *KnowSecond = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+        KnowSecond.isEdit = YES;
+        [self.navigationController pushViewController:KnowSecond animated:YES];
+    }
+    else
+        
     [self postData];
 }
+
 
 - (void)postData {
    
     
     [[HUDConfig shareHUD] alwaysShow];
 //    所有字断不能为空
-        if (_nickLabel.text.length == 0 ||
-            _sexLabel.text.length  == 0 ||
-//            _eduLabel.text.length  == 0 ||
-            _sexLabel.text.length  == 0 ||
-            _signLabel.text.length == 0)  {
+//        if (self.nickLabel.text.length == 0 ||
+//            self.ageLabel.text.length  == 0 ||
+//            self.sexLabel.text.length  == 0 ||
+//            self.areaLabel.text.length  == 0 ||
+//            self.workStatusLabel.text.length == 0 ||
+//            self.collegeLabel.text.length  == 0 ||
+//            self.degreeLabel.text.length  == 0 ||
+//            self.weixinLabel.text.length  == 0 ||
+//            self.QQLabel.text.length  == 0 ||
+//            self.emailLabel.text.length  == 0 ||
+//            self.severCity.text.length  == 0)  {
+//    
+//            [SVProgressHUD showErrorWithStatus:@"请完善资料"];
+//            return;
+//        }
     
-            [SVProgressHUD showErrorWithStatus:@"请完善资料"];
-            return;
-        }
-    
-        if (_cityLabel.text.length == 0) {
-    
-            [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
-            return;
-    
-        }
-    
-    //头像名
-    self.params.headiconUrl = imageName;
-    //昵称
-    self.params.nickname = _nickLabel.text;
-    //性别
-    self.params.sex = _sexLabel.text;
-    //学历
-    self.params.college = _collegeTF.text;
-    //年龄
-    self.params.age = _ageLabel.text;
+//        if (_cityLabel.text.length == 0) {
+//    
+//            [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
+//            return;
+//    
+//        }
+
     //服务费用
-//    DECIMAL_DIG
-    self.params.serviceCharge = [[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] intValue];
-    //签名
-    self.params.signature = _signLabel.text;
-    //服务城市id
-    self.params.cityId = cityModel.id;
-    //服务城市名称
-    self.params.serviceCity = cityModel.cityName;
-    
+    self.params.serviceCharge = [NSString stringWithFormat:@"%ld",[[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] integerValue]];
+
     NSLog(@"%@",self.params.mj_keyValues);
-    
+ 
     [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
         
          [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
@@ -508,52 +541,36 @@
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 
                 NSDictionary *dic = [responseObj objectForKey:@"data"];
-                account.age = [dic objectForKey:@"age"];
-                account.cityId = [dic objectForKey:@"cityId"];
-                account.serviceCity = [dic objectForKey:@"serviceCity"];
-                account.college = [dic objectForKey:@"college"];
-                account.headiconUrl = [dic objectForKey:@"headiconUrl"];
-                account.nickname = [dic objectForKey:@"nickname"];
                 account.serviceCharge = [dic objectForKey:@"serviceCharge"];
-                NSLog(@"1 is%@ 2is%@",account.serviceCharge,[dic objectForKey:@"serviceCharge"]);
-                account.sex = [dic objectForKey:@"sex"];
-                account.signature = [dic objectForKey:@"signature"];
-                
                 [AccountModel saveAccount:account];
-                //编辑状态
-                if (_isEdit) {
-                    
-                    RCUserInfo *userInfo = [RCIM sharedRCIM].currentUserInfo;
-                    userInfo.userId = account.id;
-                    userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl];
-                    userInfo.name = account.nickname;
-                    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
-                    [self.navigationController popViewControllerAnimated:YES];
 
-                }else {
-                    
-                if (account.photoPaths.length == 0) {
-    
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    KnowSecondRegisterVC *KnowSecond = [story instantiateViewControllerWithIdentifier:@"KnowSecondRegisterVC"];
-                    [self.navigationController pushViewController:KnowSecond animated:YES];
-                    return;
-                }
                 
-                //没有身份认证
-                if (account.realName.length == 0) {
+                if (!_isEdit) {
+                    
+                    //没有身份认证
+                    //                if (account.realName.length == 0) {
                     
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
                     [self.navigationController pushViewController:KnowThree animated:YES];
-                    return;
+                    //                    return;
+                    //                }
+                    
+                    //                if (account.photoPaths.length == 0) {
+                    //
+                    //                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                    //                UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+                    //                [self.navigationController pushViewController:KnowThree animated:YES];
+                    //                    return;
+                    //                }
+                    
+                    //                UITabBarController *TabBar = [PageInfo pageControllers];
+                    //                [self presentViewController:TabBar animated:YES completion:nil];
+                    
+                    //                }
                 }
                 
-                UITabBarController *TabBar = [PageInfo pageControllers];
-                [self presentViewController:TabBar animated:YES completion:nil];
-                
-                }
-                
+
             }
         }
         

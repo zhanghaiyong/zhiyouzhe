@@ -10,7 +10,7 @@
 
 @protocol BirthdayViewDelegate <NSObject>
 
-- (void)selectedBirthday:(NSString *)birthdayString;
+- (void)selectedBirthday:(NSString *)age star:(NSString *)star;
 
 @end
 

@@ -6,7 +6,7 @@
 //
 
 #import "KnowSecondRegisterVC.h"
-#import "ZZPhotoController.h"
+//#import "ZZPhotoController.h"
 #import "MWPhotoBrowser.h"
 #import "PostImageTool.h"
 #import "PhotoNamesParams.h"
@@ -78,6 +78,7 @@
     [super viewDidLoad];
     
     account = [AccountModel account];
+    [self setNavigationLeft:@"icon_back_iphone"];
     
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(takePhotos:)];
     [_imageV1 addGestureRecognizer:tap1];
@@ -96,8 +97,8 @@
     UITapGestureRecognizer *tap8 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(takePhotos:)];
     [_imageV8 addGestureRecognizer:tap8];
     
-    if (self.isEdit) {
-        
+//    if (self.isEdit) {
+    
         self.title = @"我的相册";
         saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
@@ -144,11 +145,11 @@
             }
         }
         
-    }else {
-        self.title = @"上传照片(2/3)";
-        [self.navigationItem setHidesBackButton:TRUE animated:NO];
-    }
-    
+//    }else {
+//        self.title = @"上传照片";
+//        [self.navigationItem setHidesBackButton:TRUE animated:NO];
+//    }
+//    
 }
 
 - (void)takePhotos:(UITapGestureRecognizer *)gesture {
@@ -158,7 +159,7 @@
     //当前点击的对象
 //    UIImageView *touchImage = (UIImageView *)gesture.view;
 //     空白图片
-    if (!touchImage.highlighted ) {
+    if (!touchImage.highlighted) {
         UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:@"取消"
@@ -437,7 +438,6 @@
     }
     
     
-    
     for (int i = 0; i<self.selectedPhotos.count; i++) {
         
         NSLog(@"%ld",self.selectedPhotos.count);
@@ -499,16 +499,19 @@
                     [AccountModel saveAccount:account];
                     [[HUDConfig shareHUD] SuccessHUD:@"上传成功" delay:DELAY];
                     
-                    //没有身份认证
-                    if (account.realName.length == 0) {
-                        
-                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                        KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
-                        [self.navigationController pushViewController:KnowThree animated:YES];
-                        return;
-                    }   
-                    UITabBarController *TabBar = [PageInfo pageControllers];
-                    [self presentViewController:TabBar animated:YES completion:nil];
+                    self.block(self.selectedPhotos);
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+//                    //没有身份认证
+//                    if (account.realName.length == 0) {
+//                        
+//                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//                        KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
+//                        [self.navigationController pushViewController:KnowThree animated:YES];
+//                        return;
+//                    }   
+//                    UITabBarController *TabBar = [PageInfo pageControllers];
+//                    [self presentViewController:TabBar animated:YES completion:nil];
             }
             }
 
@@ -546,5 +549,9 @@
     }
 }
 
+- (void)returnPhotos:(setPhotoBlock)block {
+
+    _block = block;
+}
 
 @end

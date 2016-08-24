@@ -163,19 +163,19 @@
         [Uitils shake:_phoneTF];
         
     }
-//    else if (_codeTF.text.length == 0) {
-//    
-//         [[HUDConfig shareHUD] Tips:@"请输入验证码" delay:DELAY];
-//        [Uitils shake:_codeTF];
-//        
-//    }
+    else if (_codeTF.text.length == 0) {
+    
+         [[HUDConfig shareHUD] Tips:@"请输入验证码" delay:DELAY];
+        [Uitils shake:_codeTF];
+        
+    }
     else {
     
         [[HUDConfig shareHUD]alwaysShow];
-//        
-//    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
-//        
-//        if (!error) {
+        
+    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
+        
+        if (!error) {
         NSLog(@"验证成功");
         [KSMNetworkRequest postRequest:KLogin params:@{@"phone":_phoneTF.text}  success:^(id responseObj) {
             
@@ -193,7 +193,6 @@
                 RoleViewController *roleVC = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
                 UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:roleVC];
                 [self presentViewController:navi animated:YES completion:nil];
-                
             }
             }
         } failure:^(NSError *error) {
@@ -202,11 +201,11 @@
             
         } type:0];
         
-//        }else {
-//            NSLog(@"验证失败");
-//            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
-//        }
-//    }];
+        }else {
+            NSLog(@"验证失败");
+            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
+        }
+    }];
     }
     
 }

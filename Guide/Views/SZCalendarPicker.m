@@ -34,11 +34,11 @@ NSString *const SZCalendarCellIdentifier = @"cell";
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [_collectionView registerClass:[SZCalendarCell class] forCellWithReuseIdentifier:SZCalendarCellIdentifier];
     _collectionView.backgroundColor = lever3Color;
      _weekDayArray = @[@"日",@"一",@"二",@"三",@"四",@"五",@"六"];
+    
 }
 
 - (void)customInterface

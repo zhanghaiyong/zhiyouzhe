@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qF4-l1-bDY">
-                    <rect key="frame" x="0.0" y="368" width="320" height="200"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="200"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctb-Pi-KpD">
                             <rect key="frame" x="10" y="0.0" width="80" height="40"/>
@@ -83,10 +83,16 @@
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="qF4-l1-bDY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6uY-wZ-D4f"/>
+                <constraint firstItem="qF4-l1-bDY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Rap-xm-QYn"/>
                 <constraint firstAttribute="bottom" secondItem="qF4-l1-bDY" secondAttribute="bottom" id="p6Z-gT-iRW"/>
                 <constraint firstAttribute="trailing" secondItem="qF4-l1-bDY" secondAttribute="trailing" id="vVd-vD-lbv"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="p6Z-gT-iRW"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="datePicker" destination="6Q9-fo-SLx" id="bkd-BZ-uto"/>
             </connections>

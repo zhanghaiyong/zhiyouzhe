@@ -412,6 +412,10 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="scoreLabel" destination="Deu-iu-hrR" id="o0O-fw-fme"/>
+                        <outlet property="scoreView" destination="i5I-c0-jpj" id="6fh-1X-Mxp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VLr-zP-GUD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

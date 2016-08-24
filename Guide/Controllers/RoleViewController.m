@@ -8,7 +8,8 @@
 
 #import "RoleViewController.h"
 #import "KnowFirstRegisterVC.h"
-#import "KnowSecondRegisterVC.h"
+#import "UpImgViewController.h"
+#import "LabelViewController.h"
 #import "RootTabBarController.h"
 #import "KnowThreeRegisterVC.h"
 #import "PageInfo.h"
@@ -58,6 +59,7 @@
             RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:account.id name:account.nickname portrait:[NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl]];
             [RCIM sharedRCIM].currentUserInfo = userInfo;
             NSLog(@"currentUserInfo = %@",userInfo);
+            
             [KSMNetworkRequest getRequest:KGgetRongCloudToken params:params.mj_keyValues success:^(id responseObj) {
             
                 [[HUDConfig shareHUD] dismiss];
@@ -68,18 +70,10 @@
                 
                 //第一部分资料没有完善
                 if (account.nickname.length == 0) {
-                    
+                
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     KnowFirstRegisterVC *KnowFirst = [story instantiateViewControllerWithIdentifier:@"KnowFirstRegisterVC"];
                     [self.navigationController pushViewController:KnowFirst animated:YES];
-                    return;
-                }
-                //没有上传6张以上照片
-                if (account.photoPaths.length == 0) {
-                    
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    KnowSecondRegisterVC *KnowSecond = [story instantiateViewControllerWithIdentifier:@"KnowSecondRegisterVC"];
-                    [self.navigationController pushViewController:KnowSecond animated:YES];
                     return;
                 }
                 
@@ -92,6 +86,23 @@
                     return;
                 }
                 
+                //没有上传6张以上照片
+                if (account.photoPaths.length == 0) {
+                    
+                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                    UpImgViewController *KnowSecond = [story instantiateViewControllerWithIdentifier:@"UpImgViewControlle"];
+                    [self.navigationController pushViewController:KnowSecond animated:YES];
+                    return;
+                }
+                
+                //没有上传6张以上照片
+                if (account.skillLabel.length == 0) {
+                    
+                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                    LabelViewController *LabelView = [story instantiateViewControllerWithIdentifier:@"LabelViewController"];
+                    [self.navigationController pushViewController:LabelView animated:YES];
+                    return;
+                }
                 
                 UITabBarController *TabBar = [PageInfo pageControllers];
                 [self presentViewController:TabBar animated:YES completion:nil];

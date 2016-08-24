@@ -10,8 +10,8 @@
 #import "CellLayout.h"
 #import "Cell.h"
 #import "CityModel.h"
-@interface CityItemViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
-{
+#import "InfoParams.h"
+@interface CityItemViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
     
     UIPageControl    *control;
     UICollectionView *collection;
@@ -21,42 +21,43 @@
     UIButton         *currentBtn;
     //绑定的city
     CityModel        *bindCity;
+    AccountModel *account;
     
 }
+@property (nonatomic,strong)InfoParams *params;
 @end
 
 static NSString * const reuseIdentifier = @"Cell";
 
 @implementation CityItemViewController
 
+-(InfoParams *)params {
+    
+    if (_params == nil) {
+        
+        InfoParams *params = [[InfoParams alloc]init];
+        _params = params;
+    }
+    return _params;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title  = @"服务城市";
     self.view.backgroundColor = backgroudColor;
+    account = [AccountModel account];
     
     dataArray = [NSMutableArray array];
     
-    UIButton *left = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
-    [left setTitle:@"取消" forState:UIControlStateNormal];
-    [left setTitleColor:lever1Color forState:UIControlStateNormal];
-    left.titleLabel.font = lever1Font;
-    [left setAction:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn sizeToFit];
+    [btn setImage:[UIImage imageNamed:@"icon_back_iphone"] forState:UIControlStateNormal];
+    [btn setAction:^{
+        [self.navigationController popViewControllerAnimated:YES];
     }];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:left];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = item;
     
-    UIButton *right = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 44)];
-    [right setTitle:@"确定" forState:UIControlStateNormal];
-    [right setTitleColor:lever1Color forState:UIControlStateNormal];
-    right.titleLabel.font = lever1Font;
-    [right setAction:^{
-        self.callBlock(bindCity);
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:right];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
     collection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) collectionViewLayout:[[CellLayout alloc]init]];
     collection.backgroundColor = [UIColor clearColor];
@@ -70,12 +71,10 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.view addSubview:collection];
     
     [self requestCityList];
-    
 }
 
 - (void)requestCityList {
 
-    
     [[HUDConfig shareHUD]alwaysShow];
     
     [KSMNetworkRequest postRequest:KGetCityList params:nil success:^(id responseObj) {
@@ -106,10 +105,6 @@ static NSString * const reuseIdentifier = @"Cell";
     } type:0];
 }
 
-- (void)returnBindCity:(CallBlock)block {
-
-    self.callBlock = block;
-}
 
 #pragma mark UICollectionView代理和数据源
 //返回组的个数
@@ -132,7 +127,7 @@ static NSString * const reuseIdentifier = @"Cell";
     CityModel *model = dataArray[indexPath.row];
     [cell.itemButton setTitle:model.cityName forState:UIControlStateNormal];
     
-    if (indexPath.row == 0) {
+    if ([model.cityName isEqualToString:account.serviceCity]) {
         
         cell.itemButton.selected = YES;
         currentBtn = cell.itemButton;
@@ -153,7 +148,44 @@ static NSString * const reuseIdentifier = @"Cell";
         currentBtn = cell.itemButton;
         cell.itemButton.selected = YES;
     }
+    
+    self.params.cityId = bindCity.id;
+    self.params.serviceCity = bindCity.cityName;
+    
+    NSLog(@"%@",self.params.mj_keyValues);
+    
+    [[HUDConfig shareHUD] alwaysShow];
+    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
+        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        NSLog(@"%@",responseObj);
+        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+            
+            NSDictionary *dic = [responseObj objectForKey:@"data"];
+            
+            if ([dic.allKeys containsObject:@"cityId"]) {
+                account.cityId = [dic objectForKey:@"cityId"];
+            }
+            if ([dic.allKeys containsObject:@"serviceCity"]) {
+                account.serviceCity = [dic objectForKey:@"serviceCity"];
+            }
+            
+            [AccountModel saveAccount:account];
+            self.callBlock(bindCity);
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
+        
+    } type:2];
+    
 }
 
+- (void)returnBindCity:(severCityBlock)block {
+    
+    self.callBlock = block;
+}
 
 @end

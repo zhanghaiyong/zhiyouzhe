@@ -33,12 +33,33 @@
 
     self.navigationItem.title = @"个人";
     
+    [self getEvaluationLevel];
+    
+}
+
+- (void)getEvaluationLevel {
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
     account = [AccountModel account];
+    
+    NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
+    [KSMNetworkRequest getRequest:KLevel params:params success:^(id responseObj) {
+        
+        NSLog(@"level = %@",responseObj);
+        
+        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+            
+            self.starRanting.show_star = [[responseObj objectForKey:@"data"] integerValue];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    } type:0];
+    
     
     [Uitils cacheImage:account.headiconUrl withImageV:_userAvatar withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
     
@@ -61,7 +82,6 @@
         default:
             break;
     }
-    self.starRanting.show_star = 4;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -138,7 +158,7 @@
             case 3: { //服务
                 
                 KnowSecondRegisterVC *knowSecond = [storyboard instantiateViewControllerWithIdentifier:@"KnowSecondRegisterVC"];
-                knowSecond.isEdit = YES;
+//                knowSecond.isEdit = YES;
                 [self.navigationController pushViewController:knowSecond animated:YES];
             }
                 break;

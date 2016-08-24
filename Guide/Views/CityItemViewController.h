@@ -6,14 +6,14 @@
 //  Copyright © 2016年 ksm. All rights reserved.
 //
 
-typedef void(^CallBlock)(id model);
+typedef void(^severCityBlock)(id model);
 
 #import "BaseViewController.h"
 
 @interface CityItemViewController : UIViewController
 
-@property (nonatomic, copy) CallBlock callBlock;
+@property (nonatomic, copy) severCityBlock callBlock;
 
-- (void)returnBindCity:(CallBlock)block;
+- (void)returnBindCity:(severCityBlock)block;
 
 @end

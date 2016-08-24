@@ -27,6 +27,10 @@
 		78287AB11CC880A700B2C656 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78287AAF1CC880A700B2C656 /* NewsCell.xib */; };
 		78287AB51CC8AE2000B2C656 /* IncomeDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78287AB31CC8AE2000B2C656 /* IncomeDetailCell.m */; };
 		78287AB61CC8AE2000B2C656 /* IncomeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78287AB41CC8AE2000B2C656 /* IncomeDetailCell.xib */; };
+		783D540F1D62FA8400663698 /* LabelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783D540E1D62FA8400663698 /* LabelViewController.m */; };
+		783D54131D630FC100663698 /* UserLabelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783D54121D630FC100663698 /* UserLabelViewController.m */; };
+		783D54161D63111500663698 /* UserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783D54151D63111500663698 /* UserTableViewController.m */; };
+		783D54191D6311D800663698 /* BirthdayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783D54181D6311D800663698 /* BirthdayViewController.m */; };
 		783EB78D1D08058800CF2481 /* SystemMsgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 783EB78C1D08058800CF2481 /* SystemMsgModel.m */; };
 		783EB7901D08199E00CF2481 /* isAgreeAppointmentParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 783EB78F1D08199E00CF2481 /* isAgreeAppointmentParams.m */; };
 		784089B91CC9C9620018E94B /* ReleaseTraverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784089B81CC9C9620018E94B /* ReleaseTraverViewController.m */; };
@@ -110,6 +114,9 @@
 		78B1C4261CF2E2C100656CE8 /* RongCloudTokenParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B1C4251CF2E2C100656CE8 /* RongCloudTokenParams.m */; };
 		78C0EC6F1D4B05AB003A00E9 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C0EC6D1D4B05AB003A00E9 /* GuideViewController.m */; };
 		78C0EC701D4B05AB003A00E9 /* GuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78C0EC6E1D4B05AB003A00E9 /* GuideViewController.xib */; };
+		78F839981D64460E00FA4E51 /* UpImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F839971D64460E00FA4E51 /* UpImgViewController.m */; };
+		78F8399B1D6556E100FA4E51 /* AvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F8399A1D6556E100FA4E51 /* AvatarViewController.m */; };
+		78F8399E1D65AAD600FA4E51 /* LabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F8399D1D65AAD600FA4E51 /* LabelButton.m */; };
 		95EAA53111E032752F884385 /* libPods-Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AD686A3B3E57CEF39406F5 /* libPods-Guide.a */; };
 /* End PBXBuildFile section */
 
@@ -150,6 +157,14 @@
 		78287AB21CC8AE2000B2C656 /* IncomeDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomeDetailCell.h; sourceTree = "<group>"; };
 		78287AB31CC8AE2000B2C656 /* IncomeDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomeDetailCell.m; sourceTree = "<group>"; };
 		78287AB41CC8AE2000B2C656 /* IncomeDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomeDetailCell.xib; sourceTree = "<group>"; };
+		783D540D1D62FA8400663698 /* LabelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelViewController.h; sourceTree = "<group>"; };
+		783D540E1D62FA8400663698 /* LabelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelViewController.m; sourceTree = "<group>"; };
+		783D54111D630FC100663698 /* UserLabelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLabelViewController.h; sourceTree = "<group>"; };
+		783D54121D630FC100663698 /* UserLabelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLabelViewController.m; sourceTree = "<group>"; };
+		783D54141D63111500663698 /* UserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewController.h; sourceTree = "<group>"; };
+		783D54151D63111500663698 /* UserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewController.m; sourceTree = "<group>"; };
+		783D54171D6311D800663698 /* BirthdayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayViewController.h; sourceTree = "<group>"; };
+		783D54181D6311D800663698 /* BirthdayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayViewController.m; sourceTree = "<group>"; };
 		783EB78B1D08058800CF2481 /* SystemMsgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemMsgModel.h; sourceTree = "<group>"; };
 		783EB78C1D08058800CF2481 /* SystemMsgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemMsgModel.m; sourceTree = "<group>"; };
 		783EB78E1D08199E00CF2481 /* isAgreeAppointmentParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isAgreeAppointmentParams.h; sourceTree = "<group>"; };
@@ -311,6 +326,12 @@
 		78C0EC6C1D4B05AB003A00E9 /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
 		78C0EC6D1D4B05AB003A00E9 /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
 		78C0EC6E1D4B05AB003A00E9 /* GuideViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideViewController.xib; sourceTree = "<group>"; };
+		78F839961D64460E00FA4E51 /* UpImgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpImgViewController.h; sourceTree = "<group>"; };
+		78F839971D64460E00FA4E51 /* UpImgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpImgViewController.m; sourceTree = "<group>"; };
+		78F839991D6556E100FA4E51 /* AvatarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarViewController.h; sourceTree = "<group>"; };
+		78F8399A1D6556E100FA4E51 /* AvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarViewController.m; sourceTree = "<group>"; };
+		78F8399C1D65AAD600FA4E51 /* LabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelButton.h; sourceTree = "<group>"; };
+		78F8399D1D65AAD600FA4E51 /* LabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelButton.m; sourceTree = "<group>"; };
 		A61D2A6A383783984B71C04D /* Pods-Guide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Guide.release.xcconfig"; path = "Pods/Target Support Files/Pods-Guide/Pods-Guide.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,6 +374,34 @@
 				7828007F1CD1BD9100F760EF /* SDKKey.m */,
 			);
 			path = Global;
+			sourceTree = "<group>";
+		};
+		783D54091D62B91C00663698 /* 提现 */ = {
+			isa = PBXGroup;
+			children = (
+				781134331CBF98AC0097D89F /* WithDrawView.h */,
+				781134341CBF98AC0097D89F /* WithDrawView.m */,
+				781134361CBF98C60097D89F /* WithDrawView.xib */,
+			);
+			name = "提现";
+			sourceTree = "<group>";
+		};
+		783D54101D630F3300663698 /* 信息设置详情界面 */ = {
+			isa = PBXGroup;
+			children = (
+				788C3B761CBB8DA40057C61B /* 选择城市 */,
+				783D54111D630FC100663698 /* UserLabelViewController.h */,
+				783D54121D630FC100663698 /* UserLabelViewController.m */,
+				783D54141D63111500663698 /* UserTableViewController.h */,
+				783D54151D63111500663698 /* UserTableViewController.m */,
+				783D54171D6311D800663698 /* BirthdayViewController.h */,
+				783D54181D6311D800663698 /* BirthdayViewController.m */,
+				78F839961D64460E00FA4E51 /* UpImgViewController.h */,
+				78F839971D64460E00FA4E51 /* UpImgViewController.m */,
+				78F839991D6556E100FA4E51 /* AvatarViewController.h */,
+				78F8399A1D6556E100FA4E51 /* AvatarViewController.m */,
+			);
+			name = "信息设置详情界面";
 			sourceTree = "<group>";
 		};
 		784089BA1CCA34760018E94B /* photos */ = {
@@ -474,6 +523,7 @@
 				785631E91CBE23F9004852A4 /* CityItemViewController.m */,
 			);
 			name = "选择城市";
+			path = ../Views;
 			sourceTree = "<group>";
 		};
 		789E78811CB60D080039AC69 = {
@@ -534,10 +584,13 @@
 				789E78E71CB63FBA0039AC69 /* RoleViewController.m */,
 				788A562F1CB7797600A58302 /* KnowFirstRegisterVC.h */,
 				788A56301CB7797600A58302 /* KnowFirstRegisterVC.m */,
+				783D54101D630F3300663698 /* 信息设置详情界面 */,
 				788A562C1CB764ED00A58302 /* KnowSecondRegisterVC.h */,
 				788A562D1CB764ED00A58302 /* KnowSecondRegisterVC.m */,
 				789E78EC1CB658620039AC69 /* KnowThreeRegisterVC.h */,
 				789E78ED1CB658620039AC69 /* KnowThreeRegisterVC.m */,
+				783D540D1D62FA8400663698 /* LabelViewController.h */,
+				783D540E1D62FA8400663698 /* LabelViewController.m */,
 				788A56371CB78A8B00A58302 /* RootTabBarController.h */,
 				788A56381CB78A8B00A58302 /* RootTabBarController.m */,
 				788A563A1CB78C7500A58302 /* ChatListViewController.h */,
@@ -650,15 +703,14 @@
 				785631E41CBDF212004852A4 /* 星评 */,
 				788836CF1CBCC9A00030909E /* 生日选择 */,
 				788836C91CBC9B4C0030909E /* 学历选择 */,
-				788C3B761CBB8DA40057C61B /* 选择城市 */,
-				781134331CBF98AC0097D89F /* WithDrawView.h */,
-				781134341CBF98AC0097D89F /* WithDrawView.m */,
-				781134361CBF98C60097D89F /* WithDrawView.xib */,
+				783D54091D62B91C00663698 /* 提现 */,
 				7856293F1D013A98009D9160 /* NoChatList.h */,
 				785629401D013A98009D9160 /* NoChatList.m */,
 				785629421D013AA1009D9160 /* NoChatList.xib */,
 				7866D56C1D05220E00D22F41 /* ChatAppointmentOrder.h */,
 				7866D56D1D05220E00D22F41 /* ChatAppointmentOrder.m */,
+				78F8399C1D65AAD600FA4E51 /* LabelButton.h */,
+				78F8399D1D65AAD600FA4E51 /* LabelButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -749,7 +801,7 @@
 				TargetAttributes = {
 					789E78891CB60D080039AC69 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 9JB56G6779;
+						DevelopmentTeam = 3LH5W66BT8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -895,12 +947,15 @@
 				788C3B751CBB8D670057C61B /* SeverTimeViewController.m in Sources */,
 				783EB7901D08199E00CF2481 /* isAgreeAppointmentParams.m in Sources */,
 				788836D21CBCC9C20030909E /* BirthdayView.m in Sources */,
+				783D54191D6311D800663698 /* BirthdayViewController.m in Sources */,
 				78829D571CFD482300337327 /* HUDConfig.m in Sources */,
 				789E78921CB60D080039AC69 /* AppDelegate.m in Sources */,
 				78287AAB1CC87FAE00B2C656 /* orderCell.m in Sources */,
 				789E78E01CB637EE0039AC69 /* LoginViewController.m in Sources */,
+				78F8399E1D65AAD600FA4E51 /* LabelButton.m in Sources */,
 				789E78CD1CB631E40039AC69 /* UIView+HYExt.m in Sources */,
 				7871FC251CBF3F0D00E2608C /* MywalletViewController.m in Sources */,
+				78F839981D64460E00FA4E51 /* UpImgViewController.m in Sources */,
 				7889AB8B1D06B0FD000A4E8D /* AppointmentMsgModel.m in Sources */,
 				78287AB01CC880A700B2C656 /* NewsCell.m in Sources */,
 				783EB78D1D08058800CF2481 /* SystemMsgModel.m in Sources */,
@@ -924,8 +979,12 @@
 				789E78D71CB632950039AC69 /* HYSandbox.m in Sources */,
 				78234E1E1D1BC28200B64BAD /* SZCalendarCell.m in Sources */,
 				7853BBBB1CE42FA8002195B6 /* InfoParams.m in Sources */,
+				783D54131D630FC100663698 /* UserLabelViewController.m in Sources */,
+				783D540F1D62FA8400663698 /* LabelViewController.m in Sources */,
 				78551AA81D0E57FE00E91896 /* ChatOrderCell.m in Sources */,
+				78F8399B1D6556E100FA4E51 /* AvatarViewController.m in Sources */,
 				789231321CD87EF100E69A94 /* KSMNetworkRequest.m in Sources */,
+				783D54161D63111500663698 /* UserTableViewController.m in Sources */,
 				788A56421CB78CC900A58302 /* NewsViewController.m in Sources */,
 				786B63801CC7588B00362DBF /* ChatViewController.m in Sources */,
 				78287AA61CC8781100B2C656 /* NewsDetailCell.m in Sources */,
@@ -965,8 +1024,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -988,7 +1047,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
+				PROVISIONING_PROFILE = "7c7637aa-c7a2-48ae-8cd4-8218c6347659";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1010,8 +1069,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Casmate network technology co., LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Casmate network technology co., LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhu yongtao (QY298JKMKN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhu yongtao (QY298JKMKN)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1026,7 +1085,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
+				PROVISIONING_PROFILE = "7c7637aa-c7a2-48ae-8cd4-8218c6347659";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1039,15 +1098,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
+				PROVISIONING_PROFILE = "7c7637aa-c7a2-48ae-8cd4-8218c6347659";
 			};
 			name = Debug;
 		};
@@ -1057,16 +1116,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Casmate network technology co., LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Casmate network technology co., LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao11111111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eec1e60e-3981-43e0-9459-54097a7c6039";
+				PROVISIONING_PROFILE = "7c7637aa-c7a2-48ae-8cd4-8218c6347659";
 			};
 			name = Release;
 		};

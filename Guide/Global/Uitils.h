@@ -38,6 +38,8 @@ typedef void (^loadedImage)(UIImage* image);
 + (NSString*)weekdayStringFromDate:(NSDate*)inputDate;
 
 + (NSString *)statusCode:(NSString *)codeStr;
+
+
 @end
 
              

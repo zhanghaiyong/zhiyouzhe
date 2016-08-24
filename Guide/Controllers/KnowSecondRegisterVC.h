@@ -6,10 +6,14 @@
 //  Copyright © 2016年 ksm. All rights reserved.
 //
 
+typedef void(^setPhotoBlock)(NSArray *photos);
+
 #import <UIKit/UIKit.h>
 
 @interface KnowSecondRegisterVC : BaseViewController
 
-@property (nonatomic,assign)BOOL isEdit;
+@property (nonatomic,copy)setPhotoBlock block;
+
+- (void)returnPhotos:(setPhotoBlock)block;
 
 @end

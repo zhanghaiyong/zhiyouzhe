@@ -20,7 +20,6 @@
 
 @implementation DriverLicenseViewController
 {
-
     //驾照
     NSString *driverLicenseImage;
     //车
@@ -140,6 +139,9 @@
     
     self.params.drivingLicenseUrl = driverLicenseImage;
     self.params.carUrl = carImage;
+    
+    NSLog(@"身份证 = %@",self.params.mj_keyValues);
+    
     [KSMNetworkRequest postRequest:KCarAuth params:self.params.mj_keyValues success:^(id responseObj) {
         
         [[HUDConfig shareHUD] Tips:[responseObj objectForKey:@"msg"] delay:DELAY];

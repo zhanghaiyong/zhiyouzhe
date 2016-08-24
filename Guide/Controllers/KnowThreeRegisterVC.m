@@ -12,6 +12,7 @@
 #import "TakePhotoViewController.h"
 #import "PostImageTool.h"
 #import "InfoParams.h"
+#import "UpImgViewController.h"
 @interface KnowThreeRegisterVC ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *finishButton;
@@ -85,15 +86,14 @@
         }];
         
     }else { //注册状态下
-        self.title = @"上传身份证照（3/3）";
+        self.title = @"身份认证1";
        [self.navigationItem setHidesBackButton:TRUE animated:NO];
     }
        
 }
 
 //编辑状态下的退出
-- (void)back:(UIButton *)sender
-{
+- (void)back:(UIButton *)sender {
     
     //通过保存按钮的交互来盘点是否修改了信息，提示信息，是直接退出，还是继续编辑
     if (rightBtn.userInteractionEnabled == YES) {
@@ -176,7 +176,18 @@
 //注册状态下的提交信息
 - (IBAction)nextOrFinishAction:(id)sender {
     
-    [self postDatatoServer];
+    if (rightBtn.userInteractionEnabled == YES) {
+    
+        [self postDatatoServer];
+    }else {
+    
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+        KnowThree.isEdit = self.isEdit;
+        [self.navigationController pushViewController:KnowThree animated:YES];
+    }
+    
+    
     
 }
 
@@ -244,7 +255,9 @@
                     
                 }else {
                 
-                    [self presentViewController:[PageInfo pageControllers] animated:YES completion:nil];
+                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                    UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+                    [self.navigationController pushViewController:KnowThree animated:YES];
                 }
             }
         }

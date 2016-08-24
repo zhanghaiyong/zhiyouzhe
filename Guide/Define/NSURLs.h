@@ -23,6 +23,9 @@
 //登录
 #define KLogin [BaseURLString stringByAppendingString:@"zhiliao/login"]
 
+//获取星评
+#define KLevel [BaseURLString stringByAppendingString:@"zhiliao/getEvaluationLevel"]
+
 //获取token
 #define KGetToken [BaseURLString stringByAppendingString:@"file/getZhiliaoToken"]
 

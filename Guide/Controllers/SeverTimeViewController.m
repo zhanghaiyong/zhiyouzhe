@@ -18,8 +18,9 @@
 @interface SeverTimeViewController () {
     
     AccountModel     *account;
+    UIView *greenView ;
+    UILabel *getLabel;
 }
-
 @end
 
 @implementation SeverTimeViewController
@@ -70,8 +71,25 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     
     [self loadSeverTime];
+    
+    
+    greenView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-40, self.view.height -40, 15, 15)];
+    greenView.backgroundColor = RGB(47, 176, 130);
+    [[UIApplication sharedApplication].keyWindow addSubview:greenView];
+    getLabel = [[UILabel alloc]initWithFrame:CGRectMake(greenView.right+10, self.view.height -40, 100, 15)];
+    getLabel.text = @"有预约";
+    getLabel.font = [UIFont systemFontOfSize:13];
+    [[UIApplication sharedApplication].keyWindow addSubview:getLabel];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+
+    [super viewWillDisappear:animated];
+    [greenView removeFromSuperview];
+    greenView = nil;
+    [getLabel removeFromSuperview];
+    getLabel = nil;
+}
 
 - (void)loadSeverTime {
 

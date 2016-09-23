@@ -87,6 +87,7 @@
     
     _scrollerContentSizeHeight.constant = SCREEN_HEIGHT;
     [_contentLabel becomeFirstResponder];
+    _image2.hidden = YES;
     _image3.hidden = YES;
     _image4.hidden = YES;
     _image5.hidden = YES;
@@ -102,7 +103,7 @@
     //当前点击的对象
     UIButton *button = (UIButton *)sender;
     
-    NSLog(@"%@",button.currentBackgroundImage);
+    FxLog(@"%@",button.currentBackgroundImage);
     if (button.selected == YES || button.currentBackgroundImage == nil) {
     
         ZZPhotoController *photoController = [[ZZPhotoController alloc]init];
@@ -158,7 +159,7 @@
 #pragma mark MWPhotoBrowserDelegate
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser deletePhoto:(NSUInteger)index {
     
-    NSLog(@"%ld",index);
+    FxLog(@"%ld",index);
     [self.selectedPhotos removeObjectAtIndex:index];
     [self refreshPhoto:index];
     
@@ -213,19 +214,24 @@
             self.params.photoUrl = imageString;
             self.params.content = _contentLabel.text;
             
-            NSLog(@"%@",self.params.mj_keyValues);
+            FxLog(@"%@",self.params.mj_keyValues);
             [KSMNetworkRequest postRequest:KAddTravelNotes params:self.params.mj_keyValues success:^(id responseObj) {
                 
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
-                NSLog(@"%@",dic);
-                [[HUDConfig shareHUD] Tips:[dic objectForKey:@"msg"] delay:DELAY];
+                FxLog(@"%@",dic);
                 
                 if (![dic isKindOfClass:[NSNull class]]) {
                     
                     if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
+                        
+                        [[HUDConfig shareHUD] Tips:@"发布成功" delay:DELAY];
+                        
                         TravelNote *model = [TravelNote mj_objectWithKeyValues:[dic objectForKey:@"data"]];
                         self.callBack(model);
                         [self.navigationController popViewControllerAnimated:YES];   
+                    }else {
+                    
+                        [[HUDConfig shareHUD] Tips:@"发布失败" delay:DELAY];
                     }
                 }
             } failure:^(NSError *error) {

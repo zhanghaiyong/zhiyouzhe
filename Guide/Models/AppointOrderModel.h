@@ -26,4 +26,5 @@
 @property (nonnull,strong)NSString *zServiceCity;
 @property (nonnull,strong)NSString *zSex;
 @property (nonnull,strong)NSString *zhiliaoId;
+@property (nonnull,strong)NSString *orderGrade;
 @end

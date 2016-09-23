@@ -29,7 +29,7 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest getRequest:KLevel params:params success:^(id responseObj) {
         
-        NSLog(@"level = %@",responseObj);
+        FxLog(@"level = %@",responseObj);
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             

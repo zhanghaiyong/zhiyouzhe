@@ -38,7 +38,7 @@
     manager.enable = YES;
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = NO;
-    manager.enableAutoToolbar = YES;
+    manager.enableAutoToolbar = NO;
 }
 
 //容云
@@ -74,23 +74,23 @@
     }
 }
 
-- (void)RCIMConnectWithToken:(NSString *)token {
+- (void)RCIMConnectWithToken:(NSString *)token success:(SuccessBlock)successHandler failure:(FailureBlock)failureHandler{
 
-    NSLog(@"RongCloudToken = %@",token);
+    FxLog(@"RongCloudToken = %@",token);
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
         
-        NSLog(@"连接成功 = %@",userId);
+        FxLog(@"连接成功 = %@",userId);
         
 //        dispatch_async(dispatch_get_main_queue(), ^{
-        
             ////设置用户信息源
             [[RCIM sharedRCIM]setUserInfoDataSource:self];
-       
-            
 //        });
         
+        successHandler();
+     
     } error:^(RCConnectErrorCode status) {
-        NSLog(@"连接失败 ＝ %ld",(long)status);
+        FxLog(@"连接失败 ＝ %ld",(long)status);
+        failureHandler();
         
     } tokenIncorrect:^{
         
@@ -130,7 +130,7 @@
         params.vid = userId;
         params.zid = account.id;
         params.ztoken = account.token;
-        NSLog(@"%@",params.mj_keyValues);
+        FxLog(@"%@",params.mj_keyValues);
         
         [KSMNetworkRequest postRequest:KGetVisiterMsg params:params.mj_keyValues success:^(id responseObj) {
             NSDictionary *dic = [responseObj objectForKey:@"data"];
@@ -140,7 +140,7 @@
                 visiterInfo.userId = [dic objectForKey:@"id"];
                 visiterInfo.name = [dic objectForKey:@"nickname"];
                 visiterInfo.portraitUri = [NSString stringWithFormat:@"%@%@",KVisiterUrl,[dic objectForKey:@"headiconUrl"]];
-                NSLog(@"游客信息 ＝ %@",[NSString stringWithFormat:@"%@%@",KVisiterUrl,[dic objectForKey:@"headiconUrl"]]);
+                FxLog(@"游客信息 ＝ %@",[NSString stringWithFormat:@"%@%@",KVisiterUrl,[dic objectForKey:@"headiconUrl"]]);
                 return completion(visiterInfo);
             }
         } failure:^(NSError *error) {

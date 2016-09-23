@@ -144,7 +144,7 @@
     
     _delete.frame = CGRectMake(_time.right, _content.bottom+imagesH+10, 60, 25);
     [_delete setTitle:@"删除" forState:UIControlStateNormal];
-    NSLog(@"imagesH = %f",imagesH);
+    FxLog(@"imagesH = %f",imagesH);
     
     
     CGRect frame = self.frame;
@@ -160,7 +160,7 @@
     
     if (array.count == 1) {
         UIImageView *imageV = [[UIImageView alloc]init];
-        imageV.frame = CGRectMake(_avator.right+10,_content.bottom + 5, imageW*2, imageW*2-30);
+        imageV.frame = CGRectMake(_avator.right+10,_content.bottom + 10, imageW*2, imageW*2-30);
         height = imageW*2-30;
         imageV.tag = 100;
         imageV.contentMode = UIViewContentModeScaleToFill;
@@ -185,7 +185,7 @@
             
         for (int j = 0; j<3; j++) {
             
-            UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(_avator.right+10+j*(imageW+1),_content.bottom + 5 + i*(imageW+1), imageW, imageW)];
+            UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(_avator.right+10+j*(imageW+1),_content.bottom + 10 + i*(imageW+1), imageW, imageW)];
             imageV.userInteractionEnabled = YES;
             imageV.contentMode = UIViewContentModeScaleToFill;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImageV:)];
@@ -196,7 +196,7 @@
             [self.contentView addSubview:imageV];
             
             if (i*3+j == array.count-1) {
-                NSLog(@"%d,%d",i,j);
+                FxLog(@"%d,%d",i,j);
                 stop = YES;
                 break;
             }
@@ -214,7 +214,6 @@
 
     UIImageView *tapImV = (UIImageView *)gesture.view;
 
-    NSLog(@"xcvdzfg");
     NSArray *array = [_model.photoUrl componentsSeparatedByString:@","];
     
     self.browserBlock(array,tapImV.tag);

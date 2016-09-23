@@ -53,6 +53,7 @@
         if (i==4) {
             UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureAction:)];
             [view addGestureRecognizer:gesture];
+            view.userInteractionEnabled = YES;
         }
 //        [gesture setObject:@(i)];
         

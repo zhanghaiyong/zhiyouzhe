@@ -83,11 +83,19 @@
     
 }
 
+- (void)awakeFromNib {
+
+     account = [AccountModel account];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appointOrder) name:@"appointOrder" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatOrder) name:@"chatOrder" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.navigationItem.title = @"订单";
     self.tableView.tableFooterView = [[UIView alloc]init];
+    
     //默认是预约订单
     appointOrChat = 1;
     //切换订单类型
@@ -95,23 +103,20 @@
         
         appointOrChat = flag;
         if (flag == 1) {
-//            if (self.AppointOrderArr.count == 0) {
-//                [self.tableView.mj_header beginRefreshing];
-//            }else {
+
             [self appointOrder];
-                [self.tableView reloadData];
-//            }
+
         }else {
             
-//            if (self.ChatOrderArr.count == 0) {
-//                [self.tableView.mj_header beginRefreshing];
-//            }else {
             [self chatOrder];
-                [self.tableView reloadData];
-//            }
+
         }
     }];
+    
     account = [AccountModel account];
+    
+    [self appointOrder];
+    
 //    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
 //        if (appointOrChat == 1) {
 //
@@ -122,38 +127,43 @@
 //            [self chatOrder];
 //        }
 //    }];
-    [self appointOrder];
 //    [self.tableView.mj_header beginRefreshing];
-//    
+
 }
 
 //获取预约订单列表
 - (void)appointOrder {
 
+    
+    [[HUDConfig shareHUD]alwaysShow];
+    
     [self.AppointOrderArr removeAllObjects];
+    
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     
     [KSMNetworkRequest getRequest:KAppointOrder params:params success:^(id responseObj) {
         
         [self.tableView.mj_header endRefreshing];
         
-        NSLog(@"appointOrder = %@",responseObj);
+        FxLog(@"appointOrder = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
+
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-            
-                [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+                
                 NSArray *array = [responseObj objectForKey:@"data"];
                 NSArray *modelArr = [AppointOrderModel mj_objectArrayWithKeyValuesArray:array];
                 [self.AppointOrderArr addObjectsFromArray:modelArr];
-                [self.tableView reloadData];
                 
-            }else {
-            
-                self.noOrderView.label1.text = @"";
-                self.noOrderView.label2.text = @"当前暂无订单";
-                [self.tableView addSubview:self.noOrderView];
+                
             }
+        }else {
+        
+            [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         }
+        
+        [self.tableView reloadData];
+        
+        [[HUDConfig shareHUD] dismiss];
         
     } failure:^(NSError *error) {
         
@@ -167,28 +177,32 @@
 //获取聊天订单列表
 - (void)chatOrder {
 
+    
+    [[HUDConfig shareHUD]alwaysShow];
     [self.ChatOrderArr removeAllObjects];
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     
     [KSMNetworkRequest getRequest:KChatOrder params:params success:^(id responseObj) {
         [self.tableView.mj_header endRefreshing];
         
-        NSLog(@"chatOrder = %@",responseObj);
+        
+        FxLog(@"chatOrder = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-                
-                [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+               
                 NSArray *array = [responseObj objectForKey:@"data"];
                 NSArray *modelArr = [ChatOrderModel mj_objectArrayWithKeyValuesArray:array];
                 [self.ChatOrderArr addObjectsFromArray:modelArr];
-                [self.tableView reloadData];
-            }else {
-            
-                self.noOrderView.label1.text = @"";
-                self.noOrderView.label2.text = @"当前暂无订单";
-                [self.tableView addSubview:self.noOrderView];
             }
+
+        }else {
+        
+            [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         }
+        
+        [self.tableView reloadData];
+        
+        [[HUDConfig shareHUD] dismiss];
         
     } failure:^(NSError *error) {
         
@@ -212,7 +226,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     
     switch (appointOrChat) {
         case 1:{

@@ -5,8 +5,8 @@
 //  Created by ksm on 16/4/28.
 //  Copyright © 2016年 ksm. All rights reserved.
 //
-
-static NSString *appKey = @"192e6ba190574c47ad3f39dd";
+//测试 	192e6ba190574c47ad3f39dd  正式  59fb4a2ef0cea05e7798bab4
+static NSString *appKey = @"59fb4a2ef0cea05e7798bab4";
 static NSString *channel = @"Publish channel";
 static BOOL isProduction = true;
 

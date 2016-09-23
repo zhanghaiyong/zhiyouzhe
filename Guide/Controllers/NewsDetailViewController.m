@@ -80,8 +80,8 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest postRequest:KAllSystemMsg params:params success:^(id responseObj) {
         
-        NSLog(@"systemMsg = %@",responseObj);
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"systemMsg = %@",responseObj);
+
         [self.tableView.mj_header endRefreshing];
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -93,9 +93,10 @@
             }
         }
         
+        [[HUDConfig shareHUD]dismiss];
     } failure:^(NSError *error) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         [self.tableView.mj_header endRefreshing];
         
     } type:0];
@@ -109,9 +110,7 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest postRequest:KAllOrderMsg params:params success:^(id responseObj) {
         
-        NSLog(@"orderMsg = %@",responseObj);
-        [[HUDConfig shareHUD]dismiss];
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"orderMsg = %@",responseObj);
         [self.tableView.mj_header endRefreshing];
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -125,9 +124,11 @@
             }
         }
         
+         [[HUDConfig shareHUD]dismiss];
+        
     } failure:^(NSError *error) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         [self.tableView.mj_header endRefreshing];
         
     } type:0];
@@ -141,8 +142,7 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest postRequest:KAllAppointmentMsg params:params success:^(id responseObj) {
         
-        NSLog(@"appointmentMsg = %@",responseObj);
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"appointmentMsg = %@",responseObj);
         [self.tableView.mj_header endRefreshing];
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -154,9 +154,11 @@
         }
         }
         
+        [[HUDConfig shareHUD]dismiss];
+        
     } failure:^(NSError *error) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         [self.tableView.mj_header endRefreshing];
         
     } type:0];
@@ -201,11 +203,16 @@
             OrderMsgModel *model = self.messageArray[indexPath.row];
             cell.messageTime.text = [[model.messageTime dateWithFormate:@"yyyy-MM-dd HH:mm:ss"] toTimeDescription];;
             
-            NSMutableAttributedString *strAtt = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@  点击查看",model.messageContent]];
-            [strAtt addAttributes:@{NSForegroundColorAttributeName:lever2Color} range:NSMakeRange(0, strAtt.length-4)];
-            [strAtt addAttributes:@{NSForegroundColorAttributeName:specialRed} range:NSMakeRange(strAtt.length-4, 4)];
-            cell.messageContent.attributedText = strAtt;
+            if ([model.messageType integerValue] == 1) {
+               
+                NSMutableAttributedString *strAtt = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@  点击查看",model.messageContent]];
+                [strAtt addAttributes:@{NSForegroundColorAttributeName:lever2Color} range:NSMakeRange(0, strAtt.length-4)];
+                [strAtt addAttributes:@{NSForegroundColorAttributeName:specialRed} range:NSMakeRange(strAtt.length-4, 4)];
+                cell.messageContent.attributedText = strAtt;
+            }else {
             
+                cell.messageContent.text = model.messageContent;
+            }
         }
             break;
         case 2: {//预约
@@ -251,12 +258,12 @@
     params.messageId = model.id;
     params.optionState = [NSString stringWithFormat:@"%ld",flag];
     
-    NSLog(@"mj_keyValues = %@",params.mj_keyValues);
+    FxLog(@"mj_keyValues = %@",params.mj_keyValues);
     
     [KSMNetworkRequest postRequest:KDealAppointment params:params.mj_keyValues success:^(id responseObj) {
         [[HUDConfig shareHUD]dismiss];
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"deal appointment = %@",responseObj);
+//        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"deal appointment = %@",responseObj);
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             [self.tableView beginUpdates];
@@ -286,7 +293,15 @@
         case 1:{//订单
             
             OrderMsgModel *model = self.messageArray[indexPath.row];
-            [cell cellAutoLayoutHeight:model.messageContent];
+            
+            if ([model.messageType integerValue] == 1) {
+                
+                [cell cellAutoLayoutHeight:[NSString stringWithFormat:@"%@  点击查看",model.messageContent]];
+                
+            }else {
+            
+                [cell cellAutoLayoutHeight:model.messageContent];
+            }
         }
             break;
         case 2: {//预约
@@ -309,13 +324,15 @@
     if (_msgType == 1) { //订单消息
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
         OrderMsgModel *model = self.messageArray[indexPath.row];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Know" bundle:nil];
-        OrderDetailViewController *orderDetail = [storyboard instantiateViewControllerWithIdentifier:@"OrderDetailViewController"];
-        orderDetail.orderCode = model.orderId;
-        [self.navigationController pushViewController:orderDetail animated:YES];
         
+        if ([model.messageType integerValue] == 1) {
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Know" bundle:nil];
+            OrderDetailViewController *orderDetail = [storyboard instantiateViewControllerWithIdentifier:@"OrderDetailViewController"];
+            orderDetail.orderCode = model.orderId;
+            [self.navigationController pushViewController:orderDetail animated:YES];
+        }
     }
 }
 

@@ -26,7 +26,7 @@
     
     NSInteger unreadCount =  [[RCIMClient sharedRCIMClient]getUnreadCount:@[@(ConversationType_PRIVATE)]];
     
-    NSLog(@"unreadCount = %ld",unreadCount);
+    FxLog(@"unreadCount = %ld",unreadCount);
     
     if (unreadCount > 0) {
         
@@ -56,6 +56,11 @@
     
     [super viewWillDisappear:animated];
     self.hidesBottomBarWhenPushed = NO;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+
+    [[HUDConfig shareHUD]dismiss];
 }
 
 - (void)viewDidLoad {
@@ -90,6 +95,14 @@
     //设置显示的会话类型
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     
+    
+    //禁止接受系统消息推送
+    [[RCIMClient sharedRCIMClient] setConversationNotificationStatus:6 targetId:account.id isBlocked:NO success:^(RCConversationNotificationStatus nStatus) {
+        
+    } error:^(RCErrorCode status) {
+        
+    }];
+    
 //    
 //    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [rightBtn setTitle:@"知了介绍" forState:UIControlStateNormal];
@@ -112,7 +125,7 @@
          conversationModel:(RCConversationModel *)model
                atIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"%@ ",model);
+    FxLog(@"%@ ",model);
     if (model.conversationType == ConversationType_PRIVATE){
     
         ChatViewController *chat = [[ChatViewController alloc]init];
@@ -128,25 +141,40 @@
 - (void)willDisplayConversationTableCell:(RCConversationBaseCell *)cell
                              atIndexPath:(NSIndexPath *)indexPath {
     
-    //禁止接受系统消息推送
-    RCConversationModel *model = self.conversationListDataSource[indexPath.row];
-    [[RCIMClient sharedRCIMClient] setConversationNotificationStatus:6 targetId:model.targetId isBlocked:YES success:^(RCConversationNotificationStatus nStatus) {
+    NSDictionary *dic = cell.model.lastestMessage.mj_keyValues;
+    NSString *str = [[dic objectForKey:@"content"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if ([str isMobilphone] || [str isTelephone] || [str isEmail] ) {
         
-    } error:^(RCErrorCode status) {
-        
-    }];
+        NSString * searchStr = str;
+        NSString * regExpStr = @"[0-9]";
+        NSString * replacement = @"*";
+        // 创建 NSRegularExpression 对象,匹配 正则表达式
+        NSRegularExpression *regExp = [[NSRegularExpression alloc] initWithPattern:regExpStr options:NSRegularExpressionCaseInsensitive error:nil];                                                                  NSString *resultStr = searchStr;
+        // 替换匹配的字符串为searchStr
+        resultStr = [regExp stringByReplacingMatchesInString:searchStr options:NSMatchingReportProgress range:NSMakeRange(0, searchStr.length)withTemplate:replacement]; NSLog(@"nsearchStr = %@nresultStr = %@",searchStr,resultStr);
+            UILabel *textLabel = [cell.contentView.subviews lastObject];
+            textLabel.text = resultStr;
+    }
 }
+
+
+- (void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+
+}
+
 
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
 
     [super didReceiveMessageNotification:notification];
     
     NSInteger unreadCount =  [[RCIMClient sharedRCIMClient]getUnreadCount:@[@(ConversationType_PRIVATE)]];
-    NSLog(@"unreadCount = %ld",unreadCount);
+    FxLog(@"unreadCount = %ld",unreadCount);
     if (unreadCount > 0) {    
         dispatch_async(dispatch_get_main_queue(), ^{
         self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld",unreadCount];
-        NSLog(@"unreadCount = %@",self.tabBarItem.badgeValue);
+        FxLog(@"unreadCount = %@",self.tabBarItem.badgeValue);
         });
     }else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,6 +186,8 @@
 
 - (void)onRCIMReceiveMessage:(RCMessage *)message
                         left:(int)lef {
+    
+    NSLog(@"asfs = %@",message);
  
     if (message.conversationType == 6) {
         
@@ -187,19 +217,23 @@
     
     switch (status) {
         case 0:
-            [[HUDConfig shareHUD] SuccessHUD:@"连接成功" delay:DELAY];
+//            [[HUDConfig shareHUD] SuccessHUD:@"连接成功" delay:DELAY];
+            [[HUDConfig shareHUD]dismiss];
             break;
         case 31011:
             [[HUDConfig shareHUD] Tips:@"与服务器的连接已断开" delay:DELAY];
             break;
         case 31004:
-            [[HUDConfig shareHUD] ErrorHUD:@"Token无效" delay:DELAY];
+//            [[HUDConfig shareHUD] ErrorHUD:@"Token无效" delay:DELAY];
+            [[HUDConfig shareHUD]dismiss];
             break;
         case 12:
-            [[HUDConfig shareHUD] Tips:@"已注销" delay:DELAY];
+//            [[HUDConfig shareHUD] Tips:@"已注销" delay:DELAY];
+            [[HUDConfig shareHUD]dismiss];
             break;
         case 11:
-            [[HUDConfig shareHUD] ErrorHUD:@"连接失败或未连接" delay:DELAY];
+//            [[HUDConfig shareHUD] ErrorHUD:@"连接失败或未连接" delay:DELAY];
+            [[HUDConfig shareHUD]dismiss];
             break;
         case 10:
             [[HUDConfig shareHUD] LoadHUD:@"连接中..." delay:NSTimeIntervalSince1970];

@@ -58,8 +58,6 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [KSMNetworkRequest postRequest:KGetIncomeDetail params:@{@"zid":account.id,@"ztoken":account.token,@"walletId":[userDefaults objectForKey:@"WalletId"]} success:^(id responseObj) {
         
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        
         BASE_INFO_FUN(responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
@@ -71,6 +69,8 @@
                 
             }
         }
+        
+        [[HUDConfig shareHUD]dismiss];
     } failure:^(NSError *error) {
         
         [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];

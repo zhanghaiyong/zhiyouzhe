@@ -48,35 +48,35 @@
 
 - (void)selectedBirthday:(NSString *)age star:(NSString *)star {
     
-    self.params.age = [NSString stringWithFormat:@"%@岁,%@",age,star];
-    
-    NSLog(@"%@",self.params.mj_keyValues);
-    
-    [[HUDConfig shareHUD] alwaysShow];
-    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
-        
-        NSLog(@"responseObj = %@",responseObj);
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        
-        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-            
-            NSDictionary *dic = [responseObj objectForKey:@"data"];
-            
-            if ([dic.allKeys containsObject:@"age"]) {
-                account.age = [dic objectForKey:@"age"];
-            }
-
-            [AccountModel saveAccount:account];
-            self.block([NSString stringWithFormat:@"%@岁  %@",age,star]);
+//    self.params.age = [NSString stringWithFormat:@"%@岁,%@",age,star];
+//    
+//    FxLog(@"%@",self.params.mj_keyValues);
+//    
+//    [[HUDConfig shareHUD] alwaysShow];
+//    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
+//        
+//        FxLog(@"responseObj = %@",responseObj);
+//        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+//        
+//        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+//            
+//            NSDictionary *dic = [responseObj objectForKey:@"data"];
+//            
+//            if ([dic.allKeys containsObject:@"age"]) {
+//                account.age = [dic objectForKey:@"age"];
+//            }
+//
+//            [AccountModel saveAccount:account];
+            self.block([NSString stringWithFormat:@"%@岁,%@",age,star]);
             
             [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-    } failure:^(NSError *error) {
-        
-        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
-        
-    } type:2];
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        
+//        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
+//        
+//    } type:2];
     
 }
 

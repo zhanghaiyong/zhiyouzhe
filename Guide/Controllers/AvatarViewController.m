@@ -37,6 +37,10 @@
     [super viewDidLoad];
     
     account = [AccountModel account];
+    [self setNavigationLeft:@"icon_back_iphone"];
+    
+    [Uitils cacheImage:account.headiconUrl withImageV:self.BigAvatar withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
+    }];
     
     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [saveBtn setTitle:@"上传头像" forState:UIControlStateNormal];
@@ -67,16 +71,17 @@
             //服务费用
             self.params.headiconUrl = avatarName;;
             
-            NSLog(@"%@",self.params.mj_keyValues);
+            FxLog(@"postAvatar = %@",self.params.mj_keyValues);
             
             [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
                 
-                [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-                NSLog(@"%@",responseObj);
+                FxLog(@"postAvatar = %@",responseObj);
                 
                 if (![responseObj isKindOfClass:[NSNull class]]) {
                     
                     if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                        
+                        [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
                         
                         NSDictionary *dic = [responseObj objectForKey:@"data"];
                         account.headiconUrl = [dic objectForKey:@"headiconUrl"];
@@ -88,11 +93,14 @@
                         userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl];
                         userInfo.name = account.nickname;
                         [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
-                        [self.navigationController popViewControllerAnimated:YES];
                         
                         self.block (image);
                         
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [self.navigationController popViewControllerAnimated:NO];
+                        
+                    }else {
+                    
+                        [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
                     }
                 }
                 
@@ -116,6 +124,11 @@
 - (void)returnAvatar:(avatarCVBlock)block {
 
     _block = block;
+}
+
+- (void)doBack:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 @end

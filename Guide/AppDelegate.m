@@ -36,15 +36,15 @@
 //判断二次登陆情况
 - (void)judgeSecondLogin {
 
-    self.window                    = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    AccountModel *account          = [AccountModel account];
-    
+    self.window            = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    AccountModel *account  = [AccountModel account];
     if (account) {
         
         //第一步，创建URL
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?token=%@",KLoginByToken,account.token]];
+        FxLog(@"xxxxx%@",account.token);
         //第二步，创建请求
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30];
 //        [request setHTTPMethod:@"GET"];//设置请求方式为POST，默认为GET
         //第三步，连接服务器
         NSError *error;
@@ -53,7 +53,7 @@
         if (error == nil) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingAllowFragments error:nil];
 //            BASE_INFO_FUN(dic);
-            NSLog(@"dic is %@",dic);
+            FxLog(@"dic is %@",dic);
             
             if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
                 //字段转model
@@ -64,6 +64,13 @@
                 RoleViewController *roleVC     = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
                 UINavigationController *navi   = [[UINavigationController alloc]initWithRootViewController:roleVC];
                 self.window.rootViewController = navi;
+                [self.window makeKeyAndVisible];
+                
+            }else {
+            
+                UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *login = [loginStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                self.window.rootViewController = login;
                 [self.window makeKeyAndVisible];
             }
             
@@ -99,6 +106,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
+    
     //推送注册
     [[JiPush shareJpush] registerPush:launchOptions];
     [[JiPush shareJpush]addObserver];
@@ -115,17 +129,12 @@
     //容云
     [[SDKKey shareSDKKey]RCIMKey:application];
 
-
-    NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
-    NSLog(@"程序启动的推送 ＝ %@",remoteNotification);
-    if (remoteNotification) {
-
-        [[HUDConfig shareHUD] Tips:remoteNotification.description delay:1009000000];
-    }
     //设置主色调
     [self configure];
 
     [self judgeSecondLogin];
+    
+
 
     return YES;
 }
@@ -157,7 +166,7 @@
 #pragma mark JPush method---------
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
-    NSLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
+    FxLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
 
     //极光推送
     [[JiPush shareJpush]registerDeviceToken:deviceToken];
@@ -171,9 +180,8 @@
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+    FxLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
-
 
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
@@ -190,11 +198,53 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:application.applicationIconBadgeNumber + 1];
     
     [[JiPush shareJpush]handleNotification:userInfo];
-    NSLog(@"推送 收到通知:%@", userInfo);
+    FxLog(@"推送 收到通知:%@", userInfo);
     completionHandler(UIBackgroundFetchResultNewData);
-    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
+    
+    
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+    NSString *type = [userInfo objectForKey:@"type"];
+    
+    if ([type isEqualToString:@"01"]) {
+        AccountModel *account = [AccountModel account];
+        account.identificationState = @"2";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"02"]) {
+    
+        AccountModel *account = [AccountModel account];
+        account.identificationState = @"3";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"03"]) {
+        
+        AccountModel *account = [AccountModel account];
+        account.serviceCarAuth = @"2";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"04"]) {
+        
+        AccountModel *account = [AccountModel account];
+        account.serviceCarAuth = @"3";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }
+    
+//    [[HUDConfig shareHUD]Tips:type delay:110];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
+    
 }
 
 
@@ -221,27 +271,9 @@
     //cType 会话类型。PR指单聊、 DS指讨论组、 GRP指群组、 CS指客服、SYS指系统会话、 MC指应用内公众服务、 MP指跨应用公众服务。
     //oName 消息类型，参考融云消息类型表.消息标志；可自定义消息类型。
     //tId 接收者的用户 Id。
-    NSLog(@"%@",notification.userInfo);
+    FxLog(@"%@",notification.userInfo);
+    
 }
 
-- (NSString *)logDic:(NSDictionary *)dic {
-    if (![dic count]) {
-        return nil;
-    }
-    NSString *tempStr1 =
-    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
-                                                 withString:@"\\U"];
-    NSString *tempStr2 =
-    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 =
-    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str =
-    [NSPropertyListSerialization propertyListFromData:tempData
-                                     mutabilityOption:NSPropertyListImmutable
-                                               format:NULL
-                                     errorDescription:NULL];
-    return str;
-}
 
 @end

@@ -10,6 +10,6 @@
 
 @interface UpImgViewController : BaseTableViewController
 
-@property (nonatomic,assign)BOOL isEdit;
+//@property (nonatomic,assign)BOOL isEdit;
 
 @end

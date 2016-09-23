@@ -38,7 +38,7 @@
 #define lever3Font         [UIFont systemFontOfSize:12]
 #define lever4Font         [UIFont systemFontOfSize:10]
 
-#define DELAY 2
+#define DELAY 1
 
 #define Account     (@"account")
 #define Cost        (@"Cost")
@@ -47,8 +47,9 @@
 #define REFRESH_SYSTEM  (@"refreshSystem")
 #define REFRESH_ORDER   (@"refreshOrder")
 #define REFRESH_APPOINT (@"refreshAppoint")
+#define REFRESH_STATUS  (@"refreshStatus")
 
-
+#define TOKEN (@"token")
 
 //shareSDK APIKey
 const static NSString *SMSKey = @"1229a77693d00";

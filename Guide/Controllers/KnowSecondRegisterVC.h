@@ -12,8 +12,11 @@ typedef void(^setPhotoBlock)(NSArray *photos);
 
 @interface KnowSecondRegisterVC : BaseViewController
 
+@property (nonatomic,assign)BOOL isEdit;
 @property (nonatomic,copy)setPhotoBlock block;
 
 - (void)returnPhotos:(setPhotoBlock)block;
+
+
 
 @end

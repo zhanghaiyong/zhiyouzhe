@@ -45,9 +45,9 @@
     
        NSString *token = [[NSString alloc]initWithData:responseObj encoding:NSUTF8StringEncoding];
     
-        KSMLog(@"token = %@ imageKey = %@ image = %@",token,imageKey,image);
+        FxLog(@"token = %@ imageKey = %@ image = %@",token,imageKey,image);
         NSData *imageData = [self dataWithImage:image];
-//        NSLog(@"imageData = %@",imageData);
+        FxLog(@"imageData = %@",imageData);
         
         QNUploadManager *upManager = [QNUploadManager sharedInstanceWithConfiguration:nil];
         [upManager putData:imageData
@@ -58,7 +58,7 @@
                           
                           successBlock();
                       }
-//                      KSMLog(@"NSDictionary = %@", info);
+                      FxLog(@"NSDictionary = %@", info);
                   } option:nil];
         
     } failure:^(NSError *error) {

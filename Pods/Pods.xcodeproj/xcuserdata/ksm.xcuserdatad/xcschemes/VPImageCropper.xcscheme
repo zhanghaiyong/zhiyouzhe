@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D7CFCAE81836C36B146D02B9'
+               BlueprintIdentifier = '22AA1CF9A3D617479FC68D52'
                BlueprintName = 'VPImageCropper'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libVPImageCropper.a'>

@@ -33,6 +33,7 @@
     NSString *backImageName;
     AccountModel *account;
     UIButton *rightBtn ;
+    BOOL repeatInfo;
 }
 
 -(InfoParams *)params {
@@ -72,14 +73,31 @@
         self.navigationItem.leftBarButtonItem = leftItem;
         
         //编辑状态下，隐藏”下一步“按钮
-        _finishButton.hidden = YES;
+        self.finishButton.hidden = YES;
         
         //将原来的数据填充到对应的字断
-        _nameLabel.text = account.realName;
-        _idcard.text = account.idcardNumber;
+        self.nameLabel.text = account.realName;
+        self.idcard.text = account.idcardNumber;
+        
+        if (account.idcardConsUrl) {
+            
+            self.frontImage.contentMode = UIViewContentModeScaleToFill;
+        }else {
+        
+            self.frontImage.contentMode = UIViewContentModeCenter;
+        }
+        
         [Uitils cacheImage:account.idcardConsUrl withImageV:_frontImage withPlaceholder:@"bg_update_iphone" completed:^(UIImage *image) {
             frontImageName = account.idcardConsUrl;
         }];
+        
+        if (account.idcardProsUrl) {
+            
+            self.backImage.contentMode = UIViewContentModeScaleToFill;
+        }else {
+            
+            self.backImage.contentMode = UIViewContentModeCenter;
+        }
         [Uitils cacheImage:account.idcardProsUrl withImageV:_backImage withPlaceholder:@"bg_update_iphone" completed:^(UIImage *image) {
             
             backImageName = account.idcardProsUrl;
@@ -89,7 +107,9 @@
         self.title = @"身份认证1";
        [self.navigationItem setHidesBackButton:TRUE animated:NO];
     }
-       
+    
+        [self.nameLabel addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
+    
 }
 
 //编辑状态下的退出
@@ -122,49 +142,56 @@
     [_nameLabel resignFirstResponder];
     
     NSString *imageName = nil;
-    switch (indexPath.row) {
-        case 2:
-            imageName = [NSString stringWithFormat:@"%@frontImageName",account.id];
-            frontImageName = imageName;
-            break;
-        case 3:
-            imageName = [NSString stringWithFormat:@"%@backImageName",account.id];
-            backImageName = imageName;
-            break;
-            
-        default:
-            break;
-    }
     
-    //选择照片
-    TakePhotoViewController *takePhotoVC = [[TakePhotoViewController alloc]init];
-    [takePhotoVC returnImage:^(UIImage *image) {
-    
+    if (indexPath.row == 2 || indexPath.row == 3) {
+        
         switch (indexPath.row) {
             case 2:
-                _frontImage.image = image;
+                imageName = [NSString stringWithFormat:@"%@frontImageName",account.id];
+                frontImageName = imageName;
                 break;
             case 3:
-                _backImage.image = image;
+
+                imageName = [NSString stringWithFormat:@"%@backImageName",account.id];
+                backImageName = imageName;
                 break;
+                
             default:
                 break;
         }
-        //选择照片的同时，将保存按钮的交互打开
-        rightBtn.userInteractionEnabled = YES;
-        [rightBtn setTitleColor:lever1Color forState:UIControlStateNormal];
-        
-        //选择的照片上传七牛
-        [[PostImageTool shareTool] QiniuPostImage:image imageKey:imageName Success:^{
+        //选择照片
+        TakePhotoViewController *takePhotoVC = [[TakePhotoViewController alloc]init];
+        [takePhotoVC returnImage:^(UIImage *image) {
             
-            BASE_INFO_FUN(@"上传成功");
+            switch (indexPath.row) {
+                case 2:
+                    self.frontImage.contentMode = UIViewContentModeScaleToFill;
+                    _frontImage.image = image;
+                    break;
+                case 3:
+                    self.backImage.contentMode = UIViewContentModeScaleToFill;
+                    _backImage.image = image;
+                    break;
+                default:
+                    break;
+            }
+            //选择照片的同时，将保存按钮的交互打开
+            rightBtn.userInteractionEnabled = YES;
+            repeatInfo = YES;
+            [rightBtn setTitleColor:lever1Color forState:UIControlStateNormal];
             
-        } failure:^(NSError *error) {
-            
-            
+            //选择的照片上传七牛
+            [[PostImageTool shareTool] QiniuPostImage:image imageKey:imageName Success:^{
+                
+                BASE_INFO_FUN(@"上传成功");
+                
+            } failure:^(NSError *error) {
+                
+                
+            }];
         }];
-    }];
-    [self presentViewController:takePhotoVC animated:YES completion:nil];
+        [self presentViewController:takePhotoVC animated:YES completion:nil];
+    }
 }
 
 //编辑状态下的提交信息
@@ -176,19 +203,17 @@
 //注册状态下的提交信息
 - (IBAction)nextOrFinishAction:(id)sender {
     
-    if (rightBtn.userInteractionEnabled == YES) {
-    
+    if (repeatInfo == YES) {
+        
         [self postDatatoServer];
+        
     }else {
     
         UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
-        KnowThree.isEdit = self.isEdit;
         [self.navigationController pushViewController:KnowThree animated:YES];
     }
-    
-    
-    
+
 }
 
 //信息提交
@@ -209,13 +234,19 @@
         return;
     }
     
+    if (![_idcard.text isIdCard]) {
+        
+        [[HUDConfig shareHUD] Tips:@"请上传正确的身份证号" delay:DELAY];
+        return;
+    }
+    
     
     [[HUDConfig shareHUD] alwaysShow];
     
     self.params.idcardConsUrl = frontImageName;
     self.params.idcardProsUrl = backImageName;
-    self.params.realName = _nameLabel.text;
-    self.params.idcardNumber = _idcard.text;
+    self.params.realName = self.nameLabel.text;
+    self.params.idcardNumber = self.idcard.text;
     
     NSString *urlStr;
     
@@ -227,7 +258,7 @@
         urlStr = KPersonalAuth;
     }
     
-    NSLog(@"KInfoEdit = %@",self.params.mj_keyValues);
+    FxLog(@"KInfoEdit = %@",self.params.mj_keyValues);
     
     [KSMNetworkRequest postRequest:urlStr params:self.params.mj_keyValues success:^(id responseObj) {
         
@@ -239,29 +270,31 @@
             
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 
-                NSDictionary *dic = [responseObj objectForKey:@"data"];
-                [[HUDConfig shareHUD] SuccessHUD:@"上传成功" delay:DELAY];
+                [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
                 
+                NSDictionary *dic = [responseObj objectForKey:@"data"];
                 account.idcardConsUrl = [dic objectForKey:@"idcardConsUrl"];
                 account.idcardProsUrl = [dic objectForKey:@"idcardProsUrl"];
                 account.realName = [dic objectForKey:@"realName"];
                 account.idcardNumber = [dic objectForKey:@"idcardNumber"];
                 
                 [AccountModel saveAccount:account];
-                
-                if (_isEdit) {
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-                    
-                }else {
+//                
+//                if (_isEdit) {
+//                    
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                    
+//                }else {
                 
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
                     [self.navigationController pushViewController:KnowThree animated:YES];
-                }
+//                }
+            }else {
+            
+                [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
             }
         }
-        
         
     } failure:^(NSError *error) {
         [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
@@ -270,9 +303,33 @@
 }
 
 #pragma mark UITextField
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    
+    if ([string isEqualToString:@" "] || [string isEqualToString:@"\n"]) {
+        return NO;
+    }
+    
+    NSString *tempString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (textField == _nameLabel) {
+        
+        if (tempString.length > 10) {
+            
+            _nameLabel.text = [_nameLabel.text substringToIndex:10];
+            [[HUDConfig shareHUD]Tips:@"昵称长度不能超过10" delay:DELAY];
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 
     rightBtn.userInteractionEnabled = YES;
+    repeatInfo = YES;
     [rightBtn setTitleColor:lever1Color forState:UIControlStateNormal];
     
 }
@@ -282,6 +339,15 @@
     [_nameLabel resignFirstResponder];
     [_idcard resignFirstResponder];
     return YES;
+}
+
+- (void)valueChanged:(UITextField *)textField {
+    
+    if (textField.text.length > 10) {
+        [[HUDConfig shareHUD]Tips:@"昵称长度不能超过10" delay:DELAY];
+        self.nameLabel.text = [self.nameLabel.text substringToIndex:10];
+    }
+
 }
 
 @end

@@ -46,6 +46,9 @@
     //如果本地数据中已经有了照片，将照片显示
     if (account.drivingLicenseUrl) {
         
+        self.driverLicenseImage.contentMode = UIViewContentModeScaleToFill;
+        self.carImage.contentMode = UIViewContentModeScaleToFill;
+        
         [Uitils cacheImage:account.drivingLicenseUrl withImageV:_driverLicenseImage withPlaceholder:@"pic_jiazhao_up_iphone" completed:^(UIImage *image) {
             driverLicenseImage  = account.drivingLicenseUrl;
         }];
@@ -92,9 +95,11 @@
         
         switch (indexPath.row) {
             case 0:
+                self.driverLicenseImage.contentMode = UIViewContentModeScaleToFill;
                 _driverLicenseImage.image = image;
                 break;
             case 1:
+                self.carImage.contentMode = UIViewContentModeScaleToFill;
                 _carImage.image = image;
                 break;
                 
@@ -140,7 +145,7 @@
     self.params.drivingLicenseUrl = driverLicenseImage;
     self.params.carUrl = carImage;
     
-    NSLog(@"身份证 = %@",self.params.mj_keyValues);
+    FxLog(@"身份证 = %@",self.params.mj_keyValues);
     
     [KSMNetworkRequest postRequest:KCarAuth params:self.params.mj_keyValues success:^(id responseObj) {
         

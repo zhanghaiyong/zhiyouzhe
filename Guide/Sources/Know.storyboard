@@ -1314,12 +1314,13 @@
                                                     <outlet property="delegate" destination="8kD-xI-GEf" id="WE0-j5-1Vl"/>
                                                 </connections>
                                             </textView>
-                                            <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QF7-OE-pQ2">
+                                            <button opaque="NO" tag="100" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QF7-OE-pQ2">
                                                 <rect key="frame" x="5" y="95" width="74" height="74"/>
-                                                <color key="backgroundColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="QF7-OE-pQ2" secondAttribute="height" multiplier="1:1" id="NSR-Pg-xW4"/>
                                                 </constraints>
+                                                <state key="normal" backgroundImage="icon_add_poto_iphone"/>
                                                 <connections>
                                                     <action selector="SelectPhoto:" destination="8kD-xI-GEf" eventType="touchUpInside" id="vDk-HT-VRe"/>
                                                 </connections>
@@ -1394,13 +1395,12 @@
                                                     <action selector="SelectPhoto:" destination="8kD-xI-GEf" eventType="touchUpInside" id="gxe-4a-hUW"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="101" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMG-lh-gJ7">
+                                            <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMG-lh-gJ7">
                                                 <rect key="frame" x="84" y="95" width="74" height="74"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.5490196078431373" green="0.5490196078431373" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="AMG-lh-gJ7" secondAttribute="height" multiplier="1:1" id="uJV-2R-W4p"/>
                                                 </constraints>
-                                                <state key="normal" backgroundImage="icon_add_poto_iphone"/>
                                                 <connections>
                                                     <action selector="SelectPhoto:" destination="8kD-xI-GEf" eventType="touchUpInside" id="Gvx-6W-brq"/>
                                                 </connections>

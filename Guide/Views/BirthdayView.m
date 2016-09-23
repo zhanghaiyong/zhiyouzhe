@@ -68,7 +68,7 @@
         
         NSString *select = [selectedDate substringToIndex:4];
         NSString *now = [[[NSDate date] toYM2String] substringToIndex:4];
-        NSLog(@"%@  %@",select,star);
+        FxLog(@"%@  %@",select,star);
         
         NSString *age = [NSString stringWithFormat:@"%ld",[now integerValue]-[select integerValue]];
         

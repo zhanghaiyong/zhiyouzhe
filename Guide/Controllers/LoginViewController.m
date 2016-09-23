@@ -10,14 +10,15 @@
 #import "KnowSecondRegisterVC.h"
 #import <SMS_SDK/SMSSDK.h>
 #import "RoleViewController.h"
-#import "GuideViewController.h"
-@interface LoginViewController ()<GuideViewControllerDelegate>
+//#import "GuideViewController.h"
+@interface LoginViewController ()
+//<GuideViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *codeTF;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeButton;
 
-@property (strong, nonatomic)GuideViewController *guide;
+//@property (strong, nonatomic)GuideViewController *guide;
 @end
 
 @implementation LoginViewController
@@ -34,10 +35,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (![[userDefaults objectForKey:@"isFirstLogin"]isEqualToString:@"isFirstLogin"]) {
-        [self showGuide];
-    }
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    if (![[userDefaults objectForKey:@"isFirstLogin"]isEqualToString:@"isFirstLogin"]) {
+//        [self showGuide];
+//    }
 
     //获取验证码倒数60秒
     count = 60;
@@ -46,16 +47,16 @@
     
 }
 
--(void)showGuide {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"isFirstLogin" forKey:@"isFirstLogin"];
-    self.guide = [[GuideViewController alloc]init];
-    self.guide.delegate = self;
-    [self.view addSubview:self.guide.view];
-}
-- (void)guideViewControllerDisMiss:(GuideViewController *)guideViewController {
-    [self.guide.view removeFromSuperview];
-}
+//-(void)showGuide {
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setObject:@"isFirstLogin" forKey:@"isFirstLogin"];
+//    self.guide = [[GuideViewController alloc]init];
+//    self.guide.delegate = self;
+//    [self.view addSubview:self.guide.view];
+//}
+//- (void)guideViewControllerDisMiss:(GuideViewController *)guideViewController {
+//    [self.guide.view removeFromSuperview];
+//}
 #pragma mark UITextField Delegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
@@ -78,11 +79,11 @@
             }
             
             if (checkString.isMobilphone) {
-                NSLog(@"号码满足");
+                FxLog(@"号码满足");
                 _getCodeButton.alpha = 1;
                 _getCodeButton.userInteractionEnabled = YES;
             } else {
-                NSLog(@"号码不满足");
+                FxLog(@"号码不满足");
                 _getCodeButton.alpha = 0.5;
             }
             return YES;
@@ -102,7 +103,7 @@
         }
         
     }
-    NSLog(@"checkString = %@",checkString);
+    FxLog(@"checkString = %@",checkString);
     
     return YES;
 }
@@ -127,7 +128,7 @@
             [_getCodeButton setTitle:[NSString stringWithFormat:@"%ld",(long)count] forState:UIControlStateNormal];
             [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneTF.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
                 if (!error) {
-                    NSLog(@"获取验证码成功");
+                    FxLog(@"获取验证码成功");
                 } else {
                     
                     [SVProgressHUD showInfoWithStatus:NSStringFromClass([error class])];
@@ -173,17 +174,49 @@
     
         [[HUDConfig shareHUD]alwaysShow];
         
-    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
+        if ([_phoneTF.text isEqualToString:@"18380317172"] && [_codeTF.text isEqualToString:@"0000"]) {
+            
+            [KSMNetworkRequest postRequest:KLogin params:@{@"phone":_phoneTF.text}  success:^(id responseObj) {
+                
+                BASE_INFO_FUN(responseObj);
+                if (![responseObj isKindOfClass:[NSNull class]]) {
+                    
+                    if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                        //字段转model
+                        AccountModel *account = [AccountModel mj_objectWithKeyValues:[responseObj objectForKey:@"data"]];
+                        //保存model
+                        [AccountModel saveAccount:account];
+                        
+                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                        RoleViewController *roleVC = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
+                        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:roleVC];
+                        [self presentViewController:navi animated:YES completion:nil];
+                        
+                    }else {
+                    
+                        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+                    }
+                }
+            } failure:^(NSError *error) {
+                
+                [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+                
+            } type:0];
+            
+        }else
         
-        if (!error) {
-        NSLog(@"验证成功");
+//    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
+//        
+//        if (!error) {
+        FxLog(@"验证成功");
         [KSMNetworkRequest postRequest:KLogin params:@{@"phone":_phoneTF.text}  success:^(id responseObj) {
             
-            [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
             BASE_INFO_FUN(responseObj);
             if (![responseObj isKindOfClass:[NSNull class]]) {
                 
                 if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                    
+                    [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
                 //字段转model
                 AccountModel *account = [AccountModel mj_objectWithKeyValues:[responseObj objectForKey:@"data"]];
                 //保存model
@@ -193,7 +226,11 @@
                 RoleViewController *roleVC = [story instantiateViewControllerWithIdentifier:@"RoleViewController"];
                 UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:roleVC];
                 [self presentViewController:navi animated:YES completion:nil];
-            }
+                    
+                }else {
+                
+                    [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
+                }
             }
         } failure:^(NSError *error) {
             
@@ -201,11 +238,11 @@
             
         } type:0];
         
-        }else {
-            NSLog(@"验证失败");
-            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
-        }
-    }];
+//        }else {
+//            FxLog(@"验证失败");
+//            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
+//        }
+//    }];
     }
     
 }

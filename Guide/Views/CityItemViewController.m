@@ -79,8 +79,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [KSMNetworkRequest postRequest:KGetCityList params:nil success:^(id responseObj) {
         
-      [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -95,13 +93,18 @@ static NSString * const reuseIdentifier = @"Cell";
             if (dataArray.count > 0) {
                bindCity = dataArray[0];
             }
-           
+                
             [collection reloadData];
+            }else {
+            
+                [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
+            }
         }
-        }
+        
+        [[HUDConfig shareHUD]dismiss];
        
     } failure:^(NSError *error) {
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
     } type:0];
 }
 
@@ -152,35 +155,35 @@ static NSString * const reuseIdentifier = @"Cell";
     self.params.cityId = bindCity.id;
     self.params.serviceCity = bindCity.cityName;
     
-    NSLog(@"%@",self.params.mj_keyValues);
+    FxLog(@"%@",self.params.mj_keyValues);
     
-    [[HUDConfig shareHUD] alwaysShow];
-    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"%@",responseObj);
-        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-            
-            NSDictionary *dic = [responseObj objectForKey:@"data"];
-            
-            if ([dic.allKeys containsObject:@"cityId"]) {
-                account.cityId = [dic objectForKey:@"cityId"];
-            }
-            if ([dic.allKeys containsObject:@"serviceCity"]) {
-                account.serviceCity = [dic objectForKey:@"serviceCity"];
-            }
-            
-            [AccountModel saveAccount:account];
+//    [[HUDConfig shareHUD] alwaysShow];
+//    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
+//        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+//        FxLog(@"%@",responseObj);
+//        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+//            
+//            NSDictionary *dic = [responseObj objectForKey:@"data"];
+//            
+//            if ([dic.allKeys containsObject:@"cityId"]) {
+//                account.cityId = [dic objectForKey:@"cityId"];
+//            }
+//            if ([dic.allKeys containsObject:@"serviceCity"]) {
+//                account.serviceCity = [dic objectForKey:@"serviceCity"];
+//            }
+//            
+//            [AccountModel saveAccount:account];
             self.callBlock(bindCity);
             
             [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-    } failure:^(NSError *error) {
-        
-        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
-        
-    } type:2];
+//        }
     
+//    } failure:^(NSError *error) {
+//        
+//        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
+//        
+//    } type:2];
+
 }
 
 - (void)returnBindCity:(severCityBlock)block {

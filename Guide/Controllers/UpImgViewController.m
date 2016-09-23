@@ -104,9 +104,21 @@
     servicesIntroductionsPhoto = [NSMutableArray array];; //服务介绍配图
     account = [AccountModel account];
     
-    if (account.photoPaths.length != 0) {
+    
+    
+    NSString *imageString;
+    if ([Uitils getUserDefaultsForKey:account.id]) {
         
-        NSArray *photos = [account.photoPaths componentsSeparatedByString:@","];
+        imageString = [Uitils getUserDefaultsForKey:account.id];
+        
+    }else {
+        
+        imageString = account.photoPaths;
+    }
+    
+    if (imageString.length > 0) {
+        
+        NSArray *photos = [imageString componentsSeparatedByString:@","];
         //照片
         self.phoneCount.text = [NSString stringWithFormat:@"个人照片（%ld张）",photos.count];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -126,7 +138,11 @@
         }
         
         //个人介绍
-        self.selfIntroductionsTV.text = account.selfIntroductions;
+        if (account.selfIntroductions) {
+        
+            self.selfIntroductionsTV.text = account.selfIntroductions;
+        }
+        
         [selfIntroductionsPhoto addObjectsFromArray:[account.selfIntroductionsPhoto componentsSeparatedByString:@","]];
         switch (selfIntroductionsPhoto.count) {
             case 0:
@@ -147,8 +163,12 @@
         }
         self.selfIntroductionsTV_Count.text = [NSString stringWithFormat:@"%ld/400",account.selfIntroductions.length];
         
+        
         //您的生活
-        self.selflifeIntroductionsTV.text = account.selflifeIntroductions;
+        if (account.selflifeIntroductions) {
+            
+            self.selflifeIntroductionsTV.text = account.selflifeIntroductions;
+        }
         [selflifeIntroductionsPhoto addObjectsFromArray:[account.selflifeIntroductionsPhoto componentsSeparatedByString:@","]];
         switch (selflifeIntroductionsPhoto.count) {
             case 0:
@@ -171,7 +191,10 @@
         
         
         //您的服务
-        self.servicesIntroductionsTV.text = account.servicesIntroductions;
+        if (account.servicesIntroductions) {
+            
+             self.servicesIntroductionsTV.text = account.servicesIntroductions;
+        }
         [servicesIntroductionsPhoto addObjectsFromArray:[account.servicesIntroductionsPhoto componentsSeparatedByString:@","]];
         switch (servicesIntroductionsPhoto.count) {
             case 0:
@@ -193,7 +216,10 @@
         self.servicesIntroductionsTV_Count.text = [NSString stringWithFormat:@"%ld/400",account.servicesIntroductions.length];
         
         //您的城市
-        self.selfcityIntroductionsTV.text = account.selfcityIntroductions;
+        if (account.selfcityIntroductions) {
+            
+            self.selfcityIntroductionsTV.text = account.selfcityIntroductions;
+        }
         [selfcityIntroductionsPhoto addObjectsFromArray:[account.selfcityIntroductionsPhoto componentsSeparatedByString:@","]];
         switch (selfcityIntroductionsPhoto.count) {
             case 0:
@@ -215,12 +241,13 @@
         self.selfcityIntroductionsTV_Count.text = [NSString stringWithFormat:@"%ld/400",account.selfcityIntroductions.length];
         
         //个性签名
-        self.selfdomLabelTV.text = account.selfdomLabel;
-        self.selfdomLabelTV_Count.text = [NSString stringWithFormat:@"%ld/400",account.selfdomLabel.length];
-        
-        
-    }
+        if (account.signature) {
+            
+            self.selfdomLabelTV.text = account.signature;
+        }
+        self.selfdomLabelTV_Count.text = [NSString stringWithFormat:@"%ld/400",account.signature.length];
 
+    }
 
 }
 
@@ -264,6 +291,10 @@
         if ([self.selfIntroductionsTV.text isEqualToString:SELFTV]) {
             
             textView.text = @"";
+            textView.textColor = lever1Color;
+        }else {
+            
+            textView.textColor = lever3Color;
         }
     }
     
@@ -272,6 +303,10 @@
         if ([self.selflifeIntroductionsTV.text isEqualToString:SELF_LIFE]) {
             
             textView.text = @"";
+            textView.textColor = lever1Color;
+        }else {
+            
+            textView.textColor = lever3Color;
         }
     }
     
@@ -280,6 +315,10 @@
         if ([self.selfcityIntroductionsTV.text isEqualToString:SELF_CITY]) {
             
             textView.text = @"";
+            textView.textColor = lever1Color;
+        }else {
+            
+            textView.textColor = lever3Color;
         }
     }
     
@@ -288,6 +327,10 @@
         if ([self.servicesIntroductionsTV.text isEqualToString:SELF_SEVER]) {
             
             textView.text = @"";
+            textView.textColor = lever1Color;
+        }else {
+            
+            textView.textColor = lever3Color;
         }
     }
     
@@ -296,6 +339,10 @@
         if ([self.selfdomLabelTV.text isEqualToString:SELF_SIGN]) {
             
             textView.text = @"";
+            textView.textColor = lever1Color;
+        }else {
+        
+            textView.textColor = lever3Color;
         }
     }
     
@@ -410,22 +457,42 @@
                 
                 if (array.count == 1) {
                     
-                    self.selfIntroductionsImg1.image = array[0];
-                    [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg1",account.id]];
+                    UIImage *image = array[0];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg1",account.id]];
+                     if (selfIntroductionsPhoto.count == 1) {
+                    
+                        self.selfIntroductionsImg2.image = image;
+                        [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg2@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg2@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                         
+                     }else if (selfIntroductionsPhoto.count == 2) {
+                     
+                         self.selfIntroductionsImg1.image = array[0];
+                         [selfIntroductionsPhoto replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                         [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                         
+                     }else {
+                     
+                         self.selfIntroductionsImg1.image = array[0];
+                         [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                         [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                     }
                 }
                 if (array.count == 2) {
-                    self.selfIntroductionsImg1.image = array[0];
-                    self.selfIntroductionsImg2.image = array[1];
-                    [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg1",account.id]];
-                    [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg2",account.id]];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg1",account.id]];
-                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg2",account.id]];
+                    UIImage *image1 = array[0];
+                    UIImage *image2 = array[1];
+                    
+                    [selfIntroductionsPhoto removeAllObjects];
+                    self.selfIntroductionsImg1.image = image1;
+                    self.selfIntroductionsImg2.image = image2;
+                    [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [selfIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
+                    
+                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selfIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
                     
                 }
-                
 
                 [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
                 } failure:^(NSError *error) {
@@ -436,19 +503,41 @@
                 
                 if (array.count == 1) {
                     
-                    self.selflifeIntroductionsImg1.image = array[0];
-                    [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1",account.id]];
+                    UIImage *image = array[0];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1",account.id]];
+                    if (selflifeIntroductionsPhoto.count == 1) {
+                        
+                        self.selflifeIntroductionsImg2.image = image;
+                        [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        
+                    }else if (selflifeIntroductionsPhoto.count == 2) {
+                        
+                        self.selflifeIntroductionsImg1.image = array[0];
+                        [selflifeIntroductionsPhoto replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        
+                    }else {
+                    
+                        self.selflifeIntroductionsImg1.image = array[0];
+                        [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image.size.width,image.size.height]];
+                    }
+        
                 }
                 if (array.count == 2) {
-                    self.selflifeIntroductionsImg1.image = array[0];
-                    self.selflifeIntroductionsImg2.image = array[1];
-                    [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1",account.id]];
-                    [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2",account.id]];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1",account.id]];
-                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2",account.id]];
+                    UIImage *image1 = array[0];
+                    UIImage *image2 = array[1];
+                    
+                    [selflifeIntroductionsPhoto removeAllObjects];
+                    self.selflifeIntroductionsImg1.image = image1;
+                    self.selflifeIntroductionsImg2.image = image2;
+                    [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [selflifeIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
+                    
+                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selflifeIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
                 }
                 
                 [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
@@ -460,19 +549,38 @@
                 
                 if (array.count == 1) {
                     
-                    self.selfcityIntroductionsImg1.image = array[0];
-                    [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1",account.id]];
+                    UIImage *image1 = array[0];
+                    if (selfcityIntroductionsPhoto.count == 1) {
+                        
+                        self.selfcityIntroductionsImg2.image = image1;
+                        [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        
+                    }else if (selfcityIntroductionsPhoto.count == 2) {
+                        
+                        self.selfcityIntroductionsImg1.image = array[0];
+                        [selfcityIntroductionsPhoto replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    }else {
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1",account.id]];
+                        self.selfcityIntroductionsImg1.image = array[0];
+                        [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    }
+                
                 }
                 if (array.count == 2) {
-                    self.selfcityIntroductionsImg1.image = array[0];
-                    self.selfcityIntroductionsImg2.image = array[1];
-                    [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1",account.id]];
-                    [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2",account.id]];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1",account.id]];
-                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2",account.id]];
+                    UIImage *image1 = array[0];
+                    UIImage *image2 = array[1];
+                    [selfcityIntroductionsPhoto removeAllObjects];
+                    self.selfcityIntroductionsImg1.image = image1;
+                    self.selfcityIntroductionsImg2.image = image2;
+                    [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [selfcityIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
+                    
+                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@selfcityIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
                 }
                 
                 [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
@@ -484,20 +592,38 @@
                 
                 if (array.count == 1) {
                     
-                    self.servicesIntroductionsImg1.image = array[0];
-                    [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg1",account.id]];
+                    UIImage *image1 = array[0];
+                    if (servicesIntroductionsPhoto.count == 1) {
+                        
+                        self.servicesIntroductionsImg2.image = image1;
+                        [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg2@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg2@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        
+                    }else if (servicesIntroductionsPhoto.count == 2) {
+                        
+                        self.servicesIntroductionsImg1.image = array[0];
+                        [servicesIntroductionsPhoto replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    }else {
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg1",account.id]];
+                        self.servicesIntroductionsImg1.image = array[0];
+                        [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                        [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    }
                     
                 }
                 if (array.count == 2) {
+                    
+                    UIImage *image1 = array[0];
+                    UIImage *image2 = array[1];
+                    [servicesIntroductionsPhoto removeAllObjects];
                     self.servicesIntroductionsImg1.image = array[0];
                     self.servicesIntroductionsImg2.image = array[1];
-                    [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg1",account.id]];
-                    [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg2",account.id]];
+                    [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [servicesIntroductionsPhoto addObject:[NSString stringWithFormat:@"%@servicesIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
                     
-                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg1",account.id]];
-                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg2",account.id]];
+                    [dic setValue:array[0] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg1@%.0f@%.0f",account.id,image1.size.width,image1.size.height]];
+                    [dic setValue:array[1] forKey:[NSString stringWithFormat:@"%@servicesIntroductionsImg2@%.0f@%.0f",account.id,image2.size.width,image2.size.height]];
                 }
                 
                 [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
@@ -509,7 +635,6 @@
                 break;
         }
     }];
-
 }
 
 - (IBAction)nextStep:(id)sender {
@@ -519,28 +644,43 @@
         [[HUDConfig shareHUD]Tips:@"请上传个人照片" delay:DELAY];
         return;
     }
+
     
-    
-    if ((selfIntroductionsPhoto.count + selflifeIntroductionsPhoto.count + selfcityIntroductionsPhoto.count + servicesIntroductionsPhoto.count) == 0) {
-        
-        [[HUDConfig shareHUD]Tips:@"请上传至少一张配图" delay:DELAY];
+    if (selfIntroductionsPhoto.count == 0) {
+       
+        [[HUDConfig shareHUD]Tips:@"请上传至少一张个人介绍配图" delay:DELAY];
         return;
     }
     
+    if (selflifeIntroductionsPhoto.count == 0) {
+     
+        [[HUDConfig shareHUD]Tips:@"请上传至少一张我的生活配图" delay:DELAY];
+        return;
+    }
+    
+    if (selfcityIntroductionsPhoto.count == 0) {
+        
+        [[HUDConfig shareHUD]Tips:@"请上传至少一张所在城市配图" delay:DELAY];
+        return;
+    }
+    
+    if (servicesIntroductionsPhoto.count == 0) {
+        
+        [[HUDConfig shareHUD]Tips:@"请上传至少一张您的服务配图" delay:DELAY];
+        return;
+    }
     
     if ([self.selfIntroductionsTV.text isEqualToString:SELFTV]) {
         [[HUDConfig shareHUD]Tips:@"请填写个人介绍" delay:DELAY];
         return;
     }
 
-    
     if ([self.selflifeIntroductionsTV.text isEqualToString:SELF_LIFE]) {
         
         [[HUDConfig shareHUD]Tips:@"请介绍一下您的生活吧" delay:DELAY];
         return;
     }
 
-    
     if ([self.selfcityIntroductionsTV.text isEqualToString:SELF_CITY]) {
         
         [[HUDConfig shareHUD]Tips:@"请介绍一下您所在的城市吧" delay:DELAY];
@@ -580,16 +720,19 @@
         self.params.signature = self.selfdomLabelTV.text;
         
         
-        NSLog(@"%@",self.params.mj_keyValues);
+        FxLog(@"%@",self.params.mj_keyValues);
+        
+        [[HUDConfig shareHUD]alwaysShow];
         
         [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
             
-            [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-            NSLog(@"%@",responseObj);
+            FxLog(@"%@",responseObj);
             
             if (![responseObj isKindOfClass:[NSNull class]]) {
                 
                 if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+                    
+                    [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
                     
                     NSDictionary *dic = [responseObj objectForKey:@"data"];
                     account.selfIntroductions = [dic objectForKey:@"selfIntroductions"];
@@ -604,10 +747,18 @@
                     //保存model
                     [AccountModel saveAccount:account];
                     
+                    //字段转model
+//                    AccountModel *saveAccount = [AccountModel mj_objectWithKeyValues:dic];
+                    //保存model
+//                    [AccountModel saveAccount:saveAccount];
+                    
                     
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     LabelViewController *labelVC = [story instantiateViewControllerWithIdentifier:@"LabelViewController"];
                     [self.navigationController pushViewController:labelVC animated:YES];
+                }else {
+                
+                    [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
                 }
             }
             

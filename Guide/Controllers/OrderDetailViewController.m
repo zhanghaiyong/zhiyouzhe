@@ -37,9 +37,10 @@
     
     [KSMNetworkRequest getRequest:KAppointOrderDetail params:params success:^(id responseObj) {
         
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
         
-        NSLog(@"loadOrderDetailData = %@",responseObj);
+        [[HUDConfig shareHUD]dismiss];
+        
+        FxLog(@"loadOrderDetailData = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 NSDictionary *dic = [responseObj objectForKey:@"data"];
@@ -50,7 +51,7 @@
         }
     } failure:^(NSError *error) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         [[HUDConfig shareHUD]dismiss];
         
     } type:0];
@@ -67,15 +68,76 @@
     self.telLabel.text = [NSString stringWithFormat:@"电话：%@",orderModel.vPhone];
     self.priceLabel.text = [NSString stringWithFormat:@"收费：%@",orderModel.orderMoney];
     
-    if ([orderModel.orderState integerValue] == 1 || [orderModel.orderState integerValue] == 2) {
-        
-        self.scoreView.hidden = YES;
-        self.tipsLabel.hidden = NO;
-    }else {
     
-        self.scoreView.hidden = NO;
-        self.tipsLabel.hidden = YES;
+    //    "0"; //待付款
+    //    "1"; //待出行
+    //    "2"; //退款中
+    //    "3"; //已退款
+    //    "4";//行程中
+    //    "5";//已结束
+    switch ([orderModel.orderState integerValue]) {
+        case 0:
+            
+            self.scoreView.hidden = YES;
+            self.tipsLabel.hidden = NO;
+            self.tipsLabel.text = @"待付款";
+            
+            break;
+        case 1:
+            self.scoreView.hidden = YES;
+            self.tipsLabel.hidden = NO;
+            self.tipsLabel.text = @"待出行";
+            
+            break;
+        case 2:
+            
+            self.scoreView.hidden = YES;
+            self.tipsLabel.hidden = NO;
+            self.tipsLabel.text = @"退款中";
+            
+            break;
+        case 3:
+            
+            self.scoreView.hidden = YES;
+            self.tipsLabel.hidden = NO;
+            self.scores.show_star = [orderModel.orderGrade integerValue];
+            
+            break;
+        case 4:
+            
+            self.scoreView.hidden = NO;
+            self.tipsLabel.hidden = YES;
+            self.scores.show_star = [orderModel.orderGrade integerValue];
+            
+            break;
+        case 5:
+            
+            self.scoreView.hidden = NO;
+            self.tipsLabel.hidden = YES;
+            self.scores.show_star = [orderModel.orderGrade integerValue];
+            
+            break;
+            
+        default:
+            
+            self.scoreView.hidden = NO;
+            self.tipsLabel.hidden = YES;
+            self.scores.show_star = [orderModel.orderGrade integerValue];
+            
+            break;
     }
+    
+    NSLog(@"sdgfsfh = %@",orderModel.orderGrade);
+    
+//    if ([orderModel.orderState integerValue] == 0 || [orderModel.orderState integerValue] == 1 || [orderModel.orderState integerValue] == 2 || [orderModel.orderState integerValue] == 3 || [orderModel.orderState integerValue] == 4) {
+//        
+//        self.scoreView.hidden = YES;
+//        self.tipsLabel.hidden = NO;
+//    }else {
+//    
+//        self.scoreView.hidden = NO;
+//        self.tipsLabel.hidden = YES;
+//    }
 }
 
 @end

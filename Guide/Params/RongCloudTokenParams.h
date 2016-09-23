@@ -12,4 +12,5 @@
 @property (nonatomic,strong)NSString  *userId;
 @property (nonatomic,strong)NSString  *userName;
 @property (nonatomic,strong)NSString  *portraitUri;
+@property (nonatomic,strong)NSString  *type;
 @end

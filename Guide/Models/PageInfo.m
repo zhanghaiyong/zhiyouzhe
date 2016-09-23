@@ -8,7 +8,8 @@
 
 #import "PageInfo.h"
 #import "RootTabBarController.h"
-
+#import "OrderListViewController.h"
+#import "NewsViewController.h"
 @implementation PageInfo
 
 + (UITabBarController *)pageControllers {
@@ -30,6 +31,25 @@
         pageController.tabBarItem.selectedImage = [UIImage imageNamed:pageInfo.SelectImage];
 //        pageController.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
         [controllers addObject:navPage];
+        
+//        if ([pageInfo.ClassName isEqualToString:@"OrderListViewController"]) {
+//            
+//            OrderListViewController *orderList = (OrderListViewController *)pageController;
+//            [orderList registerNSNotification];
+//            
+//        }
+//        
+//        
+//        if ([pageInfo.ClassName isEqualToString:@"NewsViewController"]) {
+//            
+//            NewsViewController *newVC = (NewsViewController *)pageController;
+//            [newVC registerNSNotification];
+//        }
+//        
+//        if ([pageInfo.ClassName isEqualToString:@"PersonalViewController"]) {
+//            
+//        }
+        
     }
     
     rootTabBar.viewControllers = controllers;

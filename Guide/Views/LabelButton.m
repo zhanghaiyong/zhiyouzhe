@@ -29,7 +29,7 @@
 
 - (void)colseLabel {
     
-    NSLog(@"sfdfxgfhfg");
+    FxLog(@"sfdfxgfhfg");
 }
 
 @end

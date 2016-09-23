@@ -26,7 +26,7 @@
     
     NSInteger cacheSize = [SDWebImageManager.sharedManager.imageCache getSize];
     
-    NSLog(@"cacheSize = %ld",(long)(long)cacheSize);
+    FxLog(@"cacheSize = %ld",(long)(long)cacheSize);
     
     if (cacheSize/(1024*1024*1024) > 0) {
         
@@ -71,23 +71,41 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否退出当前用户" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-//        AccountModel *account = [AccountModel account];
-//        
-//        NSString *url = [NSString stringWithFormat:@"%@?%@",KLogout,account.id];
-//        
-//        [KSMNetworkRequest postRequest:url params:nil success:^(id responseObj) {
-//            
-//            NSLog(@"%@",responseObj);
-//            
-//        } failure:^(NSError *error) {
-//            
-//        } type:1];
+        AccountModel *account = [AccountModel account];
         
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *login = [story instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [UIApplication sharedApplication].keyWindow.rootViewController = login;
-        [AccountModel deleteAccount];
-        [[JiPush shareJpush] setAlias:@""];
+        NSString *url = [NSString stringWithFormat:@"%@?id=%@",KLogout,account.id];
+        
+        [[HUDConfig shareHUD]alwaysShow];
+        
+        [KSMNetworkRequest postRequest:url params:nil success:^(id responseObj) {
+            
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
+            FxLog(@"sdgsdf = %@",dic);
+            
+            if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
+                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *login = [story instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [UIApplication sharedApplication].keyWindow.rootViewController = login;
+                [AccountModel deleteAccount];
+                [Uitils UserDefaultRemoveObjectForKey:TOKEN];
+                [[JiPush shareJpush] setAlias:@""];
+                
+            }else {
+            
+                [[HUDConfig shareHUD]Tips:@"退出失败" delay:DELAY];
+            }
+
+            [[HUDConfig shareHUD]dismiss];
+            
+        } failure:^(NSError *error) {
+            
+            [[HUDConfig shareHUD]Tips:@"退出失败" delay:DELAY];
+            [[HUDConfig shareHUD]dismiss];
+            
+        } type:1];
+        
+
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"点错了" style:UIAlertActionStyleDestructive handler:nil]];
     

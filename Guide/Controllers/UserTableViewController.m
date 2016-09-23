@@ -114,43 +114,43 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *context = dataSource[indexPath.row];
-    if ([self.title isEqualToString:SEX]) {
-        
-        self.params.sex = context;
-
-    }else {
-        
-        self.params.degree = context;
-    }
-    
-    NSLog(@"%@",self.params.mj_keyValues);
-    
-    [[HUDConfig shareHUD] alwaysShow];
-    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"%@",responseObj);
-        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
-            
-            NSDictionary *dic = [responseObj objectForKey:@"data"];
-            
-            if ([dic.allKeys containsObject:@"sex"]) {
-                account.sex = [dic objectForKey:@"sex"];
-            }
-            if ([dic.allKeys containsObject:@"degree"]) {
-                account.degree = [dic objectForKey:@"degree"];
-            }
-
-            [AccountModel saveAccount:account];
+//    if ([self.title isEqualToString:SEX]) {
+//        
+//        self.params.sex = context;
+//
+//    }else {
+//        
+//        self.params.degree = context;
+//    }
+//    
+//    FxLog(@"%@",self.params.mj_keyValues);
+//    
+//    [[HUDConfig shareHUD] alwaysShow];
+//    [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
+//        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+//        FxLog(@"%@",responseObj);
+//        if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
+//            
+//            NSDictionary *dic = [responseObj objectForKey:@"data"];
+//            
+//            if ([dic.allKeys containsObject:@"sex"]) {
+//                account.sex = [dic objectForKey:@"sex"];
+//            }
+//            if ([dic.allKeys containsObject:@"degree"]) {
+//                account.degree = [dic objectForKey:@"degree"];
+//            }
+//
+//            [AccountModel saveAccount:account];
             self.block(context);
             
             [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-    } failure:^(NSError *error) {
-        
-        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
-        
-    } type:2];
+//        }
+//        
+//    } failure:^(NSError *error) {
+//        
+//        [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
+//        
+//    } type:2];
 
 }
 

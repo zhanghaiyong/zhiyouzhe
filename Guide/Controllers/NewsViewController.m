@@ -56,11 +56,18 @@
     self.hidesBottomBarWhenPushed = NO;
 }
 
+- (void)awakeFromNib {
+
+    account = [AccountModel account];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSystem) name:REFRESH_SYSTEM object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOrder) name:REFRESH_ORDER object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAppoint) name:REFRESH_APPOINT object:nil];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"消息";
-
-    account = [AccountModel account];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
 
@@ -74,9 +81,6 @@
     }];
     [self.tableView.mj_header beginRefreshing];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSystem) name:REFRESH_SYSTEM object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOrder) name:REFRESH_ORDER object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAppoint) name:REFRESH_APPOINT object:nil];
 }
 
 #pragma mark 请求消息未读数
@@ -88,7 +92,7 @@
     [KSMNetworkRequest postRequest:KUnreadSystemMsgCount params:params success:^(id responseObj) {
         [self.tableView.mj_header endRefreshing];
         
-        NSLog(@"unreadSystemMsgCount = %@",responseObj);
+        FxLog(@"unreadSystemMsgCount = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             
@@ -125,7 +129,7 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest postRequest:KUnreadOrderMsgCount params:params success:^(id responseObj) {
         [self.tableView.mj_header endRefreshing];
-        NSLog(@"unreadOrderMsgCount = %@",responseObj);
+        FxLog(@"unreadOrderMsgCount = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             NSString *count = [responseObj objectForKey:@"count"];
@@ -161,7 +165,7 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest postRequest:KUnreadAppointmentMsgCount params:params success:^(id responseObj) {
         [self.tableView.mj_header endRefreshing];
-        NSLog(@"unreadAppointmentMsgCount = %@",responseObj);
+        FxLog (@"unreadAppointmentMsgCount = %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             NSString *count = [responseObj objectForKey:@"count"];

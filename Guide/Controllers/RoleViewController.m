@@ -35,86 +35,79 @@
 
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+
+    [super viewDidDisappear:animated];
+    [[HUDConfig shareHUD]dismiss];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (indexPath.section) {
         case 0:{
             
-            RongCloudTokenParams *params = [[RongCloudTokenParams alloc]init];
-            params.userId                = account.id;
-//            NSString *string = account.nickname.length ==0 || account.nickname.length>10?@"111":[account.nickname substringWithRange:NSMakeRange(0, 10)];
-            NSString *string = account.nickname;
-            if (string.length ==0) {
-                string =@"1111";
-            }
-            else if (string.length >10) {
-                string = [string substringWithRange:NSMakeRange(0, 10)];
-            }
+            [[HUDConfig shareHUD]alwaysShow];
             
-            params.userName              = string;
-            params.portraitUri           = [NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl];
-            
-            [[HUDConfig shareHUD] alwaysShow];
-            
-            RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:account.id name:account.nickname portrait:[NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl]];
-            [RCIM sharedRCIM].currentUserInfo = userInfo;
-            NSLog(@"currentUserInfo = %@",userInfo);
-            
-            [KSMNetworkRequest getRequest:KGgetRongCloudToken params:params.mj_keyValues success:^(id responseObj) {
-            
-                [[HUDConfig shareHUD] dismiss];
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
-                NSLog(@"  dic = %@",dic);
-                [[SDKKey shareSDKKey] RCIMConnectWithToken:[dic objectForKey:@"data"]];
-            
+            if ([Uitils getUserDefaultsForKey:TOKEN]) {
                 
-                //第一部分资料没有完善
-                if (account.nickname.length == 0) {
-                
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    KnowFirstRegisterVC *KnowFirst = [story instantiateViewControllerWithIdentifier:@"KnowFirstRegisterVC"];
-                    [self.navigationController pushViewController:KnowFirst animated:YES];
-                    return;
-                }
-                
-                //没有身份认证
-                if (account.realName.length == 0) {
+                [[SDKKey shareSDKKey] RCIMConnectWithToken:[Uitils getUserDefaultsForKey:TOKEN] success:^{
                     
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
-                    [self.navigationController pushViewController:KnowThree animated:YES];
-                    return;
-                }
-                
-                //没有上传6张以上照片
-                if (account.photoPaths.length == 0) {
+                    [self intoFace];
                     
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    UpImgViewController *KnowSecond = [story instantiateViewControllerWithIdentifier:@"UpImgViewControlle"];
-                    [self.navigationController pushViewController:KnowSecond animated:YES];
-                    return;
-                }
-                
-                //没有上传6张以上照片
-                if (account.skillLabel.length == 0) {
+                } failure:^{
                     
-                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    LabelViewController *LabelView = [story instantiateViewControllerWithIdentifier:@"LabelViewController"];
-                    [self.navigationController pushViewController:LabelView animated:YES];
-                    return;
+                }];
+                
+            }else {
+            
+                RongCloudTokenParams *params = [[RongCloudTokenParams alloc]init];
+                params.userId                = account.id;
+                NSString *userName = account.nickname;
+                if (userName.length ==0) {
+                    userName =[NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]];
+                }
+                else if (userName.length >10) {
+                    userName = [userName substringWithRange:NSMakeRange(0, 10)];
                 }
                 
-                UITabBarController *TabBar = [PageInfo pageControllers];
-                [self presentViewController:TabBar animated:YES completion:nil];
+                NSString *avatarName;
+                if (account.headiconUrl.length ==0) {
+                    
+                    avatarName = @"icon_head_default_iphonex";
+                }
+                else {
+                    avatarName = account.headiconUrl;
+                }
                 
+                params.userName              = userName;
+                params.portraitUri           = avatarName;
+    //            1zhengshi  2 ceshi   融云环境
+                params.type = @"1";
                 
-            } failure:^(NSError *error) {
+                RCUserInfo *userInfo = [[RCUserInfo alloc]initWithUserId:account.id name:account.nickname portrait:[NSString stringWithFormat:@"%@%@",KImageUrl,account.headiconUrl]];
+                [RCIM sharedRCIM].currentUserInfo = userInfo;
+                FxLog(@"currentUserInfo = %@",userInfo);
+                
+                [KSMNetworkRequest getRequest:KGgetRongCloudToken params:params.mj_keyValues success:^(id responseObj) {
+                
+                    
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
+                    [Uitils setUserDefaultsObject:[dic objectForKey:@"data"] ForKey:TOKEN];
+                    FxLog(@"  dic = %@",dic);
+                    [[SDKKey shareSDKKey] RCIMConnectWithToken:[dic objectForKey:@"data"] success:^{
+                        
+                        [self intoFace];
+                        
+                    } failure:^{
+                        
+                    }];
+                    
+                } failure:^(NSError *error) {
 
-                [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
-                NSLog(@"sdfsd = %@",error.localizedDescription);
-                
-            } type:1];
-            
+                    FxLog(@"sdfsd = %@",error.localizedDescription);
+                    
+                 } type:1];
+                }
         }
             break;
             
@@ -127,6 +120,50 @@
         default:
             break;
     }
+}
+
+- (void)intoFace {
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+    //第一部分资料没有完善
+    if (account.nickname.length == 0) {
+        
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        KnowFirstRegisterVC *KnowFirst = [story instantiateViewControllerWithIdentifier:@"KnowFirstRegisterVC"];
+        [self.navigationController pushViewController:KnowFirst animated:YES];
+        return;
+    }
+    
+    //没有身份认证
+    if (account.realName.length == 0) {
+        
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
+        [self.navigationController pushViewController:KnowThree animated:YES];
+        return;
+    }
+    
+    //没有上传6张以上照片
+    if (account.photoPaths.length == 0) {
+        
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        UpImgViewController *KnowSecond = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+        [self.navigationController pushViewController:KnowSecond animated:YES];
+        return;
+    }
+    
+    //没有上传6张以上照片
+    if (account.selfdomLabel.length == 0) {
+        
+        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LabelViewController *LabelView = [story instantiateViewControllerWithIdentifier:@"LabelViewController"];
+        [self.navigationController pushViewController:LabelView animated:YES];
+        return;
+    }
+    
+    UITabBarController *TabBar = [PageInfo pageControllers];
+        [self presentViewController:TabBar animated:YES completion:nil];
+    });
 }
 
 

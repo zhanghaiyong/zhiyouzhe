@@ -41,7 +41,7 @@
                 break;
         }
         
-        NSLog(@"%ld",(long)status);
+        FxLog(@"%ld",(long)status);
     }];                                                                                                              
 }
 
@@ -150,7 +150,7 @@
 
     NSString *string = [NSString stringWithFormat:@"%@%@",KImageUrl,imageName];
     NSURL *url = [NSURL URLWithString:string];
-    NSLog(@"sdfasdf  =%@",url);
+    FxLog(@"sdfasdf  =%@",url);
     [imageV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:placehImg] options:SDWebImageProgressiveDownload | SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (!error) {
              loaded(image);
@@ -164,7 +164,7 @@
     
     NSString *string = [NSString stringWithFormat:@"%@%@",KVisiterUrl,imageName];
     NSURL *url = [NSURL URLWithString:string];
-    NSLog(@"sdfasdf  =%@",url);
+    FxLog(@"sdfasdf  =%@",url);
     [imageV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:placehImg]];
     
 }

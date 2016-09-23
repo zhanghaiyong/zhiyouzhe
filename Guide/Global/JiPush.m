@@ -92,30 +92,30 @@
 
 - (void)exchane {
 
-    NSLog(@"xvczdxv");
+    FxLog(@"设置别名");
 }
 
 #pragma  mark notifitionMethod 
 - (void)method1 {
     
-    NSLog(@"建立连接");
+    FxLog(@"建立连接");
 }
 
 - (void)method2 {
     
-    NSLog(@"关闭连接");
+    FxLog(@"关闭连接");
 }
 
 - (void)method3 {
     
-    NSLog(@"注册成功");
+    FxLog(@"注册成功");
 }
 
 - (void)method4 {
     
-    NSLog(@"登录成功");
+    FxLog(@"登录成功");
     NSString *registration = [JPUSHService registrationID];
-    NSLog(@"%@",registration);
+    FxLog(@"%@",registration);
     
 }
 @end

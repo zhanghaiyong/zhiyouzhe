@@ -74,8 +74,6 @@
     
 }
 
-
-
 /**
  *  将要显示会话消息，可以修改RCMessageBaseCell的头像形状，添加自定定义的UI修饰，建议不要修改里面label 文字的大小，cell 大小是根据文字来计算的，如果修改大小可能造成cell 显示出现问题
  *
@@ -84,85 +82,92 @@
  */
 - (void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"cellUserInfo = %@",cell.model.userInfo);
+    FxLog(@"cellUserInfo = %@",cell.model.content.mj_keyValues);
     
-//    //设置文本字体颜色等等
-//    if ([cell isMemberOfClass:[RCTextMessageCell class]]) {
-//        
-//        RCTextMessageCell *textCell = (RCTextMessageCell *)cell;
-//        //可以修改cell的背景图
-////        textCell.bubbleBackgroundView.image = [UIImage imageNamed:@"效果图1"];
-//        UILabel *textLabel = (UILabel *)textCell.textLabel;
-//        textLabel.textColor = [UIColor blueColor];
-//        
-//        
-//    }
-
+    NSDictionary *dic = cell.model.content.mj_keyValues;
+    NSString *str = [[dic objectForKey:@"content"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if ([str isMobilphone] || [str isTelephone] || [str isEmail] ) {
+        //设置文本字体颜色等等
+        if ([cell isMemberOfClass:[RCTextMessageCell class]]) {
+            
+            RCTextMessageCell *textCell = (RCTextMessageCell *)cell;
+            UILabel *textLabel = (UILabel *)textCell.textLabel;
+            NSString * searchStr = str;
+            NSString * regExpStr = @"[0-9]";
+            NSString * replacement = @"*";
+            // 创建 NSRegularExpression 对象,匹配 正则表达式
+            NSRegularExpression *regExp = [[NSRegularExpression alloc] initWithPattern:regExpStr options:NSRegularExpressionCaseInsensitive error:nil];                                                                  NSString *resultStr = searchStr;
+            // 替换匹配的字符串为searchStr
+            resultStr = [regExp stringByReplacingMatchesInString:searchStr options:NSMatchingReportProgress range:NSMakeRange(0, searchStr.length)withTemplate:replacement]; NSLog(@"nsearchStr = %@nresultStr = %@",searchStr,resultStr);
+            textLabel.text = resultStr;
+        }
+    }
 }
 
 
-/*!
- 点击Cell中的消息内容的回调
- 
- @param model 消息Cell的数据模型
- 
- @discussion SDK在此点击事件中，针对SDK中自带的图片、语音、位置等消息有默认的处理，如查看、播放等。
- 您在重写此回调时，如果想保留SDK原有的功能，需要注意调用super。
- */
-
-- (void)didTapMessageCell:(RCMessageModel *)model {
-
-    NSLog(@"点击cell ＝ %@",model);
-}
-
-
-/*!
- 点击Cell中URL的回调
- 
- @param url   点击的URL
- @param model 消息Cell的数据模型
- */
-- (void)didTapUrlInMessageCell:(NSString *)url
-                         model:(RCMessageModel *)model {
-
-    NSLog(@"点击url");
-}
-
-/*!
- 点击Cell中电话号码的回调
- 
- @param phoneNumber 点击的电话号码
- @param model       消息Cell的数据模型
- */
-- (void)didTapPhoneNumberInMessageCell:(NSString *)phoneNumber
-                                 model:(RCMessageModel *)model {
-
-    NSLog(@"点击phone");
-}
-
-/*!
- 点击Cell中头像的回调
- 
- @param userId  点击头像对应的用户ID
- */
-- (void)didTapCellPortrait:(NSString *)userId {
-
-    NSLog(@"点击头像");
-}
-
-/*!
- 长按Cell中头像的回调
- 
- @param userId  头像对应的用户ID
- */
-- (void)didLongPressCellPortrait:(NSString *)userId {
-
-    NSLog(@"长按头像");
-}
+///*!
+// 点击Cell中的消息内容的回调
+// 
+// @param model 消息Cell的数据模型
+// 
+// @discussion SDK在此点击事件中，针对SDK中自带的图片、语音、位置等消息有默认的处理，如查看、播放等。
+// 您在重写此回调时，如果想保留SDK原有的功能，需要注意调用super。
+// */
+//
+//- (void)didTapMessageCell:(RCMessageModel *)model {
+//
+//    FxLog(@"点击cell ＝ %@",model);
+//}
+//
+//
+///*!
+// 点击Cell中URL的回调
+// 
+// @param url   点击的URL
+// @param model 消息Cell的数据模型
+// */
+//- (void)didTapUrlInMessageCell:(NSString *)url
+//                         model:(RCMessageModel *)model {
+//
+//    FxLog(@"点击url");
+//}
+//
+///*!
+// 点击Cell中电话号码的回调
+// 
+// @param phoneNumber 点击的电话号码
+// @param model       消息Cell的数据模型
+// */
+//- (void)didTapPhoneNumberInMessageCell:(NSString *)phoneNumber
+//                                 model:(RCMessageModel *)model {
+//
+//    FxLog(@"点击phone");
+//}
+//
+///*!
+// 点击Cell中头像的回调
+// 
+// @param userId  点击头像对应的用户ID
+// */
+//- (void)didTapCellPortrait:(NSString *)userId {
+//
+//    FxLog(@"点击头像");
+//}
+//
+///*!
+// 长按Cell中头像的回调
+// 
+// @param userId  头像对应的用户ID
+// */
+//- (void)didLongPressCellPortrait:(NSString *)userId {
+//
+//    FxLog(@"长按头像");
+//}
 
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)lef {
     
-    NSLog(@"content = %@",message.content.mj_keyValues);
+    FxLog(@"content = %@",message.content.mj_keyValues);
     
     if (message.conversationType == 6) {
         
@@ -178,7 +183,7 @@
                 [self.navigationController popViewControllerAnimated:YES];;
             }
         }
-        NSLog(@"xoxoxo %@ ",message.content.mj_keyValues);
+        FxLog(@"xoxoxo %@ ",message.content.mj_keyValues);
             
           });
     }

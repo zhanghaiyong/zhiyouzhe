@@ -117,9 +117,21 @@
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
         self.navigationItem.leftBarButtonItem = leftItem;
         _nextButton.hidden = YES;
+    
+    
+    NSString *imageString;
+    if ([Uitils getUserDefaultsForKey:account.id]) {
         
-        if (account.photoPaths.length != 0) {
-            NSString *path = [NSString stringWithFormat:@"%@",account.photoPaths];
+        imageString = [Uitils getUserDefaultsForKey:account.id];
+        
+    }else {
+    
+        imageString = account.photoPaths;
+    }
+    
+    
+        if (imageString.length > 0) {
+            NSString *path = [NSString stringWithFormat:@"%@",imageString];
             NSArray *photos = [path componentsSeparatedByString:@","];
             __block  int j=0;
             for (int i = 0; i<photos.count; i++) {
@@ -139,9 +151,8 @@
                         }
                         
                         
-                        NSLog(@"dfs = %ld  %ld",self.selectedPhotos.count,photos.count);
+                        FxLog(@"dfs = %ld  %ld",self.selectedPhotos.count,photos.count);
                     }];
-                
             }
         }
         
@@ -241,7 +252,7 @@
             [self presentViewController:controller
                                animated:YES
                              completion:^(void){
-                                 NSLog(@"Picker View Controller is presented");
+                                 FxLog(@"Picker View Controller is presented");
                              }];
         }
         
@@ -257,7 +268,7 @@
             [self presentViewController:controller
                                animated:YES
                              completion:^(void){
-                                 NSLog(@"Picker View Controller is presented");
+                                 FxLog(@"Picker View Controller is presented");
                              }];
         }
     }
@@ -406,7 +417,7 @@
     [sourceImage drawInRect:thumbnailRect];
     
     newImage = UIGraphicsGetImageFromCurrentImageContext();
-    if(newImage == nil) NSLog(@"could not scale image");
+    if(newImage == nil) FxLog(@"could not scale image");
     
     //pop the context to get back to the default
     UIGraphicsEndImageContext();
@@ -418,7 +429,7 @@
 #pragma mark MWPhotoBrowserDelegate
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser deletePhoto:(NSUInteger)index {
 
-    NSLog(@"%ld",index);
+    FxLog(@"%ld",index);
     if (!saveBtn.userInteractionEnabled) {
         saveBtn.userInteractionEnabled = YES;
         [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
@@ -440,7 +451,7 @@
     
     for (int i = 0; i<self.selectedPhotos.count; i++) {
         
-        NSLog(@"%ld",self.selectedPhotos.count);
+        FxLog(@"%ld",self.selectedPhotos.count);
         UIImageView *imageView = [self.view viewWithTag:100+i];
         UIImage *newImage = [Uitils imageWithImage:self.selectedPhotos[i] scaledToSize:CGSizeMake(120, 120)];
         imageView.image = newImage;
@@ -463,7 +474,7 @@
     NSArray *array = self.view.subviews;
     for (UIView *view in array) {
         if ([view isKindOfClass:[UIImageView class]]) {
-            NSLog(@"view is%@",view);
+            FxLog(@"view is%@",view);
         }
     }
     
@@ -485,34 +496,36 @@
     [[PostImageTool shareTool]QiniuPostImages:dic Success:^{
         NSString *imageString = [imagekeys componentsJoinedByString:@","];
         self.params.piclist = imageString;
-        NSLog(@"%@",self.params.mj_keyValues);
+        FxLog(@"%@",self.params.mj_keyValues);
         [KSMNetworkRequest postRequest:KPhotosName params:self.params.mj_keyValues success:^(id responseObj) {
 
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObj options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"dic %@",dic);
-            [[HUDConfig shareHUD] Tips:[dic objectForKey:@"msg"] delay:DELAY];
+            FxLog(@"dic %@",dic);
             
             if (![dic isKindOfClass:[NSNull class]]) {
                 if ([[dic objectForKey:@"status"] isEqualToString:@"success"]) {
-                    account.photoPaths = imageString;
-                    NSLog(@"imageString is %@",imageString);
-                    [AccountModel saveAccount:account];
+                    
+                    [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
+                    
+//                    account.photoPaths = imageString;
+                    FxLog(@"imageString is %@",imageString);
+//                    [AccountModel saveAccount:account];
+                    
+                    [Uitils setUserDefaultsObject:imageString ForKey:account.id];
                     [[HUDConfig shareHUD] SuccessHUD:@"上传成功" delay:DELAY];
                     
-                    self.block(self.selectedPhotos);
+                    if (!self.isEdit) {
+                        
+                        self.block(self.selectedPhotos);
+                        
+                    }
+                    
                     [self.navigationController popViewControllerAnimated:YES];
                     
-//                    //没有身份认证
-//                    if (account.realName.length == 0) {
-//                        
-//                        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//                        KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
-//                        [self.navigationController pushViewController:KnowThree animated:YES];
-//                        return;
-//                    }   
-//                    UITabBarController *TabBar = [PageInfo pageControllers];
-//                    [self presentViewController:TabBar animated:YES completion:nil];
-            }
+                }else {
+                
+                    [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
+                }
             }
 
         } failure:^(NSError *error) {

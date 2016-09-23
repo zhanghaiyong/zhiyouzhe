@@ -97,7 +97,7 @@
     NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token};
     [KSMNetworkRequest postRequest:KGetCalendar params:params success:^(id responseObj) {
         [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"%@",responseObj);
+        FxLog(@"%@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 NSArray *array = [responseObj objectForKey:@"data"];
@@ -155,12 +155,12 @@
         
         
         [[HUDConfig shareHUD]alwaysShow];
-        NSLog(@"saveDate  = %@",self.saveDates);
+        FxLog(@"saveDate  = %@",self.saveDates);
         NSString *dateString = [self.saveDates componentsJoinedByString:@","];
         NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token,@"dates":dateString};
         [KSMNetworkRequest postRequest:KNotOderTake params:params success:^(id responseObj) {
             [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-            NSLog(@"saveDate ＝ %@",responseObj);
+            FxLog(@"saveDate ＝ %@",responseObj);
             if (![responseObj isKindOfClass:[NSNull class]]) {
                 if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                     [self.navigationController popViewControllerAnimated:YES];
@@ -180,13 +180,13 @@
     if (self.DeleteDates.count > 0) {
         
         [[HUDConfig shareHUD]alwaysShow];
-        NSLog(@"deleteDate  = %@",self.DeleteDates);
+        FxLog(@"deleteDate  = %@",self.DeleteDates);
         NSString *dateString = [self.DeleteDates componentsJoinedByString:@","];
         NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token,@"dates":dateString};
         [KSMNetworkRequest postRequest:KorderTake params:params success:^(id responseObj) {
             
             [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-            NSLog(@"deleteDate ＝ %@",responseObj);
+            FxLog(@"deleteDate ＝ %@",responseObj);
             
             if (![responseObj isKindOfClass:[NSNull class]]) {
                 

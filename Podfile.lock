@@ -1,29 +1,23 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DACircularProgress (2.3.1)
-  - HappyDNS (0.3.5)
+  - HappyDNS (0.3.10)
   - IQKeyboardManager (3.3.7)
-  - JPush (2.1.7)
+  - JPush-iOS-SDK (2.1.8)
   - MBProgressHUD (0.9.2)
   - MJExtension (3.0.10)
   - MJRefresh (3.1.0)
@@ -31,10 +25,10 @@ PODS:
     - DACircularProgress (~> 2.3)
     - MBProgressHUD (~> 0.9)
     - SDWebImage (!= 3.7.2, ~> 3.7)
-  - Qiniu (7.0.20):
-    - AFNetworking (~> 2.0)
+  - Qiniu (7.1.0.1):
+    - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
-  - RongCloudIMKit (2.6.2)
+  - RongCloudIMKit (2.7.0)
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
@@ -43,9 +37,9 @@ PODS:
   - VPImageCropper (0.0.4)
 
 DEPENDENCIES:
-  - AFNetworking (= 2.6.3)
+  - AFNetworking
   - IQKeyboardManager (= 3.3.7)
-  - JPush (~> 2.1.6)
+  - JPush-iOS-SDK
   - MJExtension (= 3.0.10)
   - MJRefresh (= 3.1.0)
   - MWPhotoBrowser (~> 2.1.1)
@@ -57,17 +51,17 @@ DEPENDENCIES:
   - VPImageCropper (~> 0.0.4)
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  HappyDNS: 6f8cf46fa7c0b98a6591fe8ecb2e08d9907a6e8b
+  HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
-  JPush: d37320eba856bf91f2c73989df4abf1e8846db2c
+  JPush-iOS-SDK: ea5761841ba9beb7e9dab7523c5e6bfe06a48995
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   MWPhotoBrowser: 5836d7aa041dc05a13de380c246826578adc5ea5
-  Qiniu: 8958e70c02fb563c8c04d555bb5041441c5f4216
-  RongCloudIMKit: cbad580cebcd355ec3b5ee4a6062c66f9dfba67a
+  Qiniu: 0e92ff0d1b9afbc55275306671284e4ebeb08d03
+  RongCloudIMKit: 2602b151b0411b28c1c371155e1b24d9dfc08d51
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SMS_SDK: b25cca6db6063520f7e4f66faa0bc9c13cb58365
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4

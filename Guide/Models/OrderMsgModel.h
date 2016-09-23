@@ -16,5 +16,6 @@
 @property (nonatomic,strong)NSString *orderId;
 @property (nonatomic,strong)NSString *zhiliaoId;
 @property (nonatomic,strong)NSString *state;
+@property (nonatomic,strong)NSString *messageType;
 
 @end

@@ -64,7 +64,7 @@
 
     selectedEduString = dataArray[row];
     
-    NSLog(@"%@",dataArray[row]);
+    FxLog(@"%@",dataArray[row]);
 }
 
 @end

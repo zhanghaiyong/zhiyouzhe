@@ -37,36 +37,48 @@
     
     [self setNavigationLeft:@"icon_back_iphone"];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.webView.delegate = self;
-    NSURL *url;
+//    self.webView.delegate = self;
+    
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    NSString * htmlCont;
+    
     if (self.index == 0) {
        self.title = @"用户协议";
         
-        url = [NSURL URLWithString:@"http://m.zhiliaoguide.com:8080/zyz/agreement-zl.html"];
+        NSString * htmlPath = [[NSBundle mainBundle] pathForResource:@"agreement-zl"
+                                                              ofType:@"html"];
+        htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:nil];
         
     }else {
         self.title = @"使用指南";
-        url = [NSURL URLWithString:@"http://m.zhiliaoguide.com:8080/zyz/guide-zl.html"];
+        NSString * htmlPath = [[NSBundle mainBundle] pathForResource:@"guide-zl"
+                                                              ofType:@"html"];
+        htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                             encoding:NSUTF8StringEncoding
+                                                error:nil];
     }
 
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+     [self.webView loadHTMLString:htmlCont baseURL:baseURL];
 }
 
-#pragma mark UIWebViewDelegate
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-
-    [[HUDConfig shareHUD]alwaysShow];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-
-    [[HUDConfig shareHUD]dismiss];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-
-    [[HUDConfig shareHUD]dismiss];
-}
+//#pragma mark UIWebViewDelegate
+//- (void)webViewDidStartLoad:(UIWebView *)webView {
+//
+//    [[HUDConfig shareHUD]alwaysShow];
+//}
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView {
+//
+//    [[HUDConfig shareHUD]dismiss];
+//}
+//
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+//
+//    [[HUDConfig shareHUD]dismiss];
+//}
 
 @end

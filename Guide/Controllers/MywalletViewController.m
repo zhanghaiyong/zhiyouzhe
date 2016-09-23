@@ -90,8 +90,6 @@
     
     [KSMNetworkRequest postRequest:KGEtWallet params:@{@"zid":account.id,@"ztoken":account.token} success:^(id responseObj) {
         
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        
         BASE_INFO_FUN(responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
@@ -100,15 +98,16 @@
                 _moneyLabel.text = [NSString stringWithFormat:@"%.2f元",[[[responseObj objectForKey:@"data"] objectForKey:@"balanceAmount"] floatValue]];
                 walletId = [NSString stringWithFormat:@"%@",[[responseObj objectForKey:@"data"] objectForKey:@"id"]];
                 money = [NSString stringWithFormat:@"%@",[[responseObj objectForKey:@"data"] objectForKey:@"balanceAmount"]];
-//                [account setWalletId:[NSString stringWithFormat:@"%@",[[responseObj objectForKey:@"data"] objectForKey:@"id"]]];
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:[NSString stringWithFormat:@"%@",[[responseObj objectForKey:@"data"] objectForKey:@"id"]] forKey:@"WalletId"];
                 self.withDraw.moneyTF.placeholder =[NSString stringWithFormat:@"可提现金额%.2f元",[[[responseObj objectForKey:@"data"] objectForKey:@"balanceAmount"] floatValue]];
             }
         }
+        [[HUDConfig shareHUD]dismiss];
+        
     } failure:^(NSError *error) {
         
-        [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
+        [[HUDConfig shareHUD]ErrorHUD:@"失败" delay:DELAY];
         
     } type:0];
 }

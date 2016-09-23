@@ -71,24 +71,29 @@
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     
     [KSMNetworkRequest getRequest:KGetTravelList params:params success:^(id responseObj) {
-        NSLog(@"%@",responseObj);
-        [[HUDConfig shareHUD] Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"%@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 
-                [SVProgressHUD showSuccessWithStatus:[responseObj objectForKey:@"msg"]];
                 NSArray *array = [responseObj objectForKey:@"data"];
                 NSArray *modelArray = [TravelNote mj_objectArrayWithKeyValuesArray:array];
                 [self.dataArray addObjectsFromArray:modelArray];
                 
                 [self.tableView reloadData];
+                
+            }else {
+            
+                [[HUDConfig shareHUD] Tips:@"暂未发布游记" delay:DELAY];
             }
         }
+        
+        [[HUDConfig shareHUD] dismiss];
         
     } failure:^(NSError *error) {
         [[HUDConfig shareHUD] ErrorHUD:error.localizedDescription delay:DELAY];
     } type:0];
+    
 }
 
 
@@ -145,16 +150,19 @@
     self.deleteParams.id = model.id;
     
     [KSMNetworkRequest postRequest:KDeleteTravel params:self.deleteParams.mj_keyValues success:^(id responseObj) {
-        NSLog(@"删除游记 ＝ %@",responseObj);
-        [[HUDConfig shareHUD] Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+        FxLog(@"删除游记 ＝ %@",responseObj);
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             
+            [[HUDConfig shareHUD] SuccessHUD:@"删除成功"  delay:DELAY];
             [self.tableView beginUpdates];
             [self.dataArray removeObjectAtIndex:celltag];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:celltag inSection:0];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
             [self.tableView endUpdates];
+        }else {
+        
+            [[HUDConfig shareHUD] ErrorHUD:@"删除失败"  delay:DELAY];
         }
         
         

@@ -55,7 +55,7 @@
 #pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-    NSLog(@"%ld",buttonIndex);
+    FxLog(@"%ld",buttonIndex);
     
     switch (buttonIndex) {
         case 0:

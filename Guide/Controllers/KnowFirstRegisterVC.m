@@ -31,6 +31,8 @@
     //传过来的城市
     CityModel *cityModel;
 
+    BOOL repeatInfo;
+    
 //    NSString *imageName;
 }
 
@@ -191,11 +193,18 @@
         [self.navigationItem setHidesBackButton:TRUE animated:NO];
         
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStatus) name:REFRESH_STATUS object:nil];
+}
+
+- (void)refreshStatus {
+    
+    account = [AccountModel account];
+    self.carSeverLabel.text = [Uitils statusCode:account.serviceCarAuth];
 }
 
 - (void)costList {
 
-    
     [[HUDConfig shareHUD]alwaysShow];
     
     BaseParams *params = [[BaseParams alloc]init];
@@ -203,7 +212,7 @@
         
         [[HUDConfig shareHUD]dismiss];
         
-        NSLog(@"costList ＝ %@",responseObj);
+        FxLog(@"costList ＝ %@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -219,11 +228,11 @@
             NSIndexPath *pathIndex = [NSIndexPath indexPathForRow:1 inSection:3];
             UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:pathIndex];
             
-            for (int i = 0; i<6; i++) {
+            for (int i = 0; i<costs.costArray.count; i++) {
                 
                 UIButton *sender = (UIButton *)[cell viewWithTag:100+i];
                 NSDictionary *dic = costs.costArray[i];
-                NSLog(@"dic = %@",dic);
+                FxLog(@"dic = %@",dic);
                 [sender setTitle:[[dic objectForKey:@"price"] stringByReplacingOccurrencesOfString:@".00" withString:@"元"] forState:UIControlStateNormal];
                 if ([[dic objectForKey:@"price"] intValue] == [account.serviceCharge intValue]) {
                     
@@ -258,6 +267,9 @@
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    
+    repeatInfo = YES;
+    
     UITableViewCell *titleCell = [tableView cellForRowAtIndexPath:indexPath];
     UILabel *titleLabel = [titleCell.contentView viewWithTag:100];
 
@@ -271,16 +283,14 @@
                         UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                         AvatarViewController *avatarVC = [story instantiateViewControllerWithIdentifier:@"AvatarViewController"];
                         avatarVC.title = titleLabel.text;
+                        avatarVC.imageStr = account.headiconUrl;
                         
                         [avatarVC returnAvatar:^(UIImage *avatar) {
                             
                             self.avatarImg.image = avatar;
                         }];
                         
-                        [Uitils cacheImage:account.headiconUrl withImageV:avatarVC.BigAvatar withPlaceholder:@"icon_head_default_iphone" completed:^(UIImage *image) {
-                        }];
-                        
-                        [self.navigationController pushViewController:avatarVC animated:YES];
+                        [self.navigationController pushViewController:avatarVC animated:NO];
                     }
                         break;
                     case 1:{ //昵称
@@ -485,16 +495,26 @@
 
 - (IBAction)nextActionKInfoEdit:(id)sender {
     
-    if (self.isEdit) {
+    if (!repeatInfo) {
         
-        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        UpImgViewController *KnowSecond = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
-        KnowSecond.isEdit = YES;
-        [self.navigationController pushViewController:KnowSecond animated:YES];
+        if (_isEdit) {
+            
+            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            UpImgViewController *UpImg = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+            [self.navigationController pushViewController:UpImg animated:YES];
+        }else {
+        
+            UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
+            KnowThree.isEdit = self.isEdit;
+            [self.navigationController pushViewController:KnowThree animated:YES];
+        }
     }
-    else
+    
+    else {
         
-    [self postData];
+        [self postData];
+    }
 }
 
 
@@ -502,75 +522,73 @@
    
     
     [[HUDConfig shareHUD] alwaysShow];
-//    所有字断不能为空
-//        if (self.nickLabel.text.length == 0 ||
-//            self.ageLabel.text.length  == 0 ||
-//            self.sexLabel.text.length  == 0 ||
-//            self.areaLabel.text.length  == 0 ||
-//            self.workStatusLabel.text.length == 0 ||
-//            self.collegeLabel.text.length  == 0 ||
-//            self.degreeLabel.text.length  == 0 ||
-//            self.weixinLabel.text.length  == 0 ||
-//            self.QQLabel.text.length  == 0 ||
-//            self.emailLabel.text.length  == 0 ||
-//            self.severCity.text.length  == 0)  {
-//    
-//            [SVProgressHUD showErrorWithStatus:@"请完善资料"];
-//            return;
-//        }
+    //所有字断不能为空
+        if (self.avatarImg.image == nil ||
+            self.nickLabel.text.length == 0 ||
+            self.ageLabel.text.length  == 0 ||
+            self.sexLabel.text.length  == 0 ||
+            self.areaLabel.text.length  == 0 ||
+            self.workStatusLabel.text.length == 0 ||
+            self.collegeLabel.text.length  == 0 ||
+            self.degreeLabel.text.length  == 0 ||
+            self.weixinLabel.text.length  == 0 ||
+            self.QQLabel.text.length  == 0 ||
+            self.emailLabel.text.length  == 0 ||
+            self.severCity.text.length  == 0)  {
     
-//        if (_cityLabel.text.length == 0) {
-//    
-//            [SVProgressHUD showErrorWithStatus:@"请选择服务城市"];
-//            return;
-//    
-//        }
-
+            [SVProgressHUD showErrorWithStatus:@"请完善资料"];
+            return;
+        }
+    self.params.nickname = self.nickLabel.text;
+    self.params.age = self.ageLabel.text;
+    self.params.sex = self.sexLabel.text;
+    self.params.serviceCity = cityModel.cityName;
+    self.params.cityId = cityModel.id;
+    self.params.occupation = self.workStatusLabel.text;
+    self.params.college = self.collegeLabel.text;
+    self.params.degree =  self.degreeLabel.text;
+    self.params.weixin = self.weixinLabel.text;
+    self.params.qq = self.QQLabel.text;
+    self.params.email = self.emailLabel.text;
     //服务费用
     self.params.serviceCharge = [NSString stringWithFormat:@"%ld",[[costs.costArray[currentBtn.tag-100] objectForKey:@"price"] integerValue]];
 
-    NSLog(@"%@",self.params.mj_keyValues);
+    FxLog(@"%@",self.params.mj_keyValues);
  
     [KSMNetworkRequest postRequest:KInfoEdit params:self.params.mj_keyValues success:^(id responseObj) {
         
-         [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
-        NSLog(@"%@",responseObj);
+        FxLog(@"%@",responseObj);
         
         if (![responseObj isKindOfClass:[NSNull class]]) {
             
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
                 
+                [[HUDConfig shareHUD]Tips:@"成功" delay:DELAY];
                 NSDictionary *dic = [responseObj objectForKey:@"data"];
-                account.serviceCharge = [dic objectForKey:@"serviceCharge"];
-                [AccountModel saveAccount:account];
+                AccountModel *saveAccount = [AccountModel mj_objectWithKeyValues:dic];
+                [AccountModel saveAccount:saveAccount];
 
                 
-                if (!_isEdit) {
-                    
+//                if (!_isEdit) {
+                
                     //没有身份认证
                     //                if (account.realName.length == 0) {
                     
+                if (_isEdit) {
+                    
+                    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                    UpImgViewController *UpImg = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
+                    [self.navigationController pushViewController:UpImg animated:YES];
+                }else {
+                    
                     UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
                     KnowThreeRegisterVC *KnowThree = [story instantiateViewControllerWithIdentifier:@"KnowThreeRegisterVC"];
+                    KnowThree.isEdit = self.isEdit;
                     [self.navigationController pushViewController:KnowThree animated:YES];
-                    //                    return;
-                    //                }
-                    
-                    //                if (account.photoPaths.length == 0) {
-                    //
-                    //                UIStoryboard *story = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                    //                UpImgViewController *KnowThree = [story instantiateViewControllerWithIdentifier:@"UpImgViewController"];
-                    //                [self.navigationController pushViewController:KnowThree animated:YES];
-                    //                    return;
-                    //                }
-                    
-                    //                UITabBarController *TabBar = [PageInfo pageControllers];
-                    //                [self presentViewController:TabBar animated:YES completion:nil];
-                    
-                    //                }
                 }
-                
-
+            }else {
+            
+                [[HUDConfig shareHUD]Tips:@"失败" delay:DELAY];
             }
         }
         

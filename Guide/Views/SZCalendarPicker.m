@@ -181,13 +181,13 @@ NSString *const SZCalendarCellIdentifier = @"cell";
                 
                 if ([date isEqualToDate:buttonDate]) {
                     
-                    NSLog(@"dateStr = %@",[buttonDate toYMDString]);
+                    FxLog(@"dateStr = %@",[buttonDate toYMDString]);
                     //可接单日
                     if ([model.state isEqualToString:RECEIVE]) {
                         
                         cell.timeStatus = RECEIVE;
                         
-                        NSLog(@"可接单日 = %@",dateStr);
+                        FxLog(@"可接单日 = %@",dateStr);
                       [cell.dateLabel setTextColor:[UIColor blackColor]];
                       cell.userInteractionEnabled = YES;
                         break;
@@ -196,7 +196,7 @@ NSString *const SZCalendarCellIdentifier = @"cell";
                     if ([model.state isEqualToString:RECEIVED]) {
                         
                         cell.timeStatus = RECEIVED;
-                        NSLog(@"已接单日 = %@",dateStr);
+                        FxLog(@"已接单日 = %@",dateStr);
                         [cell.dateLabel setTextColor:MainColor];
                         cell.userInteractionEnabled = NO;
                         break;
@@ -207,7 +207,7 @@ NSString *const SZCalendarCellIdentifier = @"cell";
                         
                         cell.timeStatus = NO_RECEIVE;
                         
-                        NSLog(@"不接单日 = %@",dateStr);
+                        FxLog(@"不接单日 = %@",dateStr);
                         [cell.dateLabel setTextColor:lever3Color];
                         cell.userInteractionEnabled = YES;
                         break;
@@ -263,51 +263,57 @@ NSString *const SZCalendarCellIdentifier = @"cell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSDateComponents *comp = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:self.date];
-    NSInteger firstWeekday = [self firstWeekdayInThisMonth:_date];
-    
-    NSInteger day = 0;
-    NSInteger i = indexPath.row;
-    day = i - firstWeekday + 1;
-    
-    NSString *dateStr = [NSString stringWithFormat:@"%ld-%ld-%ld",[comp year],[comp month],day];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *buttonDate = [formatter dateFromString:dateStr];
-    
-    NSString *string = [buttonDate toYMDString];
-    NSLog(@"string = %@",string);
     
     SZCalendarCell *cell = (SZCalendarCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    if (cell.isTap == NO) {
+    if (cell.dateLabel.text.length > 0) {
+        NSDateComponents *comp = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:self.date];
+        NSInteger firstWeekday = [self firstWeekdayInThisMonth:_date];
         
-        cell.backgroundColor = MainColor;
-        cell.isTap = YES;
+        NSInteger day = 0;
+        NSInteger i = indexPath.row;
+        day = i - firstWeekday + 1;
         
-    }else {
-    
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.isTap = NO;
-    }
-    
-    //不接单日状态下
-    if ([cell.timeStatus isEqualToString:NO_RECEIVE]) {
+        NSString *dateStr = [NSString stringWithFormat:@"%ld-%ld-%ld",[comp year],[comp month],day];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *buttonDate = [formatter dateFromString:dateStr];
         
-        if (self.noReceive) {
-            self.noReceive(string,cell.isTap);
+        NSString *string = [buttonDate toYMDString];
+        FxLog(@"string = %@",string);
+        
+
+            
+        
+        
+        if (cell.isTap == NO) {
+            
+            cell.backgroundColor = MainColor;
+            cell.isTap = YES;
+            
+        }else {
+        
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.isTap = NO;
         }
-    }
-    
-    //可接单日状态下
-    if ([cell.timeStatus isEqualToString:RECEIVE]) {
         
-        if (self.receive) {
-            self.receive(string,cell.isTap);
+        //不接单日状态下
+        if ([cell.timeStatus isEqualToString:NO_RECEIVE]) {
+            
+            if (self.noReceive) {
+                self.noReceive(string,cell.isTap);
+            }
         }
+        
+        //可接单日状态下
+        if ([cell.timeStatus isEqualToString:RECEIVE]) {
+            
+            if (self.receive) {
+                self.receive(string,cell.isTap);
+            }
+        }
+    
     }
-    
-    
     
 
 //    [self hide];

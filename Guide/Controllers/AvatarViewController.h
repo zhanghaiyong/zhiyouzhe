@@ -12,6 +12,7 @@ typedef void(^avatarCVBlock)(UIImage *avatar);
 
 @interface AvatarViewController : BaseViewController
 @property (weak, nonatomic) IBOutlet UIImageView *BigAvatar;
+@property (nonatomic,strong)NSString *imageStr;
 
 @property (nonatomic,copy)avatarCVBlock block;
 

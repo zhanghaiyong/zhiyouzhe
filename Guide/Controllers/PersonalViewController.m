@@ -33,23 +33,27 @@
 
     self.navigationItem.title = @"个人";
     
-    [self getEvaluationLevel];
     
-}
-
-- (void)getEvaluationLevel {
 
 }
+
+- (void)awakeFromNib {
+
+    account = [AccountModel account];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStatus) name:REFRESH_STATUS object:nil];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
+
     account = [AccountModel account];
     
     NSDictionary *params = @{@"zid":account.id,@"ztoken":account.token};
     [KSMNetworkRequest getRequest:KLevel params:params success:^(id responseObj) {
         
-        NSLog(@"level = %@",responseObj);
+        FxLog(@"level = %@",responseObj);
         
         if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
             
@@ -69,6 +73,23 @@
     }];
     _userNickName.text = account.nickname.length>10?[account.nickname substringWithRange:NSMakeRange(0, 10)]:account.nickname;
     _userSex.selected = [account.sex isEqualToString:@"男"]? NO :YES;
+    switch ([account.identificationState intValue]) {
+        case 0:
+            _identifierLabel.text = @"未认证";
+            break;
+        case 1:
+            _identifierLabel.text = @"认证中";
+            break;
+        case 2:
+            _identifierLabel.text = @"已认证";
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)refreshStatus {
+
     switch ([account.identificationState intValue]) {
         case 0:
             _identifierLabel.text = @"未认证";
@@ -158,7 +179,7 @@
             case 3: { //服务
                 
                 KnowSecondRegisterVC *knowSecond = [storyboard instantiateViewControllerWithIdentifier:@"KnowSecondRegisterVC"];
-//                knowSecond.isEdit = YES;
+                knowSecond.isEdit = YES;
                 [self.navigationController pushViewController:knowSecond animated:YES];
             }
                 break;

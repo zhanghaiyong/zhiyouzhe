@@ -221,6 +221,10 @@
 - (void)imageCropper:(VPImageCropperViewController *)cropperViewController didFinished:(UIImage *)editedImage {
 //    touchImage.image = editedImage;
     [self.selectedPhotos addObject:editedImage];
+    
+    
+    NSLog(@"awersgdfhghmf = %@",NSStringFromCGSize(editedImage.size));
+    
     saveBtn.userInteractionEnabled = YES;
     [saveBtn setTitleColor:lever1Color forState:UIControlStateNormal];
     UIImageView *imageView = [self.view viewWithTag:index];

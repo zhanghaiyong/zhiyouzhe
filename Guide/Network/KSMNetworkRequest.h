@@ -47,31 +47,31 @@ typedef void (^progressBlock)(int64_t bytesWritten, int64_t totalBytesWritten, i
  */
 + (void)postRequest:(NSString *)url params:(NSDictionary *)params success:(requestSuccessBlock)successHandler failure:(requestFailureBlock)failureHandler type:(NSInteger)type;
 
-/**
+/*
  PUT请求
- */
+
 + (void)putRequest:(NSString *)url params:(NSDictionary *)params success:(requestSuccessBlock)successHandler failure:(requestFailureBlock)failureHandler;
 
-/**
+
  DELETE请求
- */
+
 + (void)deleteRequest:(NSString *)url params:(NSDictionary *)params success:(requestSuccessBlock)successHandler failure:(requestFailureBlock)failureHandler;
 
-/**
+
  下载文件，监听下载进度
- */
+
 + (void)downloadRequest:(NSString *)url successAndProgress:(progressBlock)progressHandler complete:(responseBlock)completionHandler;
 
-/**
+
  文件上传
- */
+
 + (void)updateRequest:(NSString *)url params:(NSDictionary *)params fileConfig:(XLFileConfig *)fileConfig success:(requestSuccessBlock)successHandler failure:(requestFailureBlock)failureHandler;
 
-/**
- 文件上传，监听上传进度
- */
-+ (void)updateRequest:(NSString *)url params:(NSDictionary *)params fileConfig:(XLFileConfig *)fileConfig successAndProgress:(progressBlock)progressHandler complete:(responseBlock)completionHandler;
 
+ 文件上传，监听上传进度
+ 
++ (void)updateRequest:(NSString *)url params:(NSDictionary *)params fileConfig:(XLFileConfig *)fileConfig successAndProgress:(progressBlock)progressHandler complete:(responseBlock)completionHandler;
+*/
 @end
 
 

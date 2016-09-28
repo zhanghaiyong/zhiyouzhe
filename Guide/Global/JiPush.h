@@ -12,8 +12,8 @@ static BOOL isProduction = true;
 
 #import <Foundation/Foundation.h>
 #import <JPUSHService.h>
-
-@interface JiPush : NSObject
+#import <UserNotifications/UserNotifications.h>
+@interface JiPush : NSObject<JPUSHRegisterDelegate>
 
 @property(nonatomic, strong) NSString   *userId;
 @property(nonatomic, strong) NSString   *aliasName;

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import <JPUSHService.h>
+#import <UserNotifications/UserNotifications.h>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,JPUSHRegisterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

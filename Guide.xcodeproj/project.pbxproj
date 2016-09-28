@@ -11,6 +11,8 @@
 		781134371CBF98C60097D89F /* WithDrawView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781134361CBF98C60097D89F /* WithDrawView.xib */; };
 		7811343A1CBF9DE70097D89F /* IncomeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781134391CBF9DE70097D89F /* IncomeDetailViewController.m */; };
 		78123CFA1CDB2E8700FFACB6 /* PostImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 78123CF91CDB2E8700FFACB6 /* PostImageTool.m */; };
+		78152EB31D98E426009BAF32 /* explianView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78152EB21D98E426009BAF32 /* explianView.xib */; };
+		78152EB61D98E443009BAF32 /* explianView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78152EB51D98E443009BAF32 /* explianView.m */; };
 		7818FC4A1CF409C10001F066 /* GetVisitorParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7818FC491CF409C10001F066 /* GetVisitorParams.m */; };
 		7821E9E11CF6F96600D3B8AB /* AddTravelNoteParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7821E9E01CF6F96600D3B8AB /* AddTravelNoteParams.m */; };
 		78234E1E1D1BC28200B64BAD /* SZCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78234E1A1D1BC28200B64BAD /* SZCalendarCell.m */; };
@@ -119,6 +121,7 @@
 		78F839981D64460E00FA4E51 /* UpImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F839971D64460E00FA4E51 /* UpImgViewController.m */; };
 		78F8399B1D6556E100FA4E51 /* AvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F8399A1D6556E100FA4E51 /* AvatarViewController.m */; };
 		78F8399E1D65AAD600FA4E51 /* LabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F8399D1D65AAD600FA4E51 /* LabelButton.m */; };
+		78F984921D9B65D60079C645 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F984911D9B65D60079C645 /* UserNotifications.framework */; };
 		95EAA53111E032752F884385 /* libPods-Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AD686A3B3E57CEF39406F5 /* libPods-Guide.a */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +135,9 @@
 		781134391CBF9DE70097D89F /* IncomeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomeDetailViewController.m; sourceTree = "<group>"; };
 		78123CF81CDB2E8700FFACB6 /* PostImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostImageTool.h; sourceTree = "<group>"; };
 		78123CF91CDB2E8700FFACB6 /* PostImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostImageTool.m; sourceTree = "<group>"; };
+		78152EB21D98E426009BAF32 /* explianView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = explianView.xib; sourceTree = "<group>"; };
+		78152EB41D98E443009BAF32 /* explianView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = explianView.h; sourceTree = "<group>"; };
+		78152EB51D98E443009BAF32 /* explianView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = explianView.m; sourceTree = "<group>"; };
 		7818FC481CF409C10001F066 /* GetVisitorParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetVisitorParams.h; sourceTree = "<group>"; };
 		7818FC491CF409C10001F066 /* GetVisitorParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetVisitorParams.m; sourceTree = "<group>"; };
 		7821E9DF1CF6F96600D3B8AB /* AddTravelNoteParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTravelNoteParams.h; sourceTree = "<group>"; };
@@ -336,6 +342,8 @@
 		78F8399A1D6556E100FA4E51 /* AvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarViewController.m; sourceTree = "<group>"; };
 		78F8399C1D65AAD600FA4E51 /* LabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelButton.h; sourceTree = "<group>"; };
 		78F8399D1D65AAD600FA4E51 /* LabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelButton.m; sourceTree = "<group>"; };
+		78F984901D9B60E50079C645 /* Guide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Guide.entitlements; sourceTree = "<group>"; };
+		78F984911D9B65D60079C645 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		A61D2A6A383783984B71C04D /* Pods-Guide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Guide.release.xcconfig"; path = "Pods/Target Support Files/Pods-Guide/Pods-Guide.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -344,6 +352,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F984921D9B65D60079C645 /* UserNotifications.framework in Frameworks */,
 				95EAA53111E032752F884385 /* libPods-Guide.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +562,7 @@
 		789E788C1CB60D080039AC69 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
+				78F984901D9B60E50079C645 /* Guide.entitlements */,
 				789E78901CB60D080039AC69 /* AppDelegate.h */,
 				789E78911CB60D080039AC69 /* AppDelegate.m */,
 				78C0EC6C1D4B05AB003A00E9 /* GuideViewController.h */,
@@ -717,6 +727,9 @@
 				7866D56D1D05220E00D22F41 /* ChatAppointmentOrder.m */,
 				78F8399C1D65AAD600FA4E51 /* LabelButton.h */,
 				78F8399D1D65AAD600FA4E51 /* LabelButton.m */,
+				78152EB41D98E443009BAF32 /* explianView.h */,
+				78152EB51D98E443009BAF32 /* explianView.m */,
+				78152EB21D98E426009BAF32 /* explianView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -768,6 +781,7 @@
 		D815A6B3175F1ECC695226AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78F984911D9B65D60079C645 /* UserNotifications.framework */,
 				60AD686A3B3E57CEF39406F5 /* libPods-Guide.a */,
 			);
 			name = Frameworks;
@@ -807,9 +821,13 @@
 				TargetAttributes = {
 					789E78891CB60D080039AC69 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 3LH5W66BT8;
+						DevelopmentTeam = 43Z4SJTU2R;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -842,6 +860,7 @@
 				78287AB61CC8AE2000B2C656 /* IncomeDetailCell.xib in Resources */,
 				78234E201D1BC28200B64BAD /* SZCalendarPicker.xib in Resources */,
 				788A56491CB790C000A58302 /* GuideTabBar.plist in Resources */,
+				78152EB31D98E426009BAF32 /* explianView.xib in Resources */,
 				78287AB11CC880A700B2C656 /* NewsCell.xib in Resources */,
 				788A56361CB77BAC00A58302 /* Know.storyboard in Resources */,
 				78C0EC701D4B05AB003A00E9 /* GuideViewController.xib in Resources */,
@@ -996,6 +1015,7 @@
 				788A56421CB78CC900A58302 /* NewsViewController.m in Sources */,
 				786B63801CC7588B00362DBF /* ChatViewController.m in Sources */,
 				78287AA61CC8781100B2C656 /* NewsDetailCell.m in Sources */,
+				78152EB61D98E443009BAF32 /* explianView.m in Sources */,
 				789E78BE1CB630D10039AC69 /* NSDate+Tools.m in Sources */,
 				7856295B1D0186CD009D9160 /* OrderMsgModel.m in Sources */,
 				788A56311CB7797600A58302 /* KnowFirstRegisterVC.m in Sources */,
@@ -1036,6 +1056,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1055,7 +1076,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0ae74512-d4df-49d6-9e28-ffd76cd61dc7";
+				PROVISIONING_PROFILE = "aa412dc4-f577-4d5a-992e-d8839784c3d9";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1081,6 +1102,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1093,7 +1115,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0ae74512-d4df-49d6-9e28-ffd76cd61dc7";
+				PROVISIONING_PROFILE = "aa412dc4-f577-4d5a-992e-d8839784c3d9";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1105,8 +1127,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
+				CODE_SIGN_ENTITLEMENTS = Guide/Guide.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
@@ -1114,7 +1138,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ae74512-d4df-49d6-9e28-ffd76cd61dc7";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1124,8 +1149,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
+				CODE_SIGN_ENTITLEMENTS = Guide/Guide.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
 				INFOPLIST_FILE = Guide/Info.plist;
@@ -1133,7 +1160,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksm.zyz.zhiliao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0ae74512-d4df-49d6-9e28-ffd76cd61dc7";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

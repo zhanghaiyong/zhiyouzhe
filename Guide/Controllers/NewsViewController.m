@@ -80,7 +80,6 @@
         
     }];
     [self.tableView.mj_header beginRefreshing];
-    
 }
 
 #pragma mark 请求消息未读数

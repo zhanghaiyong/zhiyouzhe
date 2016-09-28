@@ -398,6 +398,13 @@ static NSDateFormatter *dateFormatter = nil;
 	NSPredicate *	pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex_Url];
 	return [pred evaluateWithObject:self];
 }
+/**
+ *手机号
+ */
+- (BOOL)isPhone{
+    NSPredicate *	pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", isphone];
+    return [pred evaluateWithObject:self];
+}
 
 @end
 

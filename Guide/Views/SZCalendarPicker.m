@@ -216,13 +216,25 @@ NSString *const SZCalendarCellIdentifier = @"cell";
                 }else {
 
                     [cell.dateLabel setTextColor:lever3Color];
-                    if (day == [self day:_date]) {
+                    
+                    if (day == [self day:self.date]) {
                         
-                        cell.backgroundColor = specialGreed;
-                        
+                        if (self.date.month == [NSDate date].month) {
+                            cell.dateLabel.textColor = specialGreed;
+                            UILabel *dayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cell.height-25, cell.width, 20)];
+                            dayLabel.text = @"今日";
+                            dayLabel.textAlignment = NSTextAlignmentCenter;
+                            dayLabel.font = lever4Font;
+                            dayLabel.textColor = specialGreed;
+                            [cell.contentView addSubview:dayLabel];
+                        }
+                    }else {
+                    
+                        [cell.dateLabel setTextColor:lever3Color];
+                        SZCalendarCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:SZCalendarCellIdentifier forIndexPath:indexPath];
+                        cell.userInteractionEnabled = NO;
                     }
                     cell.userInteractionEnabled = NO;
-                    
                 }
             }
         }
@@ -267,6 +279,7 @@ NSString *const SZCalendarCellIdentifier = @"cell";
     SZCalendarCell *cell = (SZCalendarCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     if (cell.dateLabel.text.length > 0) {
+        
         NSDateComponents *comp = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:self.date];
         NSInteger firstWeekday = [self firstWeekdayInThisMonth:_date];
         
@@ -281,10 +294,6 @@ NSString *const SZCalendarCellIdentifier = @"cell";
         
         NSString *string = [buttonDate toYMDString];
         FxLog(@"string = %@",string);
-        
-
-            
-        
         
         if (cell.isTap == NO) {
             

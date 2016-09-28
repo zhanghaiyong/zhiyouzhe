@@ -47,9 +47,6 @@
     }
     return self;
 }
-- (void)awakeFromNib {
-    // Initialization code
-}
 
 -(void)loadPhotoListData:(PHAssetCollection *)collectionItem
 {

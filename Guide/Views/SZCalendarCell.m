@@ -15,9 +15,9 @@
 - (UILabel *)dateLabel
 {
     if (!_dateLabel) {
-        _dateLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height-10)];
         [_dateLabel setTextAlignment:NSTextAlignmentCenter];
-        [_dateLabel setFont:[UIFont systemFontOfSize:17]];
+        [_dateLabel setFont:[UIFont systemFontOfSize:16]];
         [self addSubview:_dateLabel];
     }
     return _dateLabel;

@@ -49,7 +49,7 @@
     //开启输入状态监听
     [RCIM sharedRCIM].enableTypingStatus = YES;
     //开启发送已读回执（只支持单聊）
-    [RCIM sharedRCIM].enableReadReceipt = YES;
+    [RCIM sharedRCIM].enabledReadReceiptConversationTypeList = @[@(ConversationType_PRIVATE)];
     //是否在发送的所有消息中携带当前登录的用户信息，默认值为NO
     [RCIM sharedRCIM].enableMessageAttachUserInfo = NO;
     

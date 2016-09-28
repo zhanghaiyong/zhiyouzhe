@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *telLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sexButton;
-
+@property (weak, nonatomic) IBOutlet UILabel *travalType;
 @property (weak, nonatomic) IBOutlet LDXScore *scores;
 
 @property (weak, nonatomic) IBOutlet UIView *scoreView;

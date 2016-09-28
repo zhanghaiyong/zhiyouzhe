@@ -78,7 +78,7 @@
                 checkString=[checkString stringByDeletingLastPathComponent];
             }
             
-            if (checkString.isMobilphone) {
+            if (checkString.isPhone) {
                 FxLog(@"号码满足");
                 _getCodeButton.alpha = 1;
                 _getCodeButton.userInteractionEnabled = YES;
@@ -114,7 +114,7 @@
     if (_phoneTF.text.length == 0) {
         
         [SVProgressHUD showInfoWithStatus:@"电话号码不能为空"];
-    }else if(!_phoneTF.text.isMobilphone){
+    }else if(!_phoneTF.text.isPhone){
         
         [Uitils shake:_phoneTF];
         [SVProgressHUD showInfoWithStatus:@"请输入正确的手机号"];
@@ -197,6 +197,9 @@
                         [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
                     }
                 }
+                
+                [[HUDConfig shareHUD]dismiss];
+                
             } failure:^(NSError *error) {
                 
                 [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];
@@ -204,11 +207,12 @@
             } type:0];
             
         }else
+   /*
+    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
         
-//    [SMSSDK commitVerificationCode:_codeTF.text phoneNumber:_phoneTF.text zone:@"86" result:^(NSError *error) {
-//        
-//        if (!error) {
+        if (!error) {
         FxLog(@"验证成功");
+    */
         [KSMNetworkRequest postRequest:KLogin params:@{@"phone":_phoneTF.text}  success:^(id responseObj) {
             
             BASE_INFO_FUN(responseObj);
@@ -238,11 +242,13 @@
             
         } type:0];
         
-//        }else {
-//            FxLog(@"验证失败");
-//            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
-//        }
-//    }];
+        /*
+        }else {
+            FxLog(@"验证失败");
+            [[HUDConfig shareHUD]ErrorHUD:@"验证失败" delay:DELAY];
+        }
+    }];
+         */
     }
     
 }

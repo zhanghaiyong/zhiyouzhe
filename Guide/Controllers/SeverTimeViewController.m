@@ -9,6 +9,7 @@
 #import "SeverTimeViewController.h"
 #import "CalendarModel.h"
 #import "SZCalendarPicker.h"
+#import "explianView.h"
 @interface SeverTimeViewController ()
 @property (nonatomic,strong)NSMutableArray *saveDates;
 @property (nonatomic,strong)NSMutableArray *DeleteDates;
@@ -18,8 +19,8 @@
 @interface SeverTimeViewController () {
     
     AccountModel     *account;
-    UIView *greenView ;
-    UILabel *getLabel;
+    explianView *explain;
+    
 }
 @end
 
@@ -72,23 +73,23 @@
     
     [self loadSeverTime];
     
+    explain = [[[NSBundle mainBundle]loadNibNamed:@"explianView" owner:self options:nil]lastObject];
+    explain.frame = CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT, 200, 80);
+    [[UIApplication sharedApplication].keyWindow addSubview:explain];
     
-    greenView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-40, self.view.height -40, 15, 15)];
-    greenView.backgroundColor = RGB(47, 176, 130);
-    [[UIApplication sharedApplication].keyWindow addSubview:greenView];
-    getLabel = [[UILabel alloc]initWithFrame:CGRectMake(greenView.right+10, self.view.height -40, 100, 15)];
-    getLabel.text = @"有预约";
-    getLabel.font = [UIFont systemFontOfSize:13];
-    [[UIApplication sharedApplication].keyWindow addSubview:getLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        
+        explain.frame = CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT-90, 200, 80);
+    }];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 
     [super viewWillDisappear:animated];
-    [greenView removeFromSuperview];
-    greenView = nil;
-    [getLabel removeFromSuperview];
-    getLabel = nil;
+    [explain removeFromSuperview];
+    explain = nil;
 }
 
 - (void)loadSeverTime {
@@ -96,7 +97,7 @@
     [[HUDConfig shareHUD]alwaysShow];
     NSDictionary *params = @{@"zhiliaoId":account.id,@"token":account.token};
     [KSMNetworkRequest postRequest:KGetCalendar params:params success:^(id responseObj) {
-        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
+//        [[HUDConfig shareHUD]Tips:[responseObj objectForKey:@"msg"] delay:DELAY];
         FxLog(@"%@",responseObj);
         if (![responseObj isKindOfClass:[NSNull class]]) {
             if ([[responseObj objectForKey:@"status"] isEqualToString:@"success"]) {
@@ -134,6 +135,7 @@
                 
            }
         }
+        [[HUDConfig shareHUD] dismiss];
     } failure:^(NSError *error) {
         
         [[HUDConfig shareHUD]ErrorHUD:error.localizedDescription delay:DELAY];

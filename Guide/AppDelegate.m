@@ -114,7 +114,35 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
     
     //推送注册
-    [[JiPush shareJpush] registerPush:launchOptions];
+    //Required
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+        
+        JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    }
+    else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    }
+    else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+    }
+    
+    //Required
+    // init Push(2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil  )
+    // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
+    [JPUSHService setupWithOption:launchOptions appKey:appKey
+                          channel:channel
+                 apsForProduction:isProduction
+            advertisingIdentifier:nil];
     [[JiPush shareJpush]addObserver];
     //统计App启动的事件
     [[RCIMClient sharedRCIMClient]recordLaunchOptionsEvent:launchOptions];
@@ -169,7 +197,7 @@
     FxLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
 
     //极光推送
-    [[JiPush shareJpush]registerDeviceToken:deviceToken];
+    [JPUSHService registerDeviceToken:deviceToken];
 
     NSString *token = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
                                                     withString:@""]stringByReplacingOccurrencesOfString:@">"
@@ -192,7 +220,130 @@
 }
 #endif
 
-//IOS 7支持需要
+
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    // Required
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+       [JPUSHService handleRemoteNotification:userInfo];
+        
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[UIApplication sharedApplication].applicationIconBadgeNumber + 1];
+        
+        [[JiPush shareJpush]handleNotification:userInfo];
+        FxLog(@"推送 收到通知:%@", userInfo);
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+        NSString *type = [userInfo objectForKey:@"type"];
+        
+        if ([type isEqualToString:@"01"]) {
+            AccountModel *account = [AccountModel account];
+            account.identificationState = @"2";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"02"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.identificationState = @"3";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"03"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.serviceCarAuth = @"2";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"04"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.serviceCarAuth = @"3";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
+        
+    }else {
+    
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[UIApplication sharedApplication].applicationIconBadgeNumber + 1];
+        
+        [[JiPush shareJpush]handleNotification:userInfo];
+        FxLog(@"推送 收到通知:%@", userInfo);
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+        NSString *type = [userInfo objectForKey:@"type"];
+        
+        if ([type isEqualToString:@"01"]) {
+            AccountModel *account = [AccountModel account];
+            account.identificationState = @"2";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"02"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.identificationState = @"3";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"03"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.serviceCarAuth = @"2";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }else if ([type isEqualToString:@"04"]) {
+            
+            AccountModel *account = [AccountModel account];
+            account.serviceCarAuth = @"3";
+            [AccountModel saveAccount:account];
+            [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+            
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
+    }
+    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+}
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+        
+    }
+    completionHandler();  // 系统要求执行这个方法
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    // Required, iOS 7 Support
+    [JPUSHService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // Required,For systems with less than or equal to iOS6
+    [JPUSHService handleRemoteNotification:userInfo];
+}
+
+/*
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:application.applicationIconBadgeNumber + 1];
@@ -200,12 +351,12 @@
     [[JiPush shareJpush]handleNotification:userInfo];
     FxLog(@"推送 收到通知:%@", userInfo);
     completionHandler(UIBackgroundFetchResultNewData);
-    
-    
+ 
     NSDictionary *aps = [userInfo valueForKey:@"aps"];
     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+ 
     NSString *type = [userInfo objectForKey:@"type"];
     
     if ([type isEqualToString:@"01"]) {
@@ -244,8 +395,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
-    
 }
+*/
 
 
 //收到推送的调用
@@ -260,7 +411,7 @@
      * @discussion 默认App在前台运行时不会进行弹窗，在程序接收通知调用此接口可实现指定的推送弹窗。
      */
     
-    
+     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:application.applicationIconBadgeNumber + 1];
 
     //用于显示一个提示框
 //    [[JiPush shareJpush] showLocalNotificationAtFront:notification];

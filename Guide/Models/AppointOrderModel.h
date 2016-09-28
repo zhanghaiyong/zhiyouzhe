@@ -27,4 +27,5 @@
 @property (nonnull,strong)NSString *zSex;
 @property (nonnull,strong)NSString *zhiliaoId;
 @property (nonnull,strong)NSString *orderGrade;
+@property (nonnull,strong)NSString *travelType;
 @end

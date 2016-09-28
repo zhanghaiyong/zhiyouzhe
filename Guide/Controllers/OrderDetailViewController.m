@@ -63,6 +63,7 @@
     self.orderCodeLabel.text = [NSString stringWithFormat:@"订单号：%@",orderModel.orderCode];
     [Uitils cacheVisitorImage:orderModel.vHeadiconUrl withImageV:self.avatarImg withPlaceholder:@"icon_head_default_iphone"];
     self.nickNameLabel.text = orderModel.vNickname;
+    self.travalType.text = [NSString stringWithFormat:@"出行方式：%@",[orderModel.travelType isEqualToString:@"0"]? @"步行" :@"驾车"];
     self.sexButton.selected = [orderModel.vSex isEqualToString:@"男"]? NO :YES;
     self.orderTimeLabel.text = [NSString stringWithFormat:@"时间：%@",orderModel.orderTime];
     self.telLabel.text = [NSString stringWithFormat:@"电话：%@",orderModel.vPhone];

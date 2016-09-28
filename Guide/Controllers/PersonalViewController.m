@@ -38,7 +38,8 @@
 }
 
 - (void)awakeFromNib {
-
+    
+    [super awakeFromNib];
     account = [AccountModel account];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshStatus) name:REFRESH_STATUS object:nil];
 }

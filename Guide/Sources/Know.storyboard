@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSO-dC-iCV">
-                                <rect key="frame" x="0.0" y="195" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="210" width="320" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户评星" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxT-au-UYd">
                                         <rect key="frame" x="10" y="10" width="56" height="25"/>
@@ -64,6 +64,12 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="游客取消了行程，订单已关闭" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiM-PC-Bg3">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="0.13769634989999999" blue="0.23518977890000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -81,14 +87,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="游客取消了行程，订单已关闭" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiM-PC-Bg3">
-                                <rect key="frame" x="0.0" y="195" width="320" height="80"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="1" green="0.13769634989999999" blue="0.23518977890000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T8i-M5-LFa">
-                                <rect key="frame" x="0.0" y="20" width="320" height="165"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="180"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXK-AD-buU">
                                         <rect key="frame" x="0.0" y="44" width="320" height="1"/>
@@ -117,7 +117,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电话：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDb-uX-9ZT">
-                                        <rect key="frame" x="80" y="105" width="42" height="25"/>
+                                        <rect key="frame" x="80" y="130" width="42" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="RYy-zs-GPZ"/>
                                         </constraints>
@@ -126,7 +126,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收费：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXO-BZ-GLV">
-                                        <rect key="frame" x="80" y="130" width="42" height="25"/>
+                                        <rect key="frame" x="80" y="155" width="42" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="kWl-2Z-8ec"/>
                                         </constraints>
@@ -135,7 +135,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyN-iL-bNb">
-                                        <rect key="frame" x="80" y="80" width="42" height="25"/>
+                                        <rect key="frame" x="80" y="105" width="42" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="rQL-sW-fET"/>
                                         </constraints>
@@ -161,28 +161,45 @@
                                         <color key="textColor" red="0.22352941176470589" green="0.22352941176470589" blue="0.22352941176470589" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出行方式：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6h-hx-pQZ">
+                                        <rect key="frame" x="80" y="80" width="70" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="Jxz-OF-Ri4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="eXO-BZ-GLV" firstAttribute="leading" secondItem="mDb-uX-9ZT" secondAttribute="leading" id="36f-H9-hO8"/>
                                     <constraint firstItem="wXK-AD-buU" firstAttribute="leading" secondItem="T8i-M5-LFa" secondAttribute="leading" id="3FA-qW-881"/>
+                                    <constraint firstItem="t6h-hx-pQZ" firstAttribute="top" secondItem="uNI-oB-RT3" secondAttribute="bottom" id="3Pv-id-50S"/>
                                     <constraint firstItem="uNI-oB-RT3" firstAttribute="leading" secondItem="kO0-Uk-4S4" secondAttribute="trailing" constant="10" id="8dR-Tv-WLf"/>
                                     <constraint firstItem="kO0-Uk-4S4" firstAttribute="leading" secondItem="T8i-M5-LFa" secondAttribute="leading" constant="10" id="9mp-sF-WoU"/>
                                     <constraint firstItem="uNI-oB-RT3" firstAttribute="top" secondItem="wXK-AD-buU" secondAttribute="bottom" constant="5" id="BlT-Hg-O9S"/>
+                                    <constraint firstItem="t6h-hx-pQZ" firstAttribute="leading" secondItem="uNI-oB-RT3" secondAttribute="leading" id="Im4-06-OzC"/>
                                     <constraint firstItem="AnM-JQ-NZl" firstAttribute="top" secondItem="T8i-M5-LFa" secondAttribute="top" id="NSK-pf-BSk"/>
                                     <constraint firstItem="wXK-AD-buU" firstAttribute="top" secondItem="AnM-JQ-NZl" secondAttribute="bottom" id="Ndt-5c-Qzq"/>
+                                    <constraint firstItem="QyN-iL-bNb" firstAttribute="top" secondItem="t6h-hx-pQZ" secondAttribute="bottom" id="Qcs-a7-do8"/>
                                     <constraint firstItem="kO0-Uk-4S4" firstAttribute="top" secondItem="wXK-AD-buU" secondAttribute="bottom" constant="10" id="UHb-Ry-bfi"/>
-                                    <constraint firstAttribute="height" constant="165" id="aOM-gO-Jr4"/>
+                                    <constraint firstAttribute="height" constant="180" id="aOM-gO-Jr4"/>
                                     <constraint firstItem="i3Y-52-DFe" firstAttribute="centerY" secondItem="uNI-oB-RT3" secondAttribute="centerY" id="b6s-tW-i9Y"/>
                                     <constraint firstItem="mDb-uX-9ZT" firstAttribute="leading" secondItem="kO0-Uk-4S4" secondAttribute="trailing" constant="10" id="bpx-UN-dsJ"/>
                                     <constraint firstAttribute="trailing" secondItem="wXK-AD-buU" secondAttribute="trailing" id="gMh-9M-Ugp"/>
                                     <constraint firstItem="eXO-BZ-GLV" firstAttribute="top" secondItem="mDb-uX-9ZT" secondAttribute="bottom" id="gO4-BN-QPh"/>
                                     <constraint firstItem="mDb-uX-9ZT" firstAttribute="top" secondItem="QyN-iL-bNb" secondAttribute="bottom" id="hXx-hc-E9t"/>
                                     <constraint firstItem="i3Y-52-DFe" firstAttribute="leading" secondItem="uNI-oB-RT3" secondAttribute="trailing" constant="10" id="j2S-9Z-X1j"/>
-                                    <constraint firstItem="QyN-iL-bNb" firstAttribute="top" secondItem="uNI-oB-RT3" secondAttribute="bottom" id="yUV-F6-mkt"/>
+                                    <constraint firstItem="QyN-iL-bNb" firstAttribute="top" secondItem="uNI-oB-RT3" secondAttribute="bottom" constant="40" id="yUV-F6-mkt"/>
                                     <constraint firstItem="AnM-JQ-NZl" firstAttribute="leading" secondItem="T8i-M5-LFa" secondAttribute="leading" constant="10" id="yhr-vv-tkG"/>
                                     <constraint firstItem="QyN-iL-bNb" firstAttribute="leading" secondItem="kO0-Uk-4S4" secondAttribute="trailing" constant="10" id="zkA-LC-0pr"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="yUV-F6-mkt"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,10 +207,6 @@
                             <constraint firstItem="T8i-M5-LFa" firstAttribute="top" secondItem="iuy-rl-5ea" secondAttribute="bottom" id="Km9-7n-8cM"/>
                             <constraint firstAttribute="trailing" secondItem="QSO-dC-iCV" secondAttribute="trailing" id="c99-Zz-SKP"/>
                             <constraint firstItem="QSO-dC-iCV" firstAttribute="leading" secondItem="212-Bw-XyI" secondAttribute="leading" id="cbA-8N-Js1"/>
-                            <constraint firstItem="fiM-PC-Bg3" firstAttribute="top" secondItem="QSO-dC-iCV" secondAttribute="top" id="fhx-1L-4y0"/>
-                            <constraint firstItem="fiM-PC-Bg3" firstAttribute="leading" secondItem="QSO-dC-iCV" secondAttribute="leading" id="jSK-gz-yv5"/>
-                            <constraint firstItem="fiM-PC-Bg3" firstAttribute="width" secondItem="QSO-dC-iCV" secondAttribute="width" id="jdY-Oa-O8C"/>
-                            <constraint firstItem="fiM-PC-Bg3" firstAttribute="height" secondItem="QSO-dC-iCV" secondAttribute="height" id="nmK-Lh-2fZ"/>
                             <constraint firstItem="T8i-M5-LFa" firstAttribute="leading" secondItem="212-Bw-XyI" secondAttribute="leading" id="sUy-4N-Jva"/>
                             <constraint firstAttribute="trailing" secondItem="T8i-M5-LFa" secondAttribute="trailing" id="zu5-Kl-j62"/>
                             <constraint firstItem="QSO-dC-iCV" firstAttribute="top" secondItem="T8i-M5-LFa" secondAttribute="bottom" constant="10" id="zyC-vC-xV5"/>
@@ -211,6 +224,7 @@
                         <outlet property="sexButton" destination="i3Y-52-DFe" id="vzK-wm-uVQ"/>
                         <outlet property="telLabel" destination="mDb-uX-9ZT" id="GWM-m5-dtU"/>
                         <outlet property="tipsLabel" destination="fiM-PC-Bg3" id="ZA3-BV-4x7"/>
+                        <outlet property="travalType" destination="t6h-hx-pQZ" id="vgJ-bh-xib"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQD-y7-fwc" userLabel="First Responder" sceneMemberID="firstResponder"/>

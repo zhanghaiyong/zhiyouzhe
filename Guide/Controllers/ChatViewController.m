@@ -190,5 +190,47 @@
      
 }
 
+-(void)sendMessage:(RCMessageContent *)messageContent pushContent:(NSString *)pushContent {
+    
+    NSLog(@"content is %@   pushContent is %@",messageContent.mj_keyValues,pushContent);
+    
+    NSDictionary *dic = messageContent.mj_keyValues;
+    
+    NSString *string = [dic objectForKey:@"content"];
+    pushContent = string;
+    NSString *subStr;
+    string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (string.length >11) {
+        for ( int i =0; i<string.length; i++) {
+            if (string.length-i>=11) {
+                subStr = [string substringWithRange:NSMakeRange(i, 11)];
+            }
+        }
+    }
+    if ([string isMobilphone] || [string isEmail] || [string isTelephone] ) {
+        
+        pushContent = @"***********";
+    }
+    if ([subStr isMobilphone] || [subStr isEmail] || [subStr isTelephone] ) {
+        
+        NSString * searchStr = string;
+        NSString * regExpStr = @"[0-9]";
+        NSString * replacement = @"*";
+        
+        NSRegularExpression *regExp = [[NSRegularExpression alloc] initWithPattern:regExpStr options:NSRegularExpressionCaseInsensitive error:nil];                                                                  NSString *resultStr = searchStr;
+        
+        resultStr = [regExp stringByReplacingMatchesInString:searchStr options:NSMatchingReportProgress range:NSMakeRange(0, searchStr.length)withTemplate:replacement];
+        
+        pushContent = resultStr;
+    }
+    [messageContent setValue:pushContent forKey:@"content"];
+    
+    [[RCIM sharedRCIM]sendMessage:ConversationType_PRIVATE targetId:self.targetId content:messageContent pushContent:pushContent pushData:nil success:^(long messageId) {
+        
+    } error:^(RCErrorCode nErrorCode, long messageId) {
+        
+    }];
+}
+
 
 @end

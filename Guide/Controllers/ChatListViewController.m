@@ -11,7 +11,7 @@
 #import "SDKKey.h"
 #import "NoChatList.h"
 #import "LoginViewController.h"
-
+#import "JiPush.h"
 @interface ChatListViewController ()<RCIMReceiveMessageDelegate,RCIMConnectionStatusDelegate>
 {
     AccountModel *account;
@@ -94,6 +94,7 @@
     
     //设置显示的会话类型
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+
     
     
     //禁止接受系统消息推送
@@ -243,6 +244,10 @@
 
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"当前账号在其他设备登录,请重新登录" preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [AccountModel deleteAccount];
+                [Uitils UserDefaultRemoveObjectForKey:TOKEN];
+                [[JiPush shareJpush] setAlias:@""];
                 
                 LoginViewController *loginController = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewController"];
                 [UIApplication sharedApplication].keyWindow.rootViewController = loginController;

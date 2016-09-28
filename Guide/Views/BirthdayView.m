@@ -34,6 +34,7 @@
 
 -(void)awakeFromNib {
 
+    [super awakeFromNib];
     [self.datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
     self.datePicker.maximumDate = [NSDate date];
 }

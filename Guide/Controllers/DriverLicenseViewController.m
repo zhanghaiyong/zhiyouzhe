@@ -21,9 +21,9 @@
 @implementation DriverLicenseViewController
 {
     //驾照
-    NSString *driverLicenseImage;
+    NSString *driverLicenseImg;
     //车
-    NSString *carImage;
+    NSString *carImg;
     AccountModel *account;
 }
 
@@ -50,10 +50,10 @@
         self.carImage.contentMode = UIViewContentModeScaleToFill;
         
         [Uitils cacheImage:account.drivingLicenseUrl withImageV:_driverLicenseImage withPlaceholder:@"pic_jiazhao_up_iphone" completed:^(UIImage *image) {
-            driverLicenseImage  = account.drivingLicenseUrl;
+            driverLicenseImg  = account.drivingLicenseUrl;
         }];
         [Uitils cacheImage:account.carUrl withImageV:_carImage withPlaceholder:@"pic_carpoto_up_iphone" completed:^(UIImage *image) {
-            carImage = account.carUrl ;
+            carImg = account.carUrl ;
         }];
     }
     
@@ -79,11 +79,11 @@
     switch (indexPath.row) {
         case 0:
             imageName = [NSString stringWithFormat:@"%@driverLicenseImage",account.id];
-            driverLicenseImage = imageName;
+            driverLicenseImg = imageName;
             break;
         case 1:
             imageName = [NSString stringWithFormat:@"%@carImage",account.id];
-            carImage = imageName;
+            carImg = imageName;
             break;
             
         default:
@@ -127,13 +127,13 @@
 
 - (IBAction)sureAction:(id)sender {
     
-    if (driverLicenseImage.length == 0) {
+    if (driverLicenseImg.length == 0) {
         
         [[HUDConfig shareHUD]Tips:@"请上传身份证正面" delay:DELAY];
         return;
     }
     
-    if (carImage.length == 0) {
+    if (carImg.length == 0) {
         
          [[HUDConfig shareHUD]Tips:@"请上传身份证反面" delay:DELAY];
         return;
@@ -142,8 +142,8 @@
     
     [[HUDConfig shareHUD] alwaysShow];
     
-    self.params.drivingLicenseUrl = driverLicenseImage;
-    self.params.carUrl = carImage;
+    self.params.drivingLicenseUrl = driverLicenseImg;
+    self.params.carUrl = carImg;
     
     FxLog(@"身份证 = %@",self.params.mj_keyValues);
     
@@ -157,8 +157,8 @@
                 
                 [[HUDConfig shareHUD] SuccessHUD:@"上传成功" delay:DELAY];
                 
-                account.drivingLicenseUrl = driverLicenseImage;
-                account.carUrl = carImage;
+                account.drivingLicenseUrl = driverLicenseImg;
+                account.carUrl = carImg;
                 [AccountModel saveAccount:account];
                 
                 [self back];

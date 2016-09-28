@@ -60,7 +60,7 @@
 
 // 验证码
 #define Regex_MobilephoneCoede   @"^\\d{6}$"
-
+#define isphone   @"^1[3|4|5|7|8][0-9]\\d{8}$"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -116,6 +116,7 @@
 - (BOOL)isPassword;
 - (BOOL)isEmail;
 - (BOOL)isUrl;
+- (BOOL)isPhone;
 
 @end
 

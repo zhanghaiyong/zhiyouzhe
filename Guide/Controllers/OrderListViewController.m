@@ -84,7 +84,8 @@
 }
 
 - (void)awakeFromNib {
-
+    
+    [super awakeFromNib];
      account = [AccountModel account];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appointOrder) name:@"appointOrder" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatOrder) name:@"chatOrder" object:nil];

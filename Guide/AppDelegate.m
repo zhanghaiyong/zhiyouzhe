@@ -162,8 +162,6 @@
 
     [self judgeSecondLogin];
     
-
-
     return YES;
 }
 
@@ -333,7 +331,48 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     // Required, iOS 7 Support
-    [JPUSHService handleRemoteNotification:userInfo];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[UIApplication sharedApplication].applicationIconBadgeNumber + 1];
+    
+    [[JiPush shareJpush]handleNotification:userInfo];
+    FxLog(@"推送 收到通知:%@", userInfo);
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+    NSString *type = [userInfo objectForKey:@"type"];
+    
+    if ([type isEqualToString:@"01"]) {
+        AccountModel *account = [AccountModel account];
+        account.identificationState = @"2";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"02"]) {
+        
+        AccountModel *account = [AccountModel account];
+        account.identificationState = @"3";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"03"]) {
+        
+        AccountModel *account = [AccountModel account];
+        account.serviceCarAuth = @"2";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }else if ([type isEqualToString:@"04"]) {
+        
+        AccountModel *account = [AccountModel account];
+        account.serviceCarAuth = @"3";
+        [AccountModel saveAccount:account];
+        [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_STATUS object:self userInfo:nil];
+        
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_ORDER object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_APPOINT object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"appointOrder" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"chatOrder" object:self userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SYSTEM object:self userInfo:nil];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

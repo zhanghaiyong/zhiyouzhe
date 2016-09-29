@@ -170,6 +170,13 @@
         [Uitils shake:_codeTF];
         
     }
+    
+    else if (![_phoneTF.text isPhone]) {
+    
+        [[HUDConfig shareHUD] Tips:@"请输入正确电话号码" delay:DELAY];
+        [Uitils shake:_phoneTF];
+    }
+    
     else {
     
         [[HUDConfig shareHUD]alwaysShow];

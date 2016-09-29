@@ -1056,7 +1056,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 43Z4SJTU2R;
+				DEVELOPMENT_TEAM = 3LH5W66BT8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1102,7 +1102,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 43Z4SJTU2R;
+				DEVELOPMENT_TEAM = 3LH5W66BT8;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1151,7 +1151,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Guide/Guide.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;

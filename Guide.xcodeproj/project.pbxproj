@@ -1076,7 +1076,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "aa412dc4-f577-4d5a-992e-d8839784c3d9";
+				PROVISIONING_PROFILE = "6ecf3d86-d3ae-480c-8300-0c14c3496574";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1115,7 +1115,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "aa412dc4-f577-4d5a-992e-d8839784c3d9";
+				PROVISIONING_PROFILE = "6ecf3d86-d3ae-480c-8300-0c14c3496574";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1128,7 +1128,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Guide/Guide.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_BITCODE = NO;
@@ -1150,8 +1150,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Guide/Guide.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing pinjingtianxia network technology co. LTD (43Z4SJTU2R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 43Z4SJTU2R;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = /Users/ksm/Desktop/Guide/Guide/Sources/Guide.pch;
